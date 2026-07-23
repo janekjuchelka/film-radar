@@ -6,7 +6,7 @@ node_modules/
 **/dist-smoke2/
 *.log
 *.apk
-FilmRadar.apk
+!FilmRadar.apk
 app/android/
 app/node_modules/
 server/node_modules/
