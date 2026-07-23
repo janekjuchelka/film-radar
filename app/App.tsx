@@ -13,7 +13,7 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { DEFAULT_API_BASE_URL, getApiBaseUrl, setApiBaseUrl, titlesUrlFromBase } from "./src/config";
+import { DEFAULT_API_BASE_URL, getApiBaseUrl, resetToDefaultFeed, setApiBaseUrl, titlesUrlFromBase } from "./src/config";
 import type { TitleItem } from "./src/types";
 
 const PROVIDER_LABEL: Record<string, string> = {
@@ -60,12 +60,17 @@ export default function App() {
           url = `${url}${sep}minRating=70`;
           if (typeFilter !== "all") url += `&type=${typeFilter}`;
         }
-        const res = await fetch(url);
-        if (!res.ok) throw new Error("HTTP " + res.status);
+        const res = await fetch(url, {
+          headers: { Accept: "application/json" },
+        });
+        if (!res.ok) throw new Error("HTTP " + res.status + "\nURL: " + url);
         const data = await res.json();
         let list = Array.isArray(data.titles) ? data.titles : [];
         if (url.endsWith(".json") && typeFilter !== "all") {
           list = list.filter((t: { type?: string }) => t.type === typeFilter);
+        }
+        if (!list.length && !Array.isArray(data.titles)) {
+          throw new Error("Neplatná odpověď serveru\nURL: " + url);
         }
         setTitles(list);
       } catch (err) {
@@ -91,6 +96,20 @@ export default function App() {
       const saved = await setApiBaseUrl(draftUrl);
       setApiUrlState(saved);
       setSaveMessage("Uloženo");
+      setSettingsOpen(false);
+      await load(false, saved);
+    } catch (err) {
+      setSaveMessage(err instanceof Error ? err.message : String(err));
+    }
+  }
+
+  async function useGithubFeed() {
+    try {
+      setSaveMessage(null);
+      const saved = await resetToDefaultFeed();
+      setApiUrlState(saved);
+      setDraftUrl(saved);
+      setSaveMessage("Nastaven GitHub feed");
       setSettingsOpen(false);
       await load(false, saved);
     } catch (err) {
@@ -216,8 +235,11 @@ export default function App() {
               onChangeText={setDraftUrl}
             />
             {saveMessage ? <Text style={styles.modalHint}>{saveMessage}</Text> : null}
-            <Pressable style={styles.retry} onPress={saveSettings}>
-              <Text style={styles.retryText}>Uložit</Text>
+            <Pressable style={styles.retry} onPress={useGithubFeed}>
+              <Text style={styles.retryText}>Použít GitHub feed</Text>
+            </Pressable>
+            <Pressable style={styles.retrySecondary} onPress={saveSettings}>
+              <Text style={styles.retrySecondaryText}>Uložit ruční adresu</Text>
             </Pressable>
             <Pressable style={styles.retrySecondary} onPress={() => setSettingsOpen(false)}>
               <Text style={styles.retrySecondaryText}>Zavřít</Text>
