@@ -1,0 +1,313 @@
+{
+  "titles": [
+    {
+      "id": "ts20951",
+      "justwatchId": "ts20951",
+      "title": "SpongeBob v kalhotách",
+      "year": 1999,
+      "type": "series",
+      "csfdId": 72774,
+      "csfdRating": 78,
+      "csfdUrl": "https://www.csfd.cz/film/72774/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/245156112/s718/spongebob-v-kalhotach.jpg",
+      "providers": [
+        "netflix",
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-22T11:01:17.151Z",
+      "lastSeenAt": "2026-07-22T11:01:17.151Z",
+      "qualified": true
+    },
+    {
+      "id": "ts81342",
+      "justwatchId": "ts81342",
+      "title": "Zelenáč",
+      "year": 2018,
+      "type": "series",
+      "csfdId": 620005,
+      "csfdRating": 78,
+      "csfdUrl": "https://www.csfd.cz/film/620005/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/341663019/s718/zelenac.jpg",
+      "providers": [
+        "netflix"
+      ],
+      "firstSeenAt": "2026-07-22T11:01:22.884Z",
+      "lastSeenAt": "2026-07-22T11:01:22.884Z",
+      "qualified": true
+    },
+    {
+      "id": "ts20711",
+      "justwatchId": "ts20711",
+      "title": "Simpsonovi",
+      "year": 1989,
+      "type": "series",
+      "csfdId": 72489,
+      "csfdRating": 92,
+      "csfdUrl": "https://www.csfd.cz/film/72489/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/266006824/s718/simpsonovi.jpg",
+      "providers": [
+        "disney"
+      ],
+      "firstSeenAt": "2026-07-22T11:01:33.584Z",
+      "lastSeenAt": "2026-07-22T11:01:33.584Z",
+      "qualified": true
+    },
+    {
+      "id": "ts30359",
+      "justwatchId": "ts30359",
+      "title": "Okresní přebor",
+      "year": 2010,
+      "type": "series",
+      "csfdId": 254790,
+      "csfdRating": 82,
+      "csfdUrl": "https://www.csfd.cz/film/254790/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/172958177/s718/okresni-prebor.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-22T11:01:45.934Z",
+      "lastSeenAt": "2026-07-22T11:01:45.934Z",
+      "qualified": true
+    },
+    {
+      "id": "ts509168",
+      "justwatchId": "ts509168",
+      "title": "Berlusconi: Condemned to Win",
+      "year": 2025,
+      "type": "series",
+      "csfdId": 1735109,
+      "csfdRating": 75,
+      "csfdUrl": "https://www.csfd.cz/film/1735109/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/339558104/s718/.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-22T11:01:54.205Z",
+      "lastSeenAt": "2026-07-22T11:01:54.205Z",
+      "qualified": true
+    }
+  ],
+  "csfdCache": [
+    {
+      "justwatchId": "ts42062",
+      "searchedAt": "2026-07-22T11:01:14.766Z",
+      "csfdId": 64757,
+      "csfdRating": null,
+      "csfdUrl": "https://www.csfd.cz/film/64757-kouzelna-beruska-a-cerny-kocour/prehled/",
+      "skipReason": "color_average"
+    },
+    {
+      "justwatchId": "ts20951",
+      "searchedAt": "2026-07-22T11:01:17.150Z",
+      "csfdId": 72774,
+      "csfdRating": 78,
+      "csfdUrl": "https://www.csfd.cz/film/72774/prehled/"
+    },
+    {
+      "justwatchId": "tm139046",
+      "searchedAt": "2026-07-22T11:01:18.229Z",
+      "csfdId": 390447,
+      "csfdRating": null,
+      "csfdUrl": "https://www.csfd.cz/film/390447-demolice/prehled/",
+      "skipReason": "color_average"
+    },
+    {
+      "justwatchId": "ts499212",
+      "searchedAt": "2026-07-22T11:01:20.413Z",
+      "csfdId": 1875389,
+      "csfdRating": null,
+      "csfdUrl": "https://www.csfd.cz/film/1875389/prehled/",
+      "skipReason": "no_rating"
+    },
+    {
+      "justwatchId": "ts81342",
+      "searchedAt": "2026-07-22T11:01:22.880Z",
+      "csfdId": 620005,
+      "csfdRating": 78,
+      "csfdUrl": "https://www.csfd.cz/film/620005/prehled/"
+    },
+    {
+      "justwatchId": "tm2879955",
+      "searchedAt": "2026-07-22T11:01:23.988Z",
+      "csfdId": 1851086,
+      "csfdRating": null,
+      "csfdUrl": "https://www.csfd.cz/film/1851086-poldi/prehled/",
+      "skipReason": "color_average"
+    },
+    {
+      "justwatchId": "tm1947406",
+      "searchedAt": "2026-07-22T11:01:25.150Z",
+      "csfdId": 1803438,
+      "csfdRating": null,
+      "csfdUrl": "https://www.csfd.cz/film/1803438-ty-jo-kamosi/prehled/",
+      "skipReason": "color_average"
+    },
+    {
+      "justwatchId": "tm1956858",
+      "searchedAt": "2026-07-22T11:01:26.390Z",
+      "csfdId": 1823815,
+      "csfdRating": null,
+      "csfdUrl": "https://www.csfd.cz/film/1823815-pravda-o-tragedii-moriah-wilsonove/prehled/",
+      "skipReason": "color_average"
+    },
+    {
+      "justwatchId": "tm1942785",
+      "searchedAt": "2026-07-22T11:01:28.418Z",
+      "csfdId": 1797699,
+      "csfdRating": null,
+      "csfdUrl": "https://www.csfd.cz/film/1797699-zazrak-v-lake-placid/prehled/",
+      "skipReason": "movie_error:Cannot read properties of null (reading 'classNames')"
+    },
+    {
+      "justwatchId": "tm1969454",
+      "searchedAt": "2026-07-22T11:01:29.709Z",
+      "csfdId": 1821861,
+      "csfdRating": null,
+      "csfdUrl": "https://www.csfd.cz/film/1821861-made-in-korea/prehled/",
+      "skipReason": "color_average"
+    },
+    {
+      "justwatchId": "ts502088",
+      "searchedAt": "2026-07-22T11:01:30.891Z",
+      "csfdId": 1807722,
+      "csfdRating": null,
+      "csfdUrl": "https://www.csfd.cz/film/1807722-rj-decker/prehled/",
+      "skipReason": "color_average"
+    },
+    {
+      "justwatchId": "ts20711",
+      "searchedAt": "2026-07-22T11:01:33.582Z",
+      "csfdId": 72489,
+      "csfdRating": 92,
+      "csfdUrl": "https://www.csfd.cz/film/72489/prehled/"
+    },
+    {
+      "justwatchId": "ts279807",
+      "searchedAt": "2026-07-22T11:01:34.681Z",
+      "csfdId": 1364436,
+      "csfdRating": null,
+      "csfdUrl": "https://www.csfd.cz/film/1364436-stopar/prehled/",
+      "skipReason": "color_average"
+    },
+    {
+      "justwatchId": "ts21848",
+      "searchedAt": "2026-07-22T11:01:35.509Z",
+      "csfdId": null,
+      "csfdRating": null,
+      "csfdUrl": null,
+      "skipReason": "ambiguous_or_no_match"
+    },
+    {
+      "justwatchId": "tm2886763",
+      "searchedAt": "2026-07-22T11:01:36.359Z",
+      "csfdId": null,
+      "csfdRating": null,
+      "csfdUrl": null,
+      "skipReason": "ambiguous_or_no_match"
+    },
+    {
+      "justwatchId": "tm2894148",
+      "searchedAt": "2026-07-22T11:01:37.284Z",
+      "csfdId": null,
+      "csfdRating": null,
+      "csfdUrl": null,
+      "skipReason": "ambiguous_or_no_match"
+    },
+    {
+      "justwatchId": "tm1964889",
+      "searchedAt": "2026-07-22T11:01:38.459Z",
+      "csfdId": 1863881,
+      "csfdRating": null,
+      "csfdUrl": "https://www.csfd.cz/film/1863881-naslednici-zlovestna-rise-divu/prehled/",
+      "skipReason": "color_average"
+    },
+    {
+      "justwatchId": "tm2884279",
+      "searchedAt": "2026-07-22T11:01:39.389Z",
+      "csfdId": null,
+      "csfdRating": null,
+      "csfdUrl": null,
+      "skipReason": "ambiguous_or_no_match"
+    },
+    {
+      "justwatchId": "tm2889693",
+      "searchedAt": "2026-07-22T11:01:41.734Z",
+      "csfdId": 1877183,
+      "csfdRating": null,
+      "csfdUrl": "https://www.csfd.cz/film/1877183/prehled/",
+      "skipReason": "no_rating"
+    },
+    {
+      "justwatchId": "ts418985",
+      "searchedAt": "2026-07-22T11:01:43.726Z",
+      "csfdId": 1216653,
+      "csfdRating": null,
+      "csfdUrl": "https://www.csfd.cz/film/1216653-metoda-markovic-hojer/prehled/",
+      "skipReason": "movie_error:Cannot read properties of null (reading 'classNames')"
+    },
+    {
+      "justwatchId": "ts30359",
+      "searchedAt": "2026-07-22T11:01:45.932Z",
+      "csfdId": 254790,
+      "csfdRating": 82,
+      "csfdUrl": "https://www.csfd.cz/film/254790/prehled/"
+    },
+    {
+      "justwatchId": "ts20981",
+      "searchedAt": "2026-07-22T11:01:46.786Z",
+      "csfdId": null,
+      "csfdRating": null,
+      "csfdUrl": null,
+      "skipReason": "ambiguous_or_no_match"
+    },
+    {
+      "justwatchId": "ts521943",
+      "searchedAt": "2026-07-22T11:01:47.895Z",
+      "csfdId": 1783528,
+      "csfdRating": null,
+      "csfdUrl": "https://www.csfd.cz/film/1783528-bohyne-slavie/prehled/",
+      "skipReason": "color_average"
+    },
+    {
+      "justwatchId": "ts515610",
+      "searchedAt": "2026-07-22T11:01:48.738Z",
+      "csfdId": null,
+      "csfdRating": null,
+      "csfdUrl": null,
+      "skipReason": "ambiguous_or_no_match"
+    },
+    {
+      "justwatchId": "ts481050",
+      "searchedAt": "2026-07-22T11:01:50.765Z",
+      "csfdId": 1641982,
+      "csfdRating": null,
+      "csfdUrl": "https://www.csfd.cz/film/1641982-na-chvili-na-zemi/prehled/",
+      "skipReason": "movie_error:Cannot read properties of null (reading 'classNames')"
+    },
+    {
+      "justwatchId": "ts486567",
+      "searchedAt": "2026-07-22T11:01:51.910Z",
+      "csfdId": 1693026,
+      "csfdRating": null,
+      "csfdUrl": "https://www.csfd.cz/film/1693026-bratri-a-sestry/prehled/",
+      "skipReason": "color_average"
+    },
+    {
+      "justwatchId": "ts509168",
+      "searchedAt": "2026-07-22T11:01:54.203Z",
+      "csfdId": 1735109,
+      "csfdRating": 75,
+      "csfdUrl": "https://www.csfd.cz/film/1735109/prehled/"
+    }
+  ],
+  "meta": {
+    "lastScanAt": "2026-07-22T11:01:54.207Z",
+    "lastScanStats": {
+      "candidates": 27,
+      "matched": 5,
+      "qualified": 5,
+      "skipped": 22,
+      "errors": 0
+    }
+  }
+}
