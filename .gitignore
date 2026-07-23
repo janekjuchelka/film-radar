@@ -1,0 +1,13 @@
+node_modules/
+**/.env
+**/.expo/
+**/dist/
+**/dist-smoke/
+**/dist-smoke2/
+*.log
+*.apk
+FilmRadar.apk
+app/android/
+app/node_modules/
+server/node_modules/
+server/public/FilmRadar.apk

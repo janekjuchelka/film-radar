@@ -1,0 +1,8 @@
+node_modules
+npm-debug.log
+.env
+data/db.json
+public/FilmRadar.apk
+*.apk
+dist
+.git

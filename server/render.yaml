@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: film-radar
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 3847
+      - key: API_HOST
+        value: 0.0.0.0
+      - key: SCAN_CRON
+        value: "0 8 * * *"
+      - key: MIN_CSFD_RATING
+        value: "70"
+      - key: SCAN_PER_PROVIDER
+        value: "40"
+      - key: CSFD_DELAY_MS
+        value: "1500"

@@ -1,0 +1,103 @@
+{
+  "count": 5,
+  "minRating": 70,
+  "updatedAt": "2026-07-22T11:01:54.207Z",
+  "meta": {
+    "lastScanAt": "2026-07-22T11:01:54.207Z",
+    "lastScanStats": {
+      "candidates": 27,
+      "matched": 5,
+      "qualified": 5,
+      "skipped": 22,
+      "errors": 0
+    }
+  },
+  "titles": [
+    {
+      "id": "ts509168",
+      "justwatchId": "ts509168",
+      "title": "Berlusconi: Condemned to Win",
+      "year": 2025,
+      "type": "series",
+      "csfdId": 1735109,
+      "csfdRating": 75,
+      "csfdUrl": "https://www.csfd.cz/film/1735109/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/339558104/s718/.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-22T11:01:54.205Z",
+      "lastSeenAt": "2026-07-22T11:01:54.205Z",
+      "qualified": true
+    },
+    {
+      "id": "ts30359",
+      "justwatchId": "ts30359",
+      "title": "Okresní přebor",
+      "year": 2010,
+      "type": "series",
+      "csfdId": 254790,
+      "csfdRating": 82,
+      "csfdUrl": "https://www.csfd.cz/film/254790/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/172958177/s718/okresni-prebor.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-22T11:01:45.934Z",
+      "lastSeenAt": "2026-07-22T11:01:45.934Z",
+      "qualified": true
+    },
+    {
+      "id": "ts20711",
+      "justwatchId": "ts20711",
+      "title": "Simpsonovi",
+      "year": 1989,
+      "type": "series",
+      "csfdId": 72489,
+      "csfdRating": 92,
+      "csfdUrl": "https://www.csfd.cz/film/72489/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/266006824/s718/simpsonovi.jpg",
+      "providers": [
+        "disney"
+      ],
+      "firstSeenAt": "2026-07-22T11:01:33.584Z",
+      "lastSeenAt": "2026-07-22T11:01:33.584Z",
+      "qualified": true
+    },
+    {
+      "id": "ts81342",
+      "justwatchId": "ts81342",
+      "title": "Zelenáč",
+      "year": 2018,
+      "type": "series",
+      "csfdId": 620005,
+      "csfdRating": 78,
+      "csfdUrl": "https://www.csfd.cz/film/620005/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/341663019/s718/zelenac.jpg",
+      "providers": [
+        "netflix"
+      ],
+      "firstSeenAt": "2026-07-22T11:01:22.884Z",
+      "lastSeenAt": "2026-07-22T11:01:22.884Z",
+      "qualified": true
+    },
+    {
+      "id": "ts20951",
+      "justwatchId": "ts20951",
+      "title": "SpongeBob v kalhotách",
+      "year": 1999,
+      "type": "series",
+      "csfdId": 72774,
+      "csfdRating": 78,
+      "csfdUrl": "https://www.csfd.cz/film/72774/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/245156112/s718/spongebob-v-kalhotach.jpg",
+      "providers": [
+        "netflix",
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-22T11:01:17.151Z",
+      "lastSeenAt": "2026-07-22T11:01:17.151Z",
+      "qualified": true
+    }
+  ]
+}
