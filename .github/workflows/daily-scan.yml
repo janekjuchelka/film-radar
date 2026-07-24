@@ -2,8 +2,11 @@ name: Daily Film Radar scan
 
 on:
   schedule:
-    # každý den v 6:00 UTC (~8:00 SEČ)
-    - cron: "0 6 * * *"
+    # GitHub cron často zpozdí o hodiny — 2 pokusy denně
+    # ~7:00 SEČ / CEST
+    - cron: "0 5 * * *"
+    # ~13:00 SEČ / CEST (záloha, kdyby ranní běh nestihl)
+    - cron: "0 11 * * *"
   workflow_dispatch: {}
 
 permissions:

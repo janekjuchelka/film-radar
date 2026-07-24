@@ -30,6 +30,7 @@ import {
   resetToDefaultFeed,
   setApiBaseUrl,
   titlesUrlFromBase,
+  withCacheBust,
 } from "./src/config";
 import {
   formatUpdatedAt,
@@ -105,8 +106,14 @@ export default function App() {
       else setLoading(true);
       setError(null);
       try {
-        const url = titlesUrlFromBase(baseUrl);
-        const res = await fetch(url, { headers: { Accept: "application/json" } });
+        const url = withCacheBust(titlesUrlFromBase(baseUrl));
+        const res = await fetch(url, {
+          headers: {
+            Accept: "application/json",
+            "Cache-Control": "no-cache",
+            Pragma: "no-cache",
+          },
+        });
         if (!res.ok) throw new Error("HTTP " + res.status + "\nURL: " + url);
         const data = await res.json();
         const list = Array.isArray(data.titles) ? (data.titles as TitleItem[]) : [];
@@ -457,7 +464,8 @@ export default function App() {
           <View style={styles.detailCard}>
             <Text style={styles.detailTitle}>Nastavení feedu</Text>
             <Text style={styles.empty}>
-              Appka bere data z GitHubu. Tlačítko níže nastaví správnou adresu.
+              Appka bere data přímo z GitHubu. Tlačítko níže nastaví správnou adresu
+              (bez staré CDN cache).
             </Text>
             <TextInput
               style={styles.input}
