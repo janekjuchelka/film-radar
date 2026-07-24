@@ -1,18 +1,751 @@
 {
-  "count": 5,
+  "count": 48,
   "minRating": 70,
-  "updatedAt": "2026-07-22T11:01:54.207Z",
+  "updatedAt": "2026-07-24T12:05:13.846Z",
   "meta": {
-    "lastScanAt": "2026-07-22T11:01:54.207Z",
+    "lastScanAt": "2026-07-24T12:05:13.846Z",
     "lastScanStats": {
-      "candidates": 27,
-      "matched": 5,
-      "qualified": 5,
-      "skipped": 22,
+      "candidates": 163,
+      "matched": 48,
+      "qualified": 48,
+      "skipped": 115,
       "errors": 0
     }
   },
   "titles": [
+    {
+      "id": "ts444885",
+      "justwatchId": "ts444885",
+      "title": "Málo mě znáš",
+      "year": 2024,
+      "type": "series",
+      "csfdId": 1319787,
+      "csfdRating": 77,
+      "csfdUrl": "https://www.csfd.cz/film/1319787/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/319991151/s718/malo-me-znas.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-24T12:05:08.195Z",
+      "lastSeenAt": "2026-07-24T12:05:08.195Z",
+      "qualified": true
+    },
+    {
+      "id": "ts437822",
+      "justwatchId": "ts437822",
+      "title": "Mozaika",
+      "year": 2024,
+      "type": "series",
+      "csfdId": 1216648,
+      "csfdRating": 70,
+      "csfdUrl": "https://www.csfd.cz/film/1216648/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/319576324/s718/mozaika.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-24T12:04:55.794Z",
+      "lastSeenAt": "2026-07-24T12:04:55.794Z",
+      "qualified": true
+    },
+    {
+      "id": "ts412104",
+      "justwatchId": "ts412104",
+      "title": "Skandál po královsku",
+      "year": 2024,
+      "type": "series",
+      "csfdId": 1558767,
+      "csfdRating": 70,
+      "csfdUrl": "https://www.csfd.cz/film/1558767/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/322061044/s718/a-very-royal-scandal.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-24T12:04:46.191Z",
+      "lastSeenAt": "2026-07-24T12:04:46.191Z",
+      "qualified": true
+    },
+    {
+      "id": "ts389701",
+      "justwatchId": "ts389701",
+      "title": "Orlando Bloom: Na hraně",
+      "year": 2024,
+      "type": "series",
+      "csfdId": 1501795,
+      "csfdRating": 75,
+      "csfdUrl": "https://www.csfd.cz/film/1501795/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/327092595/s718/orlando-bloom-to-the-edge.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-24T12:04:37.584Z",
+      "lastSeenAt": "2026-07-24T12:04:37.584Z",
+      "qualified": true
+    },
+    {
+      "id": "ts484009",
+      "justwatchId": "ts484009",
+      "title": "Slovan Bratislava: Cesta za snom",
+      "year": 2025,
+      "type": "series",
+      "csfdId": 1692860,
+      "csfdRating": 73,
+      "csfdUrl": "https://www.csfd.cz/film/1692860/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/332184863/s718/slovan-bratislava-cesta-za-snom.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-24T12:04:31.050Z",
+      "lastSeenAt": "2026-07-24T12:04:31.050Z",
+      "qualified": true
+    },
+    {
+      "id": "ts452622",
+      "justwatchId": "ts452622",
+      "title": "Štěstíčku naproti",
+      "year": 2025,
+      "type": "series",
+      "csfdId": 1533384,
+      "csfdRating": 76,
+      "csfdUrl": "https://www.csfd.cz/film/1533384/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/338317737/s718/stesticku-naproti.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-24T12:04:26.971Z",
+      "lastSeenAt": "2026-07-24T12:04:26.971Z",
+      "qualified": true
+    },
+    {
+      "id": "ts509180",
+      "justwatchId": "ts509180",
+      "title": "Slovan Liberec: Zpátky na vrchol",
+      "year": 2025,
+      "type": "series",
+      "csfdId": 1520239,
+      "csfdRating": 80,
+      "csfdUrl": "https://www.csfd.cz/film/1520239/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/339160843/s718/slovan-liberec-zpatky-na-vrchol.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-24T12:04:22.904Z",
+      "lastSeenAt": "2026-07-24T12:04:22.904Z",
+      "qualified": true
+    },
+    {
+      "id": "ts424312",
+      "justwatchId": "ts424312",
+      "title": "Studna",
+      "year": 2025,
+      "type": "series",
+      "csfdId": 1477992,
+      "csfdRating": 76,
+      "csfdUrl": "https://www.csfd.cz/film/1477992/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/321500265/s718/studna.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-24T12:04:09.198Z",
+      "lastSeenAt": "2026-07-24T12:04:09.198Z",
+      "qualified": true
+    },
+    {
+      "id": "ts83222",
+      "justwatchId": "ts83222",
+      "title": "Pat a Mat na venkově",
+      "year": 2016,
+      "type": "series",
+      "csfdId": 1063588,
+      "csfdRating": 85,
+      "csfdUrl": "https://www.csfd.cz/film/1063588/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/118777515/s718/pat-a-mat-na-venkove.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-24T12:04:02.735Z",
+      "lastSeenAt": "2026-07-24T12:04:02.735Z",
+      "qualified": true
+    },
+    {
+      "id": "ts19648",
+      "justwatchId": "ts19648",
+      "title": "Pohotovost",
+      "year": 1994,
+      "type": "series",
+      "csfdId": 69276,
+      "csfdRating": 73,
+      "csfdUrl": "https://www.csfd.cz/film/69276/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/175475578/s718/pohotovost.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-24T12:03:58.281Z",
+      "lastSeenAt": "2026-07-24T12:03:58.281Z",
+      "qualified": true
+    },
+    {
+      "id": "ts20371",
+      "justwatchId": "ts20371",
+      "title": "Top Gear",
+      "year": 2002,
+      "type": "series",
+      "csfdId": 219338,
+      "csfdRating": 89,
+      "csfdUrl": "https://www.csfd.cz/film/219338/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/8607935/s718/top-gear.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-24T12:03:45.928Z",
+      "lastSeenAt": "2026-07-24T12:03:45.928Z",
+      "qualified": true
+    },
+    {
+      "id": "ts271787",
+      "justwatchId": "ts271787",
+      "title": "Veliká",
+      "year": 2020,
+      "type": "series",
+      "csfdId": 83686,
+      "csfdRating": 78,
+      "csfdUrl": "https://www.csfd.cz/film/83686/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/306833837/s718/the-great.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-24T12:03:41.849Z",
+      "lastSeenAt": "2026-07-24T12:03:41.849Z",
+      "qualified": true
+    },
+    {
+      "id": "ts451589",
+      "justwatchId": "ts451589",
+      "title": "Sandokan: Malajský tygr",
+      "year": 2025,
+      "type": "series",
+      "csfdId": 1509265,
+      "csfdRating": 71,
+      "csfdUrl": "https://www.csfd.cz/film/1509265/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/338976518/s718/sandokan-2025.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-24T12:03:29.639Z",
+      "lastSeenAt": "2026-07-24T12:03:29.639Z",
+      "qualified": true
+    },
+    {
+      "id": "ts21567",
+      "justwatchId": "ts21567",
+      "title": "Gilmorova děvčata",
+      "year": 2000,
+      "type": "series",
+      "csfdId": 70105,
+      "csfdRating": 74,
+      "csfdUrl": "https://www.csfd.cz/film/70105/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/326940100/s718/gilmorova-devcata.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-24T12:03:19.411Z",
+      "lastSeenAt": "2026-07-24T12:03:19.411Z",
+      "qualified": true
+    },
+    {
+      "id": "ts81987",
+      "justwatchId": "ts81987",
+      "title": "Zasněná láska",
+      "year": 2018,
+      "type": "series",
+      "csfdId": 632005,
+      "csfdRating": 71,
+      "csfdUrl": "https://www.csfd.cz/film/632005/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/306836271/s718/zasnena-laska.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-24T12:03:15.272Z",
+      "lastSeenAt": "2026-07-24T12:03:15.272Z",
+      "qualified": true
+    },
+    {
+      "id": "ts255742",
+      "justwatchId": "ts255742",
+      "title": "Všechny velké a malé bytosti",
+      "year": 2020,
+      "type": "series",
+      "csfdId": 912853,
+      "csfdRating": 87,
+      "csfdUrl": "https://www.csfd.cz/film/912853/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/318631690/s718/vsechny-velke-a-male-bytosti-2020.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-07-24T12:03:03.445Z",
+      "lastSeenAt": "2026-07-24T12:03:03.445Z",
+      "qualified": true
+    },
+    {
+      "id": "ts526545",
+      "justwatchId": "ts526545",
+      "title": "Alice a Steve",
+      "year": 2026,
+      "type": "series",
+      "csfdId": 1844779,
+      "csfdRating": 72,
+      "csfdUrl": "https://www.csfd.cz/film/1844779/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/345653880/s718/alice-and-steve.jpg",
+      "providers": [
+        "disney"
+      ],
+      "firstSeenAt": "2026-07-24T12:02:47.819Z",
+      "lastSeenAt": "2026-07-24T12:02:47.819Z",
+      "qualified": true
+    },
+    {
+      "id": "ts328597",
+      "justwatchId": "ts328597",
+      "title": "Od pólu k pólu s Willem Smithem",
+      "year": 2026,
+      "type": "series",
+      "csfdId": 1787879,
+      "csfdRating": 74,
+      "csfdUrl": "https://www.csfd.cz/film/1787879/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/341164027/s718/pole-to-pole-with-will-smith.jpg",
+      "providers": [
+        "disney"
+      ],
+      "firstSeenAt": "2026-07-24T12:02:22.077Z",
+      "lastSeenAt": "2026-07-24T12:02:22.077Z",
+      "qualified": true
+    },
+    {
+      "id": "ts12059",
+      "justwatchId": "ts12059",
+      "title": "Takoví normální Američané",
+      "year": 2013,
+      "type": "series",
+      "csfdId": 331570,
+      "csfdRating": 81,
+      "csfdUrl": "https://www.csfd.cz/film/331570/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/279050194/s718/takovi-normalni-americane.jpg",
+      "providers": [
+        "disney"
+      ],
+      "firstSeenAt": "2026-07-24T12:01:51.826Z",
+      "lastSeenAt": "2026-07-24T12:01:51.826Z",
+      "qualified": true
+    },
+    {
+      "id": "ts353556",
+      "justwatchId": "ts353556",
+      "title": "Daredevil: Znovuzrození",
+      "year": 2025,
+      "type": "series",
+      "csfdId": 1214949,
+      "csfdRating": 76,
+      "csfdUrl": "https://www.csfd.cz/film/1214949/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/326901581/s718/daredevil-born-again.jpg",
+      "providers": [
+        "disney"
+      ],
+      "firstSeenAt": "2026-07-24T12:01:47.708Z",
+      "lastSeenAt": "2026-07-24T12:01:47.708Z",
+      "qualified": true
+    },
+    {
+      "id": "ts407939",
+      "justwatchId": "ts407939",
+      "title": "Ferina Lišák",
+      "year": 2023,
+      "type": "series",
+      "csfdId": 1432440,
+      "csfdRating": 82,
+      "csfdUrl": "https://www.csfd.cz/film/1432440/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/320049237/s718/the-artful-dodger.jpg",
+      "providers": [
+        "disney"
+      ],
+      "firstSeenAt": "2026-07-24T12:01:43.010Z",
+      "lastSeenAt": "2026-07-24T12:01:43.010Z",
+      "qualified": true
+    },
+    {
+      "id": "ts421489",
+      "justwatchId": "ts421489",
+      "title": "Ráj",
+      "year": 2025,
+      "type": "series",
+      "csfdId": 1595238,
+      "csfdRating": 79,
+      "csfdUrl": "https://www.csfd.cz/film/1595238/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/325942625/s718/paradise-2025.jpg",
+      "providers": [
+        "disney"
+      ],
+      "firstSeenAt": "2026-07-24T12:01:25.647Z",
+      "lastSeenAt": "2026-07-24T12:01:25.647Z",
+      "qualified": true
+    },
+    {
+      "id": "ts21173",
+      "justwatchId": "ts21173",
+      "title": "Tatík Hill a spol.",
+      "year": 1997,
+      "type": "series",
+      "csfdId": 70610,
+      "csfdRating": 74,
+      "csfdUrl": "https://www.csfd.cz/film/70610/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/304859667/s718/tatik-hill-a-spol.jpg",
+      "providers": [
+        "disney"
+      ],
+      "firstSeenAt": "2026-07-24T12:01:21.545Z",
+      "lastSeenAt": "2026-07-24T12:01:21.545Z",
+      "qualified": true
+    },
+    {
+      "id": "ts22013",
+      "justwatchId": "ts22013",
+      "title": "Šílenci z Manhattanu",
+      "year": 2007,
+      "type": "series",
+      "csfdId": 233764,
+      "csfdRating": 84,
+      "csfdUrl": "https://www.csfd.cz/film/233764/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/304523894/s718/silenci-z-manhattanu.jpg",
+      "providers": [
+        "disney"
+      ],
+      "firstSeenAt": "2026-07-24T12:01:17.286Z",
+      "lastSeenAt": "2026-07-24T12:01:17.286Z",
+      "qualified": true
+    },
+    {
+      "id": "ts5746",
+      "justwatchId": "ts5746",
+      "title": "American Horror Story",
+      "year": 2011,
+      "type": "series",
+      "csfdId": 455968,
+      "csfdRating": 81,
+      "csfdUrl": "https://www.csfd.cz/film/455968/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/83411028/s718/american-horror-story.jpg",
+      "providers": [
+        "disney"
+      ],
+      "firstSeenAt": "2026-07-24T12:01:05.199Z",
+      "lastSeenAt": "2026-07-24T12:01:05.199Z",
+      "qualified": true
+    },
+    {
+      "id": "ts6495",
+      "justwatchId": "ts6495",
+      "title": "Myšlenky zločince",
+      "year": 2005,
+      "type": "series",
+      "csfdId": 219796,
+      "csfdRating": 72,
+      "csfdUrl": "https://www.csfd.cz/film/219796/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/301749199/s718/myslenky-zlocince.jpg",
+      "providers": [
+        "disney"
+      ],
+      "firstSeenAt": "2026-07-24T12:00:59.136Z",
+      "lastSeenAt": "2026-07-24T12:00:59.136Z",
+      "qualified": true
+    },
+    {
+      "id": "ts20605",
+      "justwatchId": "ts20605",
+      "title": "Taková moderní rodinka",
+      "year": 2009,
+      "type": "series",
+      "csfdId": 266838,
+      "csfdRating": 81,
+      "csfdUrl": "https://www.csfd.cz/film/266838/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/346358811/s718/takova-moderni-rodinka.jpg",
+      "providers": [
+        "disney"
+      ],
+      "firstSeenAt": "2026-07-24T12:00:54.417Z",
+      "lastSeenAt": "2026-07-24T12:00:54.417Z",
+      "qualified": true
+    },
+    {
+      "id": "ts529664",
+      "justwatchId": "ts529664",
+      "title": "Americký experiment",
+      "year": 2026,
+      "type": "series",
+      "csfdId": 1853793,
+      "csfdRating": 72,
+      "csfdUrl": "https://www.csfd.cz/film/1853793/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/346623186/s718/the-american-experiment.jpg",
+      "providers": [
+        "netflix"
+      ],
+      "firstSeenAt": "2026-07-24T12:00:42.337Z",
+      "lastSeenAt": "2026-07-24T12:00:42.337Z",
+      "qualified": true
+    },
+    {
+      "id": "ts528529",
+      "justwatchId": "ts528529",
+      "title": "Kylie",
+      "year": 2026,
+      "type": "series",
+      "csfdId": 1845314,
+      "csfdRating": 79,
+      "csfdUrl": "https://www.csfd.cz/film/1845314/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/345697091/s718/kylie.jpg",
+      "providers": [
+        "netflix"
+      ],
+      "firstSeenAt": "2026-07-24T12:00:31.811Z",
+      "lastSeenAt": "2026-07-24T12:00:31.811Z",
+      "qualified": true
+    },
+    {
+      "id": "ts395450",
+      "justwatchId": "ts395450",
+      "title": "Jak tlumočit lásku?",
+      "year": 2026,
+      "type": "series",
+      "csfdId": 1626409,
+      "csfdRating": 75,
+      "csfdUrl": "https://www.csfd.cz/film/1626409/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/340660207/s718/can-this-love-be-translated.jpg",
+      "providers": [
+        "netflix"
+      ],
+      "firstSeenAt": "2026-07-24T12:00:25.696Z",
+      "lastSeenAt": "2026-07-24T12:00:25.696Z",
+      "qualified": true
+    },
+    {
+      "id": "tm1959748",
+      "justwatchId": "tm1959748",
+      "title": "Louis Theroux: V nitru manosféry",
+      "year": 2026,
+      "type": "movie",
+      "csfdId": 1811585,
+      "csfdRating": 70,
+      "csfdUrl": "https://www.csfd.cz/film/1811585/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/342803125/s718/louis-theroux-inside-the-manosphere.jpg",
+      "providers": [
+        "netflix"
+      ],
+      "firstSeenAt": "2026-07-24T12:00:15.720Z",
+      "lastSeenAt": "2026-07-24T12:00:15.720Z",
+      "qualified": true
+    },
+    {
+      "id": "tm1946183",
+      "justwatchId": "tm1946183",
+      "title": "Taylor Tomlinson: Marnotratná dcera",
+      "year": 2026,
+      "type": "movie",
+      "csfdId": 1804445,
+      "csfdRating": 76,
+      "csfdUrl": "https://www.csfd.cz/film/1804445/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/341716447/s718/taylor-tomlinson-prodigal-daughter.jpg",
+      "providers": [
+        "netflix"
+      ],
+      "firstSeenAt": "2026-07-24T12:00:00.048Z",
+      "lastSeenAt": "2026-07-24T12:00:00.048Z",
+      "qualified": true
+    },
+    {
+      "id": "ts20233",
+      "justwatchId": "ts20233",
+      "title": "Rick a Morty",
+      "year": 2013,
+      "type": "series",
+      "csfdId": 360534,
+      "csfdRating": 90,
+      "csfdUrl": "https://www.csfd.cz/film/360534/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/316650772/s718/rick-a-morty.jpg",
+      "providers": [
+        "netflix"
+      ],
+      "firstSeenAt": "2026-07-24T11:59:41.633Z",
+      "lastSeenAt": "2026-07-24T11:59:41.633Z",
+      "qualified": true
+    },
+    {
+      "id": "ts285915",
+      "justwatchId": "ts285915",
+      "title": "Schodiště",
+      "year": 2022,
+      "type": "series",
+      "csfdId": 1010173,
+      "csfdRating": 71,
+      "csfdUrl": "https://www.csfd.cz/film/1010173/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/277385611/s718/the-staircase.jpg",
+      "providers": [
+        "netflix"
+      ],
+      "firstSeenAt": "2026-07-24T11:59:37.371Z",
+      "lastSeenAt": "2026-07-24T11:59:37.371Z",
+      "qualified": true
+    },
+    {
+      "id": "ts11895",
+      "justwatchId": "ts11895",
+      "title": "Sběratelé kostí",
+      "year": 2005,
+      "type": "series",
+      "csfdId": 221410,
+      "csfdRating": 76,
+      "csfdUrl": "https://www.csfd.cz/film/221410/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/304524220/s718/sberatele-kosti.jpg",
+      "providers": [
+        "netflix",
+        "disney"
+      ],
+      "firstSeenAt": "2026-07-24T11:59:27.243Z",
+      "lastSeenAt": "2026-07-24T11:59:27.243Z",
+      "qualified": true
+    },
+    {
+      "id": "ts20598",
+      "justwatchId": "ts20598",
+      "title": "Hrdinové",
+      "year": 2006,
+      "type": "series",
+      "csfdId": 224293,
+      "csfdRating": 77,
+      "csfdUrl": "https://www.csfd.cz/film/224293/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/177811108/s718/hrdinove.jpg",
+      "providers": [
+        "netflix"
+      ],
+      "firstSeenAt": "2026-07-24T11:59:21.142Z",
+      "lastSeenAt": "2026-07-24T11:59:21.142Z",
+      "qualified": true
+    },
+    {
+      "id": "ts20110",
+      "justwatchId": "ts20110",
+      "title": "Gangy z Birminghamu",
+      "year": 2013,
+      "type": "series",
+      "csfdId": 330877,
+      "csfdRating": 91,
+      "csfdUrl": "https://www.csfd.cz/film/330877/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/331653126/s718/gangy-z-birminghamu.jpg",
+      "providers": [
+        "netflix"
+      ],
+      "firstSeenAt": "2026-07-24T11:59:03.976Z",
+      "lastSeenAt": "2026-07-24T11:59:03.976Z",
+      "qualified": true
+    },
+    {
+      "id": "ts8",
+      "justwatchId": "ts8",
+      "title": "Volejte Saulovi",
+      "year": 2015,
+      "type": "series",
+      "csfdId": 366575,
+      "csfdRating": 89,
+      "csfdUrl": "https://www.csfd.cz/film/366575/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/341881441/s718/volejte-saulovi.jpg",
+      "providers": [
+        "netflix"
+      ],
+      "firstSeenAt": "2026-07-24T11:58:55.865Z",
+      "lastSeenAt": "2026-07-24T11:58:55.865Z",
+      "qualified": true
+    },
+    {
+      "id": "ts22280",
+      "justwatchId": "ts22280",
+      "title": "Dr. House",
+      "year": 2004,
+      "type": "series",
+      "csfdId": 215295,
+      "csfdRating": 87,
+      "csfdUrl": "https://www.csfd.cz/film/215295/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/290927426/s718/dr-house.jpg",
+      "providers": [
+        "netflix"
+      ],
+      "firstSeenAt": "2026-07-24T11:58:51.296Z",
+      "lastSeenAt": "2026-07-24T11:58:51.296Z",
+      "qualified": true
+    },
+    {
+      "id": "ts218232",
+      "justwatchId": "ts218232",
+      "title": "Zrádci",
+      "year": 2020,
+      "type": "series",
+      "csfdId": 616982,
+      "csfdRating": 72,
+      "csfdUrl": "https://www.csfd.cz/film/616982/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/321033071/s718/zradci.jpg",
+      "providers": [
+        "netflix"
+      ],
+      "firstSeenAt": "2026-07-24T11:58:46.838Z",
+      "lastSeenAt": "2026-07-24T11:58:46.838Z",
+      "qualified": true
+    },
+    {
+      "id": "ts434394",
+      "justwatchId": "ts434394",
+      "title": "To monstrum ve mně",
+      "year": 2025,
+      "type": "series",
+      "csfdId": 1719477,
+      "csfdRating": 75,
+      "csfdUrl": "https://www.csfd.cz/film/1719477/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/339035334/s718/the-beast-in-me.jpg",
+      "providers": [
+        "netflix"
+      ],
+      "firstSeenAt": "2026-07-24T11:58:42.306Z",
+      "lastSeenAt": "2026-07-24T11:58:42.306Z",
+      "qualified": true
+    },
+    {
+      "id": "ts423927",
+      "justwatchId": "ts423927",
+      "title": "Vraždy",
+      "year": 2024,
+      "type": "series",
+      "csfdId": 1493288,
+      "csfdRating": 70,
+      "csfdUrl": "https://www.csfd.cz/film/1493288/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/312811635/s718/vrazdy.jpg",
+      "providers": [
+        "netflix"
+      ],
+      "firstSeenAt": "2026-07-24T11:58:32.717Z",
+      "lastSeenAt": "2026-07-24T11:58:32.717Z",
+      "qualified": true
+    },
+    {
+      "id": "ts22138",
+      "justwatchId": "ts22138",
+      "title": "Kancl",
+      "year": 2005,
+      "type": "series",
+      "csfdId": 198118,
+      "csfdRating": 85,
+      "csfdUrl": "https://www.csfd.cz/film/198118/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/305385045/s718/kancl.jpg",
+      "providers": [
+        "netflix",
+        "disney"
+      ],
+      "firstSeenAt": "2026-07-24T11:58:28.733Z",
+      "lastSeenAt": "2026-07-24T11:58:28.733Z",
+      "qualified": true
+    },
     {
       "id": "ts509168",
       "justwatchId": "ts509168",
@@ -27,7 +760,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-22T11:01:54.205Z",
-      "lastSeenAt": "2026-07-22T11:01:54.205Z",
+      "lastSeenAt": "2026-07-24T12:04:04.694Z",
       "qualified": true
     },
     {
@@ -44,7 +777,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-22T11:01:45.934Z",
-      "lastSeenAt": "2026-07-22T11:01:45.934Z",
+      "lastSeenAt": "2026-07-24T12:02:57.109Z",
       "qualified": true
     },
     {
@@ -61,7 +794,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-22T11:01:33.584Z",
-      "lastSeenAt": "2026-07-22T11:01:33.584Z",
+      "lastSeenAt": "2026-07-24T12:01:05.200Z",
       "qualified": true
     },
     {
@@ -75,10 +808,11 @@
       "csfdUrl": "https://www.csfd.cz/film/620005/prehled/",
       "posterUrl": "https://images.justwatch.com/poster/341663019/s718/zelenac.jpg",
       "providers": [
-        "netflix"
+        "netflix",
+        "disney"
       ],
       "firstSeenAt": "2026-07-22T11:01:22.884Z",
-      "lastSeenAt": "2026-07-22T11:01:22.884Z",
+      "lastSeenAt": "2026-07-24T11:58:23.875Z",
       "qualified": true
     },
     {
@@ -96,7 +830,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-22T11:01:17.151Z",
-      "lastSeenAt": "2026-07-22T11:01:17.151Z",
+      "lastSeenAt": "2026-07-24T11:58:55.866Z",
       "qualified": true
     }
   ]
