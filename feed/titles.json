@@ -1,14 +1,14 @@
 {
   "count": 54,
   "minRating": 70,
-  "updatedAt": "2026-07-25T10:18:28.471Z",
+  "updatedAt": "2026-07-25T14:49:58.958Z",
   "meta": {
-    "lastScanAt": "2026-07-25T10:18:28.471Z",
+    "lastScanAt": "2026-07-25T14:49:58.958Z",
     "lastScanStats": {
-      "candidates": 167,
+      "candidates": 168,
       "matched": 49,
       "qualified": 49,
-      "skipped": 118,
+      "skipped": 119,
       "errors": 0
     }
   },
@@ -27,7 +27,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-25T10:18:26.778Z",
-      "lastSeenAt": "2026-07-25T10:18:26.778Z",
+      "lastSeenAt": "2026-07-25T14:49:58.931Z",
       "qualified": true
     },
     {
@@ -44,7 +44,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-25T10:18:16.609Z",
-      "lastSeenAt": "2026-07-25T10:18:16.609Z",
+      "lastSeenAt": "2026-07-25T14:49:53.678Z",
       "qualified": true
     },
     {
@@ -61,7 +61,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-25T10:18:09.604Z",
-      "lastSeenAt": "2026-07-25T10:18:09.604Z",
+      "lastSeenAt": "2026-07-25T14:49:53.673Z",
       "qualified": true
     },
     {
@@ -78,7 +78,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-25T10:17:56.200Z",
-      "lastSeenAt": "2026-07-25T10:17:56.200Z",
+      "lastSeenAt": "2026-07-25T14:49:53.642Z",
       "qualified": true
     },
     {
@@ -95,7 +95,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-25T10:17:49.080Z",
-      "lastSeenAt": "2026-07-25T10:17:49.080Z",
+      "lastSeenAt": "2026-07-25T14:49:53.638Z",
       "qualified": true
     },
     {
@@ -112,7 +112,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-25T10:17:39.661Z",
-      "lastSeenAt": "2026-07-25T10:17:39.661Z",
+      "lastSeenAt": "2026-07-25T14:49:53.625Z",
       "qualified": true
     },
     {
@@ -129,7 +129,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:05:08.195Z",
-      "lastSeenAt": "2026-07-25T10:18:28.469Z",
+      "lastSeenAt": "2026-07-25T14:49:58.956Z",
       "qualified": true
     },
     {
@@ -146,7 +146,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:04:55.794Z",
-      "lastSeenAt": "2026-07-25T10:18:28.466Z",
+      "lastSeenAt": "2026-07-25T14:49:58.953Z",
       "qualified": true
     },
     {
@@ -163,7 +163,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:04:46.191Z",
-      "lastSeenAt": "2026-07-25T10:18:28.465Z",
+      "lastSeenAt": "2026-07-25T14:49:58.950Z",
       "qualified": true
     },
     {
@@ -180,7 +180,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:04:37.584Z",
-      "lastSeenAt": "2026-07-25T10:18:28.461Z",
+      "lastSeenAt": "2026-07-25T14:49:58.949Z",
       "qualified": true
     },
     {
@@ -197,7 +197,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:04:31.050Z",
-      "lastSeenAt": "2026-07-25T10:18:28.460Z",
+      "lastSeenAt": "2026-07-25T14:49:58.947Z",
       "qualified": true
     },
     {
@@ -214,7 +214,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:04:26.971Z",
-      "lastSeenAt": "2026-07-25T10:18:28.457Z",
+      "lastSeenAt": "2026-07-25T14:49:58.941Z",
       "qualified": true
     },
     {
@@ -231,7 +231,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:04:22.904Z",
-      "lastSeenAt": "2026-07-25T10:18:28.458Z",
+      "lastSeenAt": "2026-07-25T14:49:58.943Z",
       "qualified": true
     },
     {
@@ -248,7 +248,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:04:09.198Z",
-      "lastSeenAt": "2026-07-25T10:18:28.454Z",
+      "lastSeenAt": "2026-07-25T14:49:58.939Z",
       "qualified": true
     },
     {
@@ -265,7 +265,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:04:02.735Z",
-      "lastSeenAt": "2026-07-25T10:18:26.782Z",
+      "lastSeenAt": "2026-07-25T14:49:58.934Z",
       "qualified": true
     },
     {
@@ -282,7 +282,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:03:58.281Z",
-      "lastSeenAt": "2026-07-25T10:18:18.336Z",
+      "lastSeenAt": "2026-07-25T14:49:58.926Z",
       "qualified": true
     },
     {
@@ -299,7 +299,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:03:45.928Z",
-      "lastSeenAt": "2026-07-25T10:18:22.060Z",
+      "lastSeenAt": "2026-07-25T14:49:58.930Z",
       "qualified": true
     },
     {
@@ -316,7 +316,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:03:41.849Z",
-      "lastSeenAt": "2026-07-25T10:18:18.335Z",
+      "lastSeenAt": "2026-07-25T14:49:58.607Z",
       "qualified": true
     },
     {
@@ -333,7 +333,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:03:29.639Z",
-      "lastSeenAt": "2026-07-25T10:18:18.328Z",
+      "lastSeenAt": "2026-07-25T14:49:56.583Z",
       "qualified": true
     },
     {
@@ -350,7 +350,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:03:19.411Z",
-      "lastSeenAt": "2026-07-25T10:18:18.332Z",
+      "lastSeenAt": "2026-07-25T14:49:56.590Z",
       "qualified": true
     },
     {
@@ -367,7 +367,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:03:15.272Z",
-      "lastSeenAt": "2026-07-25T10:18:18.333Z",
+      "lastSeenAt": "2026-07-25T14:49:56.591Z",
       "qualified": true
     },
     {
@@ -384,7 +384,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:03:03.445Z",
-      "lastSeenAt": "2026-07-25T10:18:18.330Z",
+      "lastSeenAt": "2026-07-25T14:49:56.588Z",
       "qualified": true
     },
     {
@@ -401,7 +401,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-24T12:02:47.819Z",
-      "lastSeenAt": "2026-07-25T10:18:18.322Z",
+      "lastSeenAt": "2026-07-25T14:49:53.694Z",
       "qualified": true
     },
     {
@@ -418,7 +418,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-24T12:02:22.077Z",
-      "lastSeenAt": "2026-07-25T10:18:18.316Z",
+      "lastSeenAt": "2026-07-25T14:49:53.691Z",
       "qualified": true
     },
     {
@@ -452,7 +452,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-24T12:01:47.708Z",
-      "lastSeenAt": "2026-07-25T10:18:18.312Z",
+      "lastSeenAt": "2026-07-25T14:49:53.684Z",
       "qualified": true
     },
     {
@@ -469,7 +469,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-24T12:01:43.010Z",
-      "lastSeenAt": "2026-07-25T10:18:18.311Z",
+      "lastSeenAt": "2026-07-25T14:49:53.682Z",
       "qualified": true
     },
     {
@@ -486,7 +486,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-24T12:01:25.647Z",
-      "lastSeenAt": "2026-07-25T10:18:16.612Z",
+      "lastSeenAt": "2026-07-25T14:49:53.681Z",
       "qualified": true
     },
     {
@@ -503,7 +503,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-24T12:01:21.545Z",
-      "lastSeenAt": "2026-07-25T10:18:16.610Z",
+      "lastSeenAt": "2026-07-25T14:49:53.679Z",
       "qualified": true
     },
     {
@@ -520,7 +520,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-24T12:01:17.286Z",
-      "lastSeenAt": "2026-07-25T10:18:11.274Z",
+      "lastSeenAt": "2026-07-25T14:49:53.676Z",
       "qualified": true
     },
     {
@@ -537,7 +537,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-24T12:01:05.199Z",
-      "lastSeenAt": "2026-07-25T10:18:04.454Z",
+      "lastSeenAt": "2026-07-25T14:49:53.671Z",
       "qualified": true
     },
     {
@@ -571,7 +571,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-24T12:00:54.417Z",
-      "lastSeenAt": "2026-07-25T10:18:04.446Z",
+      "lastSeenAt": "2026-07-25T14:49:53.666Z",
       "qualified": true
     },
     {
@@ -588,7 +588,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-24T12:00:42.337Z",
-      "lastSeenAt": "2026-07-24T12:00:42.337Z",
+      "lastSeenAt": "2026-07-25T14:49:53.663Z",
       "qualified": true
     },
     {
@@ -605,7 +605,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-24T12:00:31.811Z",
-      "lastSeenAt": "2026-07-25T10:17:58.357Z",
+      "lastSeenAt": "2026-07-25T14:49:53.660Z",
       "qualified": true
     },
     {
@@ -639,7 +639,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-24T12:00:15.720Z",
-      "lastSeenAt": "2026-07-25T10:17:56.213Z",
+      "lastSeenAt": "2026-07-25T14:49:53.656Z",
       "qualified": true
     },
     {
@@ -656,7 +656,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-24T12:00:00.048Z",
-      "lastSeenAt": "2026-07-25T10:17:56.215Z",
+      "lastSeenAt": "2026-07-25T14:49:53.655Z",
       "qualified": true
     },
     {
@@ -673,7 +673,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-24T11:59:41.633Z",
-      "lastSeenAt": "2026-07-25T10:17:43.872Z",
+      "lastSeenAt": "2026-07-25T14:49:53.632Z",
       "qualified": true
     },
     {
@@ -690,7 +690,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-24T11:59:37.371Z",
-      "lastSeenAt": "2026-07-25T10:17:43.874Z",
+      "lastSeenAt": "2026-07-25T14:49:53.634Z",
       "qualified": true
     },
     {
@@ -708,7 +708,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-24T11:59:27.243Z",
-      "lastSeenAt": "2026-07-25T10:17:56.205Z",
+      "lastSeenAt": "2026-07-25T14:49:53.647Z",
       "qualified": true
     },
     {
@@ -725,7 +725,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-24T11:59:21.142Z",
-      "lastSeenAt": "2026-07-25T10:17:56.203Z",
+      "lastSeenAt": "2026-07-25T14:49:53.645Z",
       "qualified": true
     },
     {
@@ -742,7 +742,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-24T11:59:03.976Z",
-      "lastSeenAt": "2026-07-25T10:17:56.202Z",
+      "lastSeenAt": "2026-07-25T14:49:53.644Z",
       "qualified": true
     },
     {
@@ -759,7 +759,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-24T11:58:55.865Z",
-      "lastSeenAt": "2026-07-25T10:17:51.243Z",
+      "lastSeenAt": "2026-07-25T14:49:53.641Z",
       "qualified": true
     },
     {
@@ -793,7 +793,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-24T11:58:46.838Z",
-      "lastSeenAt": "2026-07-25T10:17:43.870Z",
+      "lastSeenAt": "2026-07-25T14:49:53.630Z",
       "qualified": true
     },
     {
@@ -810,7 +810,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-24T11:58:42.306Z",
-      "lastSeenAt": "2026-07-25T10:17:43.871Z",
+      "lastSeenAt": "2026-07-25T14:49:53.631Z",
       "qualified": true
     },
     {
@@ -827,7 +827,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-24T11:58:32.717Z",
-      "lastSeenAt": "2026-07-25T10:17:49.082Z",
+      "lastSeenAt": "2026-07-25T14:49:53.640Z",
       "qualified": true
     },
     {
@@ -845,7 +845,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-24T11:58:28.733Z",
-      "lastSeenAt": "2026-07-25T10:17:41.733Z",
+      "lastSeenAt": "2026-07-25T14:49:53.628Z",
       "qualified": true
     },
     {
@@ -862,7 +862,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-22T11:01:54.205Z",
-      "lastSeenAt": "2026-07-25T10:18:28.452Z",
+      "lastSeenAt": "2026-07-25T14:49:58.937Z",
       "qualified": true
     },
     {
@@ -896,7 +896,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-22T11:01:33.584Z",
-      "lastSeenAt": "2026-07-25T10:18:04.449Z",
+      "lastSeenAt": "2026-07-25T14:49:53.668Z",
       "qualified": true
     },
     {
@@ -914,7 +914,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-22T11:01:22.884Z",
-      "lastSeenAt": "2026-07-25T10:17:33.960Z",
+      "lastSeenAt": "2026-07-25T14:49:53.622Z",
       "qualified": true
     },
     {
@@ -932,7 +932,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-22T11:01:17.151Z",
-      "lastSeenAt": "2026-07-25T10:18:26.780Z",
+      "lastSeenAt": "2026-07-25T14:49:58.933Z",
       "qualified": true
     }
   ]
