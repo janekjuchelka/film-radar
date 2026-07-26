@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const WATCHLIST_KEY = "filmradar.watchlist";
 const SEEN_KEY = "filmradar.seen";
+/** Trvale smazané tituly — po refreshi ani po restartu se nevrátí. */
 const HIDDEN_KEY = "filmradar.hidden";
 
 async function readIds(key: string): Promise<string[]> {
@@ -16,7 +17,12 @@ async function readIds(key: string): Promise<string[]> {
 }
 
 async function writeIds(key: string, ids: string[]): Promise<void> {
-  await AsyncStorage.setItem(key, JSON.stringify(Array.from(new Set(ids))));
+  const unique = Array.from(new Set(ids.map(String)));
+  await AsyncStorage.setItem(key, JSON.stringify(unique));
+  const check = await AsyncStorage.getItem(key);
+  if (check !== JSON.stringify(unique)) {
+    throw new Error("Nepodařilo se uložit seznam");
+  }
 }
 
 export async function loadLibrary() {
@@ -50,16 +56,28 @@ export async function unmarkSeen(id: string, seen: string[]) {
   return next;
 }
 
-export async function hideTitle(
-  id: string,
-  hidden: string[],
-  watchlist: string[]
-) {
+/**
+ * Trvale skryje titul. Vždy čte aktuální stav z disku (bez race při rychlém swipe).
+ */
+export async function hideTitleForever(id: string) {
+  const [hidden, watchlist] = await Promise.all([
+    readIds(HIDDEN_KEY),
+    readIds(WATCHLIST_KEY),
+  ]);
   const nextHidden = hidden.includes(id) ? hidden : [...hidden, id];
   const nextWatch = watchlist.filter((x) => x !== id);
   await writeIds(HIDDEN_KEY, nextHidden);
   await writeIds(WATCHLIST_KEY, nextWatch);
   return { hidden: nextHidden, watchlist: nextWatch };
+}
+
+/** @deprecated alias */
+export async function hideTitle(
+  id: string,
+  _hidden?: string[],
+  _watchlist?: string[]
+) {
+  return hideTitleForever(id);
 }
 
 export async function unhideTitle(id: string, hidden: string[]) {

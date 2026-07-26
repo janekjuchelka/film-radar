@@ -62,7 +62,7 @@ export function SwipeDismissRow({ children, onOpen, onDismiss }: Props) {
   return (
     <View style={styles.wrap}>
       <Animated.View style={[styles.behind, { opacity: trashOpacity }]}>
-        <Text style={styles.behindText}>Odstranit</Text>
+        <Text style={styles.behindText}>Smazat natrvalo</Text>
       </Animated.View>
       <Animated.View
         style={{ transform: [{ translateX }] }}

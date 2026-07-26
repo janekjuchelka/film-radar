@@ -35,7 +35,7 @@ import {
 } from "./src/config";
 import {
   formatUpdatedAt,
-  hideTitle,
+  hideTitleForever,
   isFresh,
   loadLibrary,
   markSeen,
@@ -193,10 +193,17 @@ export default function App() {
   }
 
   async function onDismiss(id: string) {
-    const next = await hideTitle(id, hidden, watchlist);
-    setHidden(next.hidden);
-    setWatchlist(next.watchlist);
+    // Okamžitě pryč z UI — i když zápis na disk ještě běží.
+    setHidden((prev) => (prev.includes(id) ? prev : [...prev, id]));
+    setWatchlist((prev) => prev.filter((x) => x !== id));
     if (detail?.id === id) setDetail(null);
+    try {
+      const next = await hideTitleForever(id);
+      setHidden(next.hidden);
+      setWatchlist(next.watchlist);
+    } catch {
+      // UI už je skryté; při příštím startu zkusíme znovu z disku
+    }
   }
 
   async function saveSettings() {
@@ -324,7 +331,7 @@ export default function App() {
             </Pressable>
           ))}
         </View>
-        <Text style={styles.hint}>Přejeď zleva doprava = odstranit</Text>
+        <Text style={styles.hint}>Přejeď zleva doprava = smazat natrvalo</Text>
       </View>
 
       {loading ? (
@@ -343,6 +350,7 @@ export default function App() {
       ) : (
         <FlatList
           data={visibleTitles}
+          extraData={hidden}
           keyExtractor={(item) => item.id}
           contentContainerStyle={styles.list}
           showsVerticalScrollIndicator={false}
@@ -492,7 +500,7 @@ export default function App() {
                   </Pressable>
                 )}
                 <Pressable style={styles.dangerBtn} onPress={() => onDismiss(detail.id)}>
-                  <Text style={styles.dangerBtnText}>Odstranit z přehledu</Text>
+                  <Text style={styles.dangerBtnText}>Smazat natrvalo</Text>
                 </Pressable>
                 <Pressable style={styles.secondaryBtn} onPress={() => setDetail(null)}>
                   <Text style={styles.secondaryBtnText}>Zavřít</Text>
