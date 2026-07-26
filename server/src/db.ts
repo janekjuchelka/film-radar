@@ -35,15 +35,47 @@ function saveDb(db: DatabaseShape): void {
   fs.writeFileSync(DB_PATH, JSON.stringify(db, null, 2), "utf8");
 }
 
+function normalizeTitle(t: TitleRecord): TitleRecord {
+  return {
+    ...t,
+    seasonCount: t.seasonCount ?? null,
+    latestSeason: t.latestSeason ?? null,
+    eventType: t.eventType ?? null,
+    eventAt: t.eventAt ?? null,
+    feedEligible:
+      typeof t.feedEligible === "boolean"
+        ? t.feedEligible
+        : Boolean(t.qualified && (t.type === "movie" || (t.year != null && t.year >= new Date().getFullYear() - 1))),
+  };
+}
+
 export function getMeta() {
   return ensureDb().meta;
+}
+
+export function getTitle(justwatchId: string): TitleRecord | undefined {
+  const found = ensureDb().titles.find((t) => t.justwatchId === justwatchId);
+  return found ? normalizeTitle(found) : undefined;
 }
 
 export function listQualifiedTitles(minRating: number): TitleRecord[] {
   const db = ensureDb();
   return db.titles
-    .filter((t) => t.qualified && (t.csfdRating ?? 0) >= minRating)
-    .sort((a, b) => b.firstSeenAt.localeCompare(a.firstSeenAt));
+    .map(normalizeTitle)
+    .filter(
+      (t) =>
+        t.qualified &&
+        t.feedEligible &&
+        (t.csfdRating ?? 0) >= minRating &&
+        (t.type === "movie" ||
+          t.eventType === "new_series" ||
+          t.eventType === "new_season")
+    )
+    .sort((a, b) => {
+      const ae = a.eventAt ?? a.firstSeenAt;
+      const be = b.eventAt ?? b.firstSeenAt;
+      return be.localeCompare(ae);
+    });
 }
 
 export function getCsfdCache(justwatchId: string): CsfdCacheEntry | undefined {
@@ -58,11 +90,11 @@ export function upsertCsfdCache(entry: CsfdCacheEntry): void {
   saveDb(db);
 }
 
-export function upsertTitle(title: TitleRecord): void {
+export function upsertTitle(title: TitleRecord): TitleRecord {
   const db = ensureDb();
   const idx = db.titles.findIndex((t) => t.justwatchId === title.justwatchId);
   if (idx >= 0) {
-    const existing = db.titles[idx];
+    const existing = normalizeTitle(db.titles[idx]);
     db.titles[idx] = {
       ...title,
       firstSeenAt: existing.firstSeenAt,
@@ -72,6 +104,63 @@ export function upsertTitle(title: TitleRecord): void {
     db.titles.push(title);
   }
   saveDb(db);
+  return title;
+}
+
+/** Jednorázově vyčistí starý feed: staré seriály jen sledovat, ne ukazovat. */
+export function migrateFeedEligibility(): number {
+  const db = ensureDb();
+  const yearCut = new Date().getFullYear() - 1;
+  let changed = 0;
+  db.titles = db.titles.map((raw) => {
+    const t = normalizeTitle(raw);
+    if (t.type === "movie") {
+      const next = {
+        ...t,
+        eventType: t.eventType ?? ("new_movie" as const),
+        eventAt: t.eventAt ?? t.firstSeenAt,
+        feedEligible: t.qualified,
+      };
+      if (
+        next.eventType !== t.eventType ||
+        next.feedEligible !== t.feedEligible ||
+        next.eventAt !== t.eventAt
+      ) {
+        changed += 1;
+      }
+      return next;
+    }
+
+    // Seriál: ve feedu jen nový seriál / nová řada.
+    if (t.eventType === "new_series" || t.eventType === "new_season") {
+      const next = { ...t, feedEligible: t.qualified };
+      if (next.feedEligible !== t.feedEligible) changed += 1;
+      return next;
+    }
+
+    // Legacy bez eventType — nech jen nedávné premiéry jako „nový seriál“.
+    if (t.year != null && t.year >= yearCut) {
+      const next = {
+        ...t,
+        eventType: "new_series" as const,
+        eventAt: t.firstSeenAt,
+        feedEligible: t.qualified,
+      };
+      changed += 1;
+      return next;
+    }
+
+    const next = {
+      ...t,
+      eventType: null,
+      eventAt: null,
+      feedEligible: false,
+    };
+    if (t.feedEligible !== false || t.eventType != null) changed += 1;
+    return next;
+  });
+  saveDb(db);
+  return changed;
 }
 
 export function setScanMeta(stats: Record<string, number>): void {

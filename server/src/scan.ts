@@ -1,13 +1,21 @@
 import { config } from "./config.js";
 import { matchCsfd } from "./csfd.js";
-import { setScanMeta, upsertTitle } from "./db.js";
+import { getTitle, migrateFeedEligibility, setScanMeta, upsertTitle } from "./db.js";
 import { exportFeed } from "./export-feed.js";
 import { fetchCandidates } from "./justwatch.js";
+import type { FeedEventType, TitleRecord } from "./types.js";
 
 let scanning = false;
 
 export function isScanning() {
   return scanning;
+}
+
+function isLikelyNewSeries(year: number | null, seasonCount: number | null): boolean {
+  const yearCut = new Date().getFullYear() - 1;
+  if (seasonCount != null && seasonCount <= 1) return true;
+  if (year != null && year >= yearCut) return true;
+  return false;
 }
 
 export async function scanDaily(): Promise<Record<string, number>> {
@@ -21,9 +29,15 @@ export async function scanDaily(): Promise<Record<string, number>> {
     qualified: 0,
     skipped: 0,
     errors: 0,
+    newSeries: 0,
+    newSeasons: 0,
+    trackedOnly: 0,
   };
 
   try {
+    const migrated = migrateFeedEligibility();
+    if (migrated) console.log(`[scan] migrated ${migrated} legacy titles`);
+
     console.log("[scan] Fetching JustWatch candidates...");
     const candidates = await fetchCandidates(config.scanPerProvider);
     stats.candidates = candidates.length;
@@ -41,7 +55,60 @@ export async function scanDaily(): Promise<Record<string, number>> {
         const qualified = match.csfdRating >= config.minCsfdRating;
         if (qualified) stats.qualified += 1;
 
-        upsertTitle({
+        const existing = getTitle(candidate.justwatchId);
+        let eventType: FeedEventType | null = existing?.eventType ?? null;
+        let eventAt: string | null = existing?.eventAt ?? null;
+        let feedEligible = existing?.feedEligible ?? false;
+
+        if (candidate.type === "movie") {
+          if (!existing) {
+            eventType = "new_movie";
+            eventAt = now;
+            feedEligible = qualified;
+          } else {
+            feedEligible = qualified && (existing.feedEligible || existing.eventType === "new_movie");
+          }
+        } else {
+          const prevSeasons = existing?.seasonCount ?? null;
+          const nextSeasons = candidate.seasonCount;
+
+          if (!existing) {
+            if (isLikelyNewSeries(candidate.year, nextSeasons)) {
+              eventType = "new_series";
+              eventAt = now;
+              feedEligible = qualified;
+              stats.newSeries += 1;
+            } else {
+              // Starý běžící seriál (nový díl v trendu) — jen sleduj počet řad.
+              eventType = null;
+              eventAt = null;
+              feedEligible = false;
+              stats.trackedOnly += 1;
+            }
+          } else if (
+            nextSeasons != null &&
+            prevSeasons != null &&
+            nextSeasons > prevSeasons
+          ) {
+            eventType = "new_season";
+            eventAt = now;
+            feedEligible = qualified;
+            stats.newSeasons += 1;
+          } else if (
+            nextSeasons != null &&
+            prevSeasons == null &&
+            isLikelyNewSeries(candidate.year, nextSeasons)
+          ) {
+            // Doplněný seasonCount u legacy záznamu — neber jako novou řadu.
+            if (!eventType && isLikelyNewSeries(candidate.year, nextSeasons)) {
+              eventType = "new_series";
+              eventAt = existing.firstSeenAt;
+              feedEligible = qualified;
+            }
+          }
+        }
+
+        const record: TitleRecord = {
           id: candidate.justwatchId,
           justwatchId: candidate.justwatchId,
           title: candidate.title,
@@ -55,9 +122,17 @@ export async function scanDaily(): Promise<Record<string, number>> {
           firstSeenAt: now,
           lastSeenAt: now,
           qualified,
-        });
+          seasonCount: candidate.seasonCount,
+          latestSeason: candidate.latestSeason,
+          eventType,
+          eventAt,
+          feedEligible,
+        };
+
+        upsertTitle(record);
+        const tag = eventType ?? "track";
         console.log(
-          `[scan] + ${candidate.title} (${candidate.year ?? "?"}) CSFD ${match.csfdRating}% [${candidate.providers.join(",")}]`
+          `[scan] + ${candidate.title} (${candidate.year ?? "?"}) CSFD ${match.csfdRating}% [${candidate.providers.join(",")}] event=${tag} seasons=${candidate.seasonCount ?? "-"}`
         );
       } catch (err) {
         stats.errors += 1;

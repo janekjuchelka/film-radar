@@ -19,6 +19,7 @@ import {
   Modal,
   Pressable,
   RefreshControl,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -34,12 +35,14 @@ import {
 } from "./src/config";
 import {
   formatUpdatedAt,
+  hideTitle,
   isFresh,
   loadLibrary,
   markSeen,
   toggleWatchlist,
   unmarkSeen,
 } from "./src/library";
+import { SwipeDismissRow, titleMetaLine } from "./src/SwipeDismissRow";
 import type { ProviderFilter, TitleItem, TitleTypeFilter } from "./src/types";
 
 type TabKey = "discover" | "fresh" | "watchlist";
@@ -55,6 +58,8 @@ const PROVIDER_COLOR: Record<string, string> = {
   disney: "#1A6DFF",
   oneplay: "#00C2A8",
 };
+
+const BOTTOM_SAFE = 36;
 
 export default function App() {
   const [bebasLoaded] = useBebas({ BebasNeue_400Regular });
@@ -77,6 +82,7 @@ export default function App() {
 
   const [watchlist, setWatchlist] = useState<string[]>([]);
   const [seen, setSeen] = useState<string[]>([]);
+  const [hidden, setHidden] = useState<string[]>([]);
 
   const [apiUrl, setApiUrlState] = useState(DEFAULT_API_BASE_URL);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -93,6 +99,7 @@ export default function App() {
       setDraftUrl(url);
       setWatchlist(library.watchlist);
       setSeen(library.seen);
+      setHidden(library.hidden);
       setHydrated(true);
     })();
     return () => {
@@ -140,24 +147,32 @@ export default function App() {
   }, [hydrated, apiUrl]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const visibleTitles = useMemo(() => {
-    let list = titles;
+    let list = titles.filter((t) => !hidden.includes(t.id));
     if (typeFilter !== "all") list = list.filter((t) => t.type === typeFilter);
     if (providerFilter !== "all") {
       list = list.filter((t) => t.providers?.includes(providerFilter));
     }
     if (tab === "fresh") {
-      list = list.filter((t) => isFresh(t.firstSeenAt) && !seen.includes(t.id));
+      list = list.filter(
+        (t) => isFresh(t.eventAt ?? t.firstSeenAt) && !seen.includes(t.id)
+      );
     } else if (tab === "watchlist") {
       list = list.filter((t) => watchlist.includes(t.id));
     } else {
       list = list.filter((t) => !seen.includes(t.id));
     }
     return list;
-  }, [titles, typeFilter, providerFilter, tab, seen, watchlist]);
+  }, [titles, typeFilter, providerFilter, tab, seen, watchlist, hidden]);
 
   const freshCount = useMemo(
-    () => titles.filter((t) => isFresh(t.firstSeenAt) && !seen.includes(t.id)).length,
-    [titles, seen]
+    () =>
+      titles.filter(
+        (t) =>
+          !hidden.includes(t.id) &&
+          isFresh(t.eventAt ?? t.firstSeenAt) &&
+          !seen.includes(t.id)
+      ).length,
+    [titles, seen, hidden]
   );
 
   async function onToggleWatch(id: string) {
@@ -175,6 +190,13 @@ export default function App() {
   async function onUnmarkSeen(id: string) {
     const next = await unmarkSeen(id, seen);
     setSeen(next);
+  }
+
+  async function onDismiss(id: string) {
+    const next = await hideTitle(id, hidden, watchlist);
+    setHidden(next.hidden);
+    setWatchlist(next.watchlist);
+    if (detail?.id === id) setDetail(null);
   }
 
   async function saveSettings() {
@@ -227,13 +249,22 @@ export default function App() {
           <View style={{ flex: 1 }}>
             <Text style={styles.brand}>FILM RADAR</Text>
             <Text style={styles.subtitle}>
-              Streaming novinky s ČSFD ≥ 70 %
+              Nové filmy, seriály a řady · ČSFD ≥ 70 %
             </Text>
             <Text style={styles.updated}>{formatUpdatedAt(updatedAt)}</Text>
           </View>
-          <Pressable onPress={() => setSettingsOpen(true)} style={styles.gearBtn}>
-            <Text style={styles.gearText}>⚙</Text>
-          </Pressable>
+          <View style={styles.headerActions}>
+            <Pressable
+              onPress={() => load(true)}
+              style={styles.gearBtn}
+              disabled={refreshing || loading}
+            >
+              <Text style={styles.gearText}>{refreshing ? "…" : "↻"}</Text>
+            </Pressable>
+            <Pressable onPress={() => setSettingsOpen(true)} style={styles.gearBtn}>
+              <Text style={styles.gearText}>⚙</Text>
+            </Pressable>
+          </View>
         </View>
 
         <View style={styles.tabs}>
@@ -293,6 +324,7 @@ export default function App() {
             </Pressable>
           ))}
         </View>
+        <Text style={styles.hint}>Přejeď zleva doprava = odstranit</Text>
       </View>
 
       {loading ? (
@@ -327,8 +359,8 @@ export default function App() {
                 {tab === "watchlist"
                   ? "Přidej tituly tlačítkem ★ u položky."
                   : tab === "fresh"
-                    ? "Nové tituly se objeví po denním scanu na GitHubu."
-                    : "Zkus jiný filtr, nebo stáhni seznam dolů."}
+                    ? "Ukazujeme jen nové filmy, nové seriály a nové řady."
+                    : "Zkus jiný filtr, nebo klepni ↻ nahoře."}
               </Text>
             </View>
           }
@@ -341,61 +373,71 @@ export default function App() {
           }
           renderItem={({ item }) => {
             const onWatchlist = watchlist.includes(item.id);
-            const fresh = isFresh(item.firstSeenAt);
+            const fresh = isFresh(item.eventAt ?? item.firstSeenAt);
+            const pill =
+              item.eventType === "new_season"
+                ? "ŘADA"
+                : item.eventType === "new_series"
+                  ? "SERIÁL"
+                  : fresh
+                    ? "NOVÉ"
+                    : null;
             return (
-              <Pressable style={styles.card} onPress={() => setDetail(item)}>
-                <View style={styles.posterWrap}>
-                  {item.posterUrl ? (
-                    <Image source={{ uri: item.posterUrl }} style={styles.poster} />
-                  ) : (
-                    <View style={[styles.poster, styles.posterFallback]} />
-                  )}
-                  <LinearGradient
-                    colors={["transparent", "rgba(0,0,0,0.85)"]}
-                    style={styles.posterFade}
-                  />
-                  <View style={styles.ratingPill}>
-                    <Text style={styles.ratingPillText}>{item.csfdRating ?? "—"}%</Text>
-                  </View>
-                  {fresh ? (
-                    <View style={styles.newPill}>
-                      <Text style={styles.newPillText}>NOVÉ</Text>
+              <SwipeDismissRow onOpen={() => setDetail(item)} onDismiss={() => onDismiss(item.id)}>
+                <View style={styles.card}>
+                  <View style={styles.posterWrap}>
+                    {item.posterUrl ? (
+                      <Image source={{ uri: item.posterUrl }} style={styles.poster} />
+                    ) : (
+                      <View style={[styles.poster, styles.posterFallback]} />
+                    )}
+                    <LinearGradient
+                      colors={["transparent", "rgba(0,0,0,0.85)"]}
+                      style={styles.posterFade}
+                    />
+                    <View style={styles.ratingPill}>
+                      <Text style={styles.ratingPillText}>{item.csfdRating ?? "—"}%</Text>
                     </View>
-                  ) : null}
-                </View>
-                <View style={styles.meta}>
-                  <Text style={styles.title} numberOfLines={2}>
-                    {item.title}
-                  </Text>
-                  <Text style={styles.metaLine}>
-                    {item.year ?? "—"} · {item.type === "series" ? "Seriál" : "Film"}
-                  </Text>
-                  <View style={styles.badges}>
-                    {(item.providers || []).map((p) => (
-                      <View
-                        key={p}
-                        style={[
-                          styles.badge,
-                          { borderColor: PROVIDER_COLOR[p] ?? "#3A4150" },
-                        ]}
-                      >
-                        <Text style={styles.badgeText}>{PROVIDER_LABEL[p] ?? p}</Text>
+                    {pill ? (
+                      <View style={styles.newPill}>
+                        <Text style={styles.newPillText}>{pill}</Text>
                       </View>
-                    ))}
+                    ) : null}
                   </View>
-                  <View style={styles.actions}>
-                    <Pressable
-                      onPress={() => onToggleWatch(item.id)}
-                      style={[styles.actionBtn, onWatchlist && styles.actionBtnOn]}
-                    >
-                      <Text style={styles.actionText}>{onWatchlist ? "★ Ve watchlistu" : "☆ Watchlist"}</Text>
-                    </Pressable>
-                    <Pressable onPress={() => onMarkSeen(item.id)} style={styles.actionBtn}>
-                      <Text style={styles.actionText}>Viděl jsem</Text>
-                    </Pressable>
+                  <View style={styles.meta}>
+                    <Text style={styles.title} numberOfLines={2}>
+                      {item.title}
+                    </Text>
+                    <Text style={styles.metaLine}>{titleMetaLine(item)}</Text>
+                    <View style={styles.badges}>
+                      {(item.providers || []).map((p) => (
+                        <View
+                          key={p}
+                          style={[
+                            styles.badge,
+                            { borderColor: PROVIDER_COLOR[p] ?? "#3A4150" },
+                          ]}
+                        >
+                          <Text style={styles.badgeText}>{PROVIDER_LABEL[p] ?? p}</Text>
+                        </View>
+                      ))}
+                    </View>
+                    <View style={styles.actions}>
+                      <Pressable
+                        onPress={() => onToggleWatch(item.id)}
+                        style={[styles.actionBtn, onWatchlist && styles.actionBtnOn]}
+                      >
+                        <Text style={styles.actionText}>
+                          {onWatchlist ? "★ Ve watchlistu" : "☆ Watchlist"}
+                        </Text>
+                      </Pressable>
+                      <Pressable onPress={() => onMarkSeen(item.id)} style={styles.actionBtn}>
+                        <Text style={styles.actionText}>Viděl jsem</Text>
+                      </Pressable>
+                    </View>
                   </View>
                 </View>
-              </Pressable>
+              </SwipeDismissRow>
             );
           }}
         />
@@ -403,9 +445,13 @@ export default function App() {
 
       <Modal visible={!!detail} animationType="slide" transparent>
         <View style={styles.modalBackdrop}>
-          <View style={styles.detailCard}>
+          <View style={[styles.detailCard, { paddingBottom: 20 + BOTTOM_SAFE }]}>
             {detail ? (
-              <>
+              <ScrollView
+                bounces={false}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{ gap: 12, paddingBottom: 8 }}
+              >
                 <View style={styles.detailTop}>
                   {detail.posterUrl ? (
                     <Image source={{ uri: detail.posterUrl }} style={styles.detailPoster} />
@@ -414,9 +460,7 @@ export default function App() {
                   )}
                   <View style={{ flex: 1, gap: 6 }}>
                     <Text style={styles.detailTitle}>{detail.title}</Text>
-                    <Text style={styles.metaLine}>
-                      {detail.year ?? "—"} · {detail.type === "series" ? "Seriál" : "Film"}
-                    </Text>
+                    <Text style={styles.metaLine}>{titleMetaLine(detail)}</Text>
                     <Text style={styles.detailRating}>{detail.csfdRating ?? "—"} % ČSFD</Text>
                     <View style={styles.badges}>
                       {(detail.providers || []).map((p) => (
@@ -433,10 +477,7 @@ export default function App() {
                 >
                   <Text style={styles.primaryBtnText}>Otevřít na ČSFD</Text>
                 </Pressable>
-                <Pressable
-                  style={styles.secondaryBtn}
-                  onPress={() => onToggleWatch(detail.id)}
-                >
+                <Pressable style={styles.secondaryBtn} onPress={() => onToggleWatch(detail.id)}>
                   <Text style={styles.secondaryBtnText}>
                     {watchlist.includes(detail.id) ? "Odebrat z watchlistu" : "Přidat do watchlistu"}
                   </Text>
@@ -450,10 +491,13 @@ export default function App() {
                     <Text style={styles.secondaryBtnText}>Označit jako viděné</Text>
                   </Pressable>
                 )}
+                <Pressable style={styles.dangerBtn} onPress={() => onDismiss(detail.id)}>
+                  <Text style={styles.dangerBtnText}>Odstranit z přehledu</Text>
+                </Pressable>
                 <Pressable style={styles.secondaryBtn} onPress={() => setDetail(null)}>
                   <Text style={styles.secondaryBtnText}>Zavřít</Text>
                 </Pressable>
-              </>
+              </ScrollView>
             ) : null}
           </View>
         </View>
@@ -461,11 +505,10 @@ export default function App() {
 
       <Modal visible={settingsOpen} animationType="slide" transparent>
         <View style={styles.modalBackdrop}>
-          <View style={styles.detailCard}>
+          <View style={[styles.detailCard, { paddingBottom: 20 + BOTTOM_SAFE }]}>
             <Text style={styles.detailTitle}>Nastavení feedu</Text>
             <Text style={styles.empty}>
-              Appka bere data přímo z GitHubu. Tlačítko níže nastaví správnou adresu
-              (bez staré CDN cache).
+              Data jdou z GitHubu. Ruční aktualizace: tlačítko ↻ nahoře nebo stáhni seznam dolů.
             </Text>
             <TextInput
               style={styles.input}
@@ -502,8 +545,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 14,
   },
-  header: { paddingHorizontal: 18, paddingBottom: 10, gap: 12 },
+  header: { paddingHorizontal: 18, paddingBottom: 10, gap: 10 },
   headerRow: { flexDirection: "row", gap: 12, alignItems: "flex-start" },
+  headerActions: { flexDirection: "row", gap: 8 },
   brand: {
     fontFamily: "BebasNeue_400Regular",
     fontSize: 42,
@@ -522,6 +566,11 @@ const styles = StyleSheet.create({
     color: "#6F7788",
     fontSize: 12,
     marginTop: 4,
+  },
+  hint: {
+    fontFamily: "DMSans_400Regular",
+    color: "#5E6573",
+    fontSize: 11,
   },
   gearBtn: {
     width: 42,
@@ -700,6 +749,18 @@ const styles = StyleSheet.create({
     color: "#B7BCC8",
     fontSize: 14,
   },
+  dangerBtn: {
+    alignSelf: "stretch",
+    paddingVertical: 10,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "rgba(224,122,106,0.45)",
+  },
+  dangerBtnText: {
+    fontFamily: "DMSans_500Medium",
+    color: "#E07A6A",
+    fontSize: 14,
+  },
   modalBackdrop: {
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.72)",
@@ -707,10 +768,12 @@ const styles = StyleSheet.create({
   },
   detailCard: {
     backgroundColor: "#151821",
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingTop: 20,
     gap: 12,
     borderTopWidth: 1,
     borderTopColor: "rgba(255,255,255,0.08)",
+    maxHeight: "88%",
   },
   detailTop: { flexDirection: "row", gap: 14 },
   detailPoster: { width: 96, height: 144, backgroundColor: "#1A1E27" },

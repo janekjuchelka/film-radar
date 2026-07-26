@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const WATCHLIST_KEY = "filmradar.watchlist";
 const SEEN_KEY = "filmradar.seen";
+const HIDDEN_KEY = "filmradar.hidden";
 
 async function readIds(key: string): Promise<string[]> {
   try {
@@ -19,11 +20,12 @@ async function writeIds(key: string, ids: string[]): Promise<void> {
 }
 
 export async function loadLibrary() {
-  const [watchlist, seen] = await Promise.all([
+  const [watchlist, seen, hidden] = await Promise.all([
     readIds(WATCHLIST_KEY),
     readIds(SEEN_KEY),
+    readIds(HIDDEN_KEY),
   ]);
-  return { watchlist, seen };
+  return { watchlist, seen, hidden };
 }
 
 export async function toggleWatchlist(id: string, current: string[]) {
@@ -48,8 +50,26 @@ export async function unmarkSeen(id: string, seen: string[]) {
   return next;
 }
 
-export function isFresh(firstSeenAt: string, days = 3): boolean {
-  const t = Date.parse(firstSeenAt);
+export async function hideTitle(
+  id: string,
+  hidden: string[],
+  watchlist: string[]
+) {
+  const nextHidden = hidden.includes(id) ? hidden : [...hidden, id];
+  const nextWatch = watchlist.filter((x) => x !== id);
+  await writeIds(HIDDEN_KEY, nextHidden);
+  await writeIds(WATCHLIST_KEY, nextWatch);
+  return { hidden: nextHidden, watchlist: nextWatch };
+}
+
+export async function unhideTitle(id: string, hidden: string[]) {
+  const next = hidden.filter((x) => x !== id);
+  await writeIds(HIDDEN_KEY, next);
+  return next;
+}
+
+export function isFresh(iso: string, days = 3): boolean {
+  const t = Date.parse(iso);
   if (!Number.isFinite(t)) return false;
   return Date.now() - t < days * 24 * 60 * 60 * 1000;
 }
@@ -64,4 +84,15 @@ export function formatUpdatedAt(iso: string | null | undefined): string {
     hour: "2-digit",
     minute: "2-digit",
   })}`;
+}
+
+export function eventLabel(
+  eventType: string | null | undefined,
+  type: "movie" | "series"
+): string | null {
+  if (eventType === "new_season") return "Nová řada";
+  if (eventType === "new_series") return "Nový seriál";
+  if (eventType === "new_movie") return "Nový film";
+  if (type === "series") return "Seriál";
+  return "Film";
 }

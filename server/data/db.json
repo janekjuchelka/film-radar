@@ -16,7 +16,12 @@
       ],
       "firstSeenAt": "2026-07-22T11:01:17.151Z",
       "lastSeenAt": "2026-07-25T14:49:58.933Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts81342",
@@ -34,7 +39,12 @@
       ],
       "firstSeenAt": "2026-07-22T11:01:22.884Z",
       "lastSeenAt": "2026-07-25T14:49:53.622Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts20711",
@@ -51,7 +61,12 @@
       ],
       "firstSeenAt": "2026-07-22T11:01:33.584Z",
       "lastSeenAt": "2026-07-25T14:49:53.668Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts30359",
@@ -68,7 +83,12 @@
       ],
       "firstSeenAt": "2026-07-22T11:01:45.934Z",
       "lastSeenAt": "2026-07-24T12:02:57.109Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts509168",
@@ -85,7 +105,12 @@
       ],
       "firstSeenAt": "2026-07-22T11:01:54.205Z",
       "lastSeenAt": "2026-07-25T14:49:58.937Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_series",
+      "eventAt": "2026-07-22T11:01:54.205Z",
+      "feedEligible": true
     },
     {
       "id": "ts22138",
@@ -103,7 +128,12 @@
       ],
       "firstSeenAt": "2026-07-24T11:58:28.733Z",
       "lastSeenAt": "2026-07-25T14:49:53.628Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts423927",
@@ -120,7 +150,12 @@
       ],
       "firstSeenAt": "2026-07-24T11:58:32.717Z",
       "lastSeenAt": "2026-07-25T14:49:53.640Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts434394",
@@ -137,7 +172,12 @@
       ],
       "firstSeenAt": "2026-07-24T11:58:42.306Z",
       "lastSeenAt": "2026-07-25T14:49:53.631Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_series",
+      "eventAt": "2026-07-24T11:58:42.306Z",
+      "feedEligible": true
     },
     {
       "id": "ts218232",
@@ -154,7 +194,12 @@
       ],
       "firstSeenAt": "2026-07-24T11:58:46.838Z",
       "lastSeenAt": "2026-07-25T14:49:53.630Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts22280",
@@ -171,7 +216,12 @@
       ],
       "firstSeenAt": "2026-07-24T11:58:51.296Z",
       "lastSeenAt": "2026-07-24T11:58:51.296Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts8",
@@ -188,7 +238,12 @@
       ],
       "firstSeenAt": "2026-07-24T11:58:55.865Z",
       "lastSeenAt": "2026-07-25T14:49:53.641Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts20110",
@@ -205,7 +260,12 @@
       ],
       "firstSeenAt": "2026-07-24T11:59:03.976Z",
       "lastSeenAt": "2026-07-25T14:49:53.644Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts20598",
@@ -222,7 +282,12 @@
       ],
       "firstSeenAt": "2026-07-24T11:59:21.142Z",
       "lastSeenAt": "2026-07-25T14:49:53.645Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts11895",
@@ -240,7 +305,12 @@
       ],
       "firstSeenAt": "2026-07-24T11:59:27.243Z",
       "lastSeenAt": "2026-07-25T14:49:53.647Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts285915",
@@ -257,7 +327,12 @@
       ],
       "firstSeenAt": "2026-07-24T11:59:37.371Z",
       "lastSeenAt": "2026-07-25T14:49:53.634Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts20233",
@@ -274,7 +349,12 @@
       ],
       "firstSeenAt": "2026-07-24T11:59:41.633Z",
       "lastSeenAt": "2026-07-25T14:49:53.632Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "tm1946183",
@@ -291,7 +371,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:00:00.048Z",
       "lastSeenAt": "2026-07-25T14:49:53.655Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_movie",
+      "eventAt": "2026-07-24T12:00:00.048Z",
+      "feedEligible": true
     },
     {
       "id": "tm1959748",
@@ -308,7 +393,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:00:15.720Z",
       "lastSeenAt": "2026-07-25T14:49:53.656Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_movie",
+      "eventAt": "2026-07-24T12:00:15.720Z",
+      "feedEligible": true
     },
     {
       "id": "ts395450",
@@ -325,7 +415,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:00:25.696Z",
       "lastSeenAt": "2026-07-25T10:18:00.550Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_series",
+      "eventAt": "2026-07-24T12:00:25.696Z",
+      "feedEligible": true
     },
     {
       "id": "ts528529",
@@ -342,7 +437,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:00:31.811Z",
       "lastSeenAt": "2026-07-25T14:49:53.660Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_series",
+      "eventAt": "2026-07-24T12:00:31.811Z",
+      "feedEligible": true
     },
     {
       "id": "ts529664",
@@ -359,7 +459,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:00:42.337Z",
       "lastSeenAt": "2026-07-25T14:49:53.663Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_series",
+      "eventAt": "2026-07-24T12:00:42.337Z",
+      "feedEligible": true
     },
     {
       "id": "ts20605",
@@ -376,7 +481,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:00:54.417Z",
       "lastSeenAt": "2026-07-25T14:49:53.666Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts6495",
@@ -393,7 +503,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:00:59.136Z",
       "lastSeenAt": "2026-07-24T12:00:59.136Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts5746",
@@ -410,7 +525,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:01:05.199Z",
       "lastSeenAt": "2026-07-25T14:49:53.671Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts22013",
@@ -427,7 +547,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:01:17.286Z",
       "lastSeenAt": "2026-07-25T14:49:53.676Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts21173",
@@ -444,7 +569,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:01:21.545Z",
       "lastSeenAt": "2026-07-25T14:49:53.679Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts421489",
@@ -461,7 +591,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:01:25.647Z",
       "lastSeenAt": "2026-07-25T14:49:53.681Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_series",
+      "eventAt": "2026-07-24T12:01:25.647Z",
+      "feedEligible": true
     },
     {
       "id": "ts407939",
@@ -478,7 +613,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:01:43.010Z",
       "lastSeenAt": "2026-07-25T14:49:53.682Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts353556",
@@ -495,7 +635,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:01:47.708Z",
       "lastSeenAt": "2026-07-25T14:49:53.684Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_series",
+      "eventAt": "2026-07-24T12:01:47.708Z",
+      "feedEligible": true
     },
     {
       "id": "ts12059",
@@ -512,7 +657,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:01:51.826Z",
       "lastSeenAt": "2026-07-24T12:01:51.826Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts328597",
@@ -529,7 +679,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:02:22.077Z",
       "lastSeenAt": "2026-07-25T14:49:53.691Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_series",
+      "eventAt": "2026-07-24T12:02:22.077Z",
+      "feedEligible": true
     },
     {
       "id": "ts526545",
@@ -546,7 +701,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:02:47.819Z",
       "lastSeenAt": "2026-07-25T14:49:53.694Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_series",
+      "eventAt": "2026-07-24T12:02:47.819Z",
+      "feedEligible": true
     },
     {
       "id": "ts255742",
@@ -563,7 +723,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:03:03.445Z",
       "lastSeenAt": "2026-07-25T14:49:56.588Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts81987",
@@ -580,7 +745,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:03:15.272Z",
       "lastSeenAt": "2026-07-25T14:49:56.591Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts21567",
@@ -597,7 +767,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:03:19.411Z",
       "lastSeenAt": "2026-07-25T14:49:56.590Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts451589",
@@ -614,7 +789,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:03:29.639Z",
       "lastSeenAt": "2026-07-25T14:49:56.583Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_series",
+      "eventAt": "2026-07-24T12:03:29.639Z",
+      "feedEligible": true
     },
     {
       "id": "ts271787",
@@ -631,7 +811,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:03:41.849Z",
       "lastSeenAt": "2026-07-25T14:49:58.607Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts20371",
@@ -648,7 +833,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:03:45.928Z",
       "lastSeenAt": "2026-07-25T14:49:58.930Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts19648",
@@ -665,7 +855,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:03:58.281Z",
       "lastSeenAt": "2026-07-25T14:49:58.926Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts83222",
@@ -682,7 +877,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:04:02.735Z",
       "lastSeenAt": "2026-07-25T14:49:58.934Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts424312",
@@ -699,7 +899,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:04:09.198Z",
       "lastSeenAt": "2026-07-25T14:49:58.939Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_series",
+      "eventAt": "2026-07-24T12:04:09.198Z",
+      "feedEligible": true
     },
     {
       "id": "ts509180",
@@ -716,7 +921,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:04:22.904Z",
       "lastSeenAt": "2026-07-25T14:49:58.943Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_series",
+      "eventAt": "2026-07-24T12:04:22.904Z",
+      "feedEligible": true
     },
     {
       "id": "ts452622",
@@ -733,7 +943,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:04:26.971Z",
       "lastSeenAt": "2026-07-25T14:49:58.941Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_series",
+      "eventAt": "2026-07-24T12:04:26.971Z",
+      "feedEligible": true
     },
     {
       "id": "ts484009",
@@ -750,7 +965,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:04:31.050Z",
       "lastSeenAt": "2026-07-25T14:49:58.947Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_series",
+      "eventAt": "2026-07-24T12:04:31.050Z",
+      "feedEligible": true
     },
     {
       "id": "ts389701",
@@ -767,7 +987,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:04:37.584Z",
       "lastSeenAt": "2026-07-25T14:49:58.949Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts412104",
@@ -784,7 +1009,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:04:46.191Z",
       "lastSeenAt": "2026-07-25T14:49:58.950Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts437822",
@@ -801,7 +1031,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:04:55.794Z",
       "lastSeenAt": "2026-07-25T14:49:58.953Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts444885",
@@ -818,7 +1053,12 @@
       ],
       "firstSeenAt": "2026-07-24T12:05:08.195Z",
       "lastSeenAt": "2026-07-25T14:49:58.956Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts462113",
@@ -835,7 +1075,12 @@
       ],
       "firstSeenAt": "2026-07-25T10:17:39.661Z",
       "lastSeenAt": "2026-07-25T14:49:53.625Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_series",
+      "eventAt": "2026-07-25T10:17:39.661Z",
+      "feedEligible": true
     },
     {
       "id": "ts21698",
@@ -852,7 +1097,12 @@
       ],
       "firstSeenAt": "2026-07-25T10:17:49.080Z",
       "lastSeenAt": "2026-07-25T14:49:53.638Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts219660",
@@ -869,7 +1119,12 @@
       ],
       "firstSeenAt": "2026-07-25T10:17:56.200Z",
       "lastSeenAt": "2026-07-25T14:49:53.642Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts21546",
@@ -886,7 +1141,12 @@
       ],
       "firstSeenAt": "2026-07-25T10:18:09.604Z",
       "lastSeenAt": "2026-07-25T14:49:53.673Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts43178",
@@ -903,7 +1163,12 @@
       ],
       "firstSeenAt": "2026-07-25T10:18:16.609Z",
       "lastSeenAt": "2026-07-25T14:49:53.678Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts369448",
@@ -920,7 +1185,12 @@
       ],
       "firstSeenAt": "2026-07-25T10:18:26.778Z",
       "lastSeenAt": "2026-07-25T14:49:58.931Z",
-      "qualified": true
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     }
   ],
   "csfdCache": [

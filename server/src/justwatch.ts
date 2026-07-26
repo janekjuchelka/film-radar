@@ -116,13 +116,38 @@ export async function fetchCandidates(perProvider: number): Promise<JustWatchCan
           type: toType(node.objectType),
           posterUrl: node.posterFullUrl || (node.posterUrl ? `https://images.justwatch.com${node.posterUrl}` : null),
           providers: [providerKey],
+          seasonCount: null,
+          latestSeason: null,
         });
       }
       await sleep(300);
     }
   }
 
-  return Array.from(byId.values()).filter((c) => c.title.length > 0);
+  const candidates = Array.from(byId.values()).filter((c) => c.title.length > 0);
+
+  // Pro seriály zjisti počet řad (díly ignorujeme — zajímá nás jen nová řada / nový seriál).
+  for (const c of candidates) {
+    if (c.type !== "series") continue;
+    try {
+      const seasons = await client.seasons(c.justwatchId, {
+        country: COUNTRY,
+        language: LANGUAGE,
+      });
+      const numbers = (seasons || [])
+        .map((s: { seasonNumber?: number | null }) =>
+          typeof s.seasonNumber === "number" ? s.seasonNumber : null
+        )
+        .filter((n: number | null): n is number => n != null);
+      c.seasonCount = seasons?.length ?? 0;
+      c.latestSeason = numbers.length ? Math.max(...numbers) : c.seasonCount;
+      await sleep(250);
+    } catch (err) {
+      console.warn(`[justwatch] seasons failed for ${c.justwatchId}:`, err);
+    }
+  }
+
+  return candidates;
 }
 
 export async function listCzProviders() {
