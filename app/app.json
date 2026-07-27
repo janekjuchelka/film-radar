@@ -8,7 +8,7 @@
     "userInterfaceStyle": "dark",
     "android": {
       "package": "cz.personal.filmradar",
-      "versionCode": 9,
+      "versionCode": 10,
       "usesCleartextTraffic": true,
       "adaptiveIcon": {
         "backgroundColor": "#0B0D14",

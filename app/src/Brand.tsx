@@ -1,5 +1,6 @@
 import {
   Image,
+  ImageSourcePropType,
   Pressable,
   StyleSheet,
   Text,
@@ -7,7 +8,20 @@ import {
 } from "react-native";
 import { colors } from "./theme";
 
-/** Ikona služby — Netflix N / Disney+ / Oneplay play. */
+const PROVIDER_IMAGES: Record<
+  string,
+  { source: ImageSourcePropType; aspect: number }
+> = {
+  netflix: { source: require("../assets/provider-netflix.png"), aspect: 2.55 },
+  disney: { source: require("../assets/provider-disney.png"), aspect: 2.15 },
+  oneplay: { source: require("../assets/provider-oneplay.png"), aspect: 1.95 },
+};
+
+function isWideProvider(provider: string) {
+  return provider in PROVIDER_IMAGES;
+}
+
+/** Ikona služby — oficiální loga Netflix / Disney+ / Oneplay. */
 export function ProviderLogo({
   provider,
   size = 18,
@@ -15,45 +29,16 @@ export function ProviderLogo({
   provider: string;
   size?: number;
 }) {
-  if (provider === "netflix") {
-    return (
-      <View
-        style={[
-          styles.netflixBox,
-          { width: size, height: size, borderRadius: size * 0.18 },
-        ]}
-      >
-        <Text style={[styles.netflixN, { fontSize: size * 0.72, lineHeight: size }]}>
-          N
-        </Text>
-      </View>
-    );
-  }
-  if (provider === "disney") {
+  const spec = PROVIDER_IMAGES[provider];
+  if (spec) {
     const h = size;
-    const w = Math.round(size * 2.15);
+    const w = Math.round(size * spec.aspect);
     return (
       <Image
-        source={require("../assets/provider-disney.png")}
+        source={spec.source}
         style={{ width: w, height: h, borderRadius: 4 }}
         resizeMode="contain"
       />
-    );
-  }
-  if (provider === "oneplay") {
-    return (
-      <View style={[styles.oneplayBox, { width: size, height: size }]}>
-        <View
-          style={[
-            styles.playTriangle,
-            {
-              borderTopWidth: size * 0.22,
-              borderBottomWidth: size * 0.22,
-              borderLeftWidth: size * 0.38,
-            },
-          ]}
-        />
-      </View>
     );
   }
   return (
@@ -65,7 +50,7 @@ export function ProviderLogo({
 
 /** Malý badge na kartě. */
 export function ProviderMark({ provider }: { provider: string }) {
-  const wide = provider === "disney";
+  const wide = isWideProvider(provider);
   return (
     <View style={[styles.markWrap, wide && styles.markWrapWide]}>
       <ProviderLogo provider={provider} size={wide ? 14 : 18} />
@@ -85,13 +70,14 @@ export function ProviderFilterChip({
   active: boolean;
   onPress: () => void;
 }) {
+  const logoSize = provider === "all" ? 16 : 14;
   return (
     <Pressable
       onPress={onPress}
       style={[styles.filterInner, active && styles.filterInnerActive]}
     >
       {provider !== "all" ? (
-        <ProviderLogo provider={provider} size={provider === "disney" ? 14 : 16} />
+        <ProviderLogo provider={provider} size={logoSize} />
       ) : null}
       <Text style={[styles.filterText, active && styles.filterTextActive]}>
         {label}
@@ -111,29 +97,6 @@ export function BrandMark() {
 }
 
 const styles = StyleSheet.create({
-  netflixBox: {
-    backgroundColor: "#E50914",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  netflixN: {
-    color: "#FFFFFF",
-    fontFamily: "DMSans_700Bold",
-  },
-  oneplayBox: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  playTriangle: {
-    width: 0,
-    height: 0,
-    backgroundColor: "transparent",
-    borderStyle: "solid",
-    borderTopColor: "transparent",
-    borderBottomColor: "transparent",
-    borderLeftColor: "#FFFFFF",
-    marginLeft: 2,
-  },
   fallback: {
     backgroundColor: "#3A4150",
     borderRadius: 6,
