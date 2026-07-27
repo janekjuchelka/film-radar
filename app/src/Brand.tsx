@@ -51,7 +51,7 @@ export function ProviderMark({ provider }: { provider: string }) {
   return <ProviderLogo provider={provider} size={wide ? 20 : 26} />;
 }
 
-/** Filtr služeb: jen logo (nebo text „Vše“). */
+/** Filtr služeb: chip jako u „Filmy / Seriály“, u služeb jen logo uvnitř. */
 export function ProviderFilterChip({
   provider,
   label,
@@ -64,24 +64,7 @@ export function ProviderFilterChip({
   onPress: () => void;
 }) {
   const logoOnly = provider !== "all";
-  const logoSize = provider === "netflix" ? 30 : provider === "all" ? 0 : 26;
-
-  if (logoOnly) {
-    return (
-      <Pressable
-        onPress={onPress}
-        accessibilityLabel={label}
-        accessibilityRole="button"
-        accessibilityState={{ selected: active }}
-        style={styles.filterLogoHit}
-        hitSlop={6}
-      >
-        <View style={[styles.filterLogo, !active && styles.filterLogoDim]}>
-          <ProviderLogo provider={provider} size={logoSize} />
-        </View>
-      </Pressable>
-    );
-  }
+  const logoSize = provider === "netflix" ? 26 : 22;
 
   return (
     <Pressable
@@ -89,11 +72,24 @@ export function ProviderFilterChip({
       accessibilityLabel={label}
       accessibilityRole="button"
       accessibilityState={{ selected: active }}
-      style={[styles.filterInner, active && styles.filterInnerActive]}
+      style={[
+        styles.filterChip,
+        logoOnly && styles.filterChipLogo,
+        active && styles.filterChipActive,
+      ]}
     >
-      <Text style={[styles.filterText, active && styles.filterTextActive]}>
-        {label}
-      </Text>
+      {logoOnly ? (
+        <ProviderLogo provider={provider} size={logoSize} />
+      ) : (
+        <Text
+          style={[
+            styles.filterText,
+            active ? styles.filterTextActive : styles.filterTextMuted,
+          ]}
+        >
+          {label}
+        </Text>
+      )}
     </Pressable>
   );
 }
@@ -115,36 +111,32 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  filterLogoHit: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  filterLogo: {
-    opacity: 1,
-  },
-  filterLogoDim: {
-    opacity: 0.42,
-  },
-  filterInner: {
+  filterChip: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
     borderColor: colors.chipBorder,
-    backgroundColor: colors.bgElevated,
+    backgroundColor: colors.chip,
     paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 12,
+    paddingVertical: 7,
+    borderRadius: 10,
     minHeight: 40,
   },
-  filterInnerActive: {
+  filterChipLogo: {
+    paddingHorizontal: 9,
+    paddingVertical: 6,
+  },
+  filterChipActive: {
     borderColor: colors.accent,
     backgroundColor: colors.accentSoft,
   },
   filterText: {
     fontFamily: "DMSans_500Medium",
-    color: colors.text,
     fontSize: 12,
+  },
+  filterTextMuted: {
+    color: colors.textMuted,
   },
   filterTextActive: {
     color: colors.accent,
