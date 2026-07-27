@@ -8,10 +8,10 @@
     "userInterfaceStyle": "dark",
     "android": {
       "package": "cz.personal.filmradar",
-      "versionCode": 5,
+      "versionCode": 6,
       "usesCleartextTraffic": true,
       "adaptiveIcon": {
-        "backgroundColor": "#12141A",
+        "backgroundColor": "#0B0D14",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"

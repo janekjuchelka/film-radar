@@ -8,7 +8,6 @@ import {
   DMSans_700Bold,
   useFonts as useDmSans,
 } from "@expo-google-fonts/dm-sans";
-import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
@@ -25,6 +24,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { BrandMark, ProviderMark } from "./src/Brand";
 import {
   DEFAULT_API_BASE_URL,
   getApiBaseUrl,
@@ -42,24 +42,17 @@ import {
   toggleWatchlist,
   unmarkSeen,
 } from "./src/library";
-import { SwipeDismissRow, titleMetaLine } from "./src/SwipeDismissRow";
+import {
+  SwipeDismissRow,
+  eventPill,
+  titleMetaLine,
+} from "./src/SwipeDismissRow";
+import { colors } from "./src/theme";
 import type { ProviderFilter, TitleItem, TitleTypeFilter } from "./src/types";
 
 type TabKey = "discover" | "fresh" | "watchlist";
 
-const PROVIDER_LABEL: Record<string, string> = {
-  netflix: "Netflix",
-  disney: "Disney+",
-  oneplay: "Oneplay",
-};
-
-const PROVIDER_COLOR: Record<string, string> = {
-  netflix: "#E50914",
-  disney: "#1A6DFF",
-  oneplay: "#00C2A8",
-};
-
-const BOTTOM_SAFE = 36;
+const BOTTOM_SAFE = 40;
 
 export default function App() {
   const [bebasLoaded] = useBebas({ BebasNeue_400Regular });
@@ -123,15 +116,13 @@ export default function App() {
         });
         if (!res.ok) throw new Error("HTTP " + res.status + "\nURL: " + url);
         const data = await res.json();
-        const list = Array.isArray(data.titles) ? (data.titles as TitleItem[]) : [];
         if (!Array.isArray(data.titles)) {
           throw new Error("Neplatná odpověď feedu\nURL: " + url);
         }
-        setTitles(list);
+        setTitles(data.titles as TitleItem[]);
         setUpdatedAt(data.updatedAt ?? data.meta?.lastScanAt ?? null);
       } catch (err) {
-        const message = err instanceof Error ? err.message : String(err);
-        setError(message);
+        setError(err instanceof Error ? err.message : String(err));
         setTitles([]);
       } finally {
         setLoading(false);
@@ -176,8 +167,7 @@ export default function App() {
   );
 
   async function onToggleWatch(id: string) {
-    const next = await toggleWatchlist(id, watchlist);
-    setWatchlist(next);
+    setWatchlist(await toggleWatchlist(id, watchlist));
   }
 
   async function onMarkSeen(id: string) {
@@ -188,12 +178,10 @@ export default function App() {
   }
 
   async function onUnmarkSeen(id: string) {
-    const next = await unmarkSeen(id, seen);
-    setSeen(next);
+    setSeen(await unmarkSeen(id, seen));
   }
 
   async function onDismiss(id: string) {
-    // Okamžitě pryč z UI — i když zápis na disk ještě běží.
     setHidden((prev) => (prev.includes(id) ? prev : [...prev, id]));
     setWatchlist((prev) => prev.filter((x) => x !== id));
     if (detail?.id === id) setDetail(null);
@@ -202,7 +190,7 @@ export default function App() {
       setHidden(next.hidden);
       setWatchlist(next.watchlist);
     } catch {
-      // UI už je skryté; při příštím startu zkusíme znovu z disku
+      // keep optimistic hide
     }
   }
 
@@ -231,13 +219,11 @@ export default function App() {
     }
   }
 
-  const fontsReady = bebasLoaded && dmLoaded;
-
-  if (!hydrated || !fontsReady) {
+  if (!hydrated || !(bebasLoaded && dmLoaded)) {
     return (
       <View style={[styles.safe, styles.center]}>
         <StatusBar style="light" />
-        <ActivityIndicator color="#E8C468" size="large" />
+        <ActivityIndicator color={colors.accent} size="large" />
       </View>
     );
   }
@@ -245,16 +231,15 @@ export default function App() {
   return (
     <View style={styles.safe}>
       <StatusBar style="light" />
-      <LinearGradient
-        colors={["#1B1520", "#12141A", "#0C0E12"]}
-        locations={[0, 0.35, 1]}
-        style={StyleSheet.absoluteFill}
-      />
 
       <View style={styles.header}>
         <View style={styles.headerRow}>
+          <BrandMark />
           <View style={{ flex: 1 }}>
-            <Text style={styles.brand}>FILM RADAR</Text>
+            <Text style={styles.brandLine}>
+              <Text style={styles.brandFilm}>FILM </Text>
+              <Text style={styles.brandRadar}>RADAR</Text>
+            </Text>
             <Text style={styles.subtitle}>
               Nové filmy, seriály a řady · ČSFD ≥ 70 %
             </Text>
@@ -263,13 +248,13 @@ export default function App() {
           <View style={styles.headerActions}>
             <Pressable
               onPress={() => load(true)}
-              style={styles.gearBtn}
+              style={styles.iconBtn}
               disabled={refreshing || loading}
             >
-              <Text style={styles.gearText}>{refreshing ? "…" : "↻"}</Text>
+              <Text style={styles.iconBtnText}>{refreshing ? "…" : "↻"}</Text>
             </Pressable>
-            <Pressable onPress={() => setSettingsOpen(true)} style={styles.gearBtn}>
-              <Text style={styles.gearText}>⚙</Text>
+            <Pressable onPress={() => setSettingsOpen(true)} style={styles.iconBtn}>
+              <Text style={styles.iconBtnText}>⚙</Text>
             </Pressable>
           </View>
         </View>
@@ -277,22 +262,38 @@ export default function App() {
         <View style={styles.tabs}>
           {(
             [
-              ["discover", "Objevuj"],
-              ["fresh", `Nové${freshCount ? ` · ${freshCount}` : ""}`],
-              ["watchlist", `Watchlist${watchlist.length ? ` · ${watchlist.length}` : ""}`],
+              ["discover", "OBJEVUJ", null as number | null],
+              ["fresh", "NOVÉ", freshCount || null],
+              ["watchlist", "WATCHLIST", watchlist.length || null],
             ] as const
-          ).map(([key, label]) => (
-            <Pressable
-              key={key}
-              onPress={() => setTab(key)}
-              style={[styles.tab, tab === key && styles.tabActive]}
-            >
-              <Text style={[styles.tabText, tab === key && styles.tabTextActive]}>{label}</Text>
-            </Pressable>
-          ))}
+          ).map(([key, label, count]) => {
+            const active = tab === key;
+            return (
+              <Pressable
+                key={key}
+                onPress={() => setTab(key)}
+                style={[styles.tab, active && styles.tabActive]}
+              >
+                <View style={styles.tabInner}>
+                  <Text style={[styles.tabText, active && styles.tabTextActive]}>
+                    {label}
+                  </Text>
+                  {count ? (
+                    <View style={styles.tabBadge}>
+                      <Text style={styles.tabBadgeText}>{count}</Text>
+                    </View>
+                  ) : null}
+                </View>
+              </Pressable>
+            );
+          })}
         </View>
 
-        <View style={styles.chips}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.chipRow}
+        >
           {(
             [
               ["all", "Vše"],
@@ -310,8 +311,13 @@ export default function App() {
               </Text>
             </Pressable>
           ))}
-        </View>
-        <View style={styles.chips}>
+        </ScrollView>
+
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.chipRow}
+        >
           {(
             [
               ["all", "Všechny služby"],
@@ -325,26 +331,26 @@ export default function App() {
               onPress={() => setProviderFilter(key)}
               style={[styles.chip, providerFilter === key && styles.chipActive]}
             >
-              <Text style={[styles.chipText, providerFilter === key && styles.chipTextActive]}>
+              <Text
+                style={[styles.chipText, providerFilter === key && styles.chipTextActive]}
+              >
                 {label}
               </Text>
             </Pressable>
           ))}
-        </View>
-        <Text style={styles.hint}>Přejeď zleva doprava = smazat natrvalo</Text>
+        </ScrollView>
+
+        <Text style={styles.hint}>↪  Přejeď zleva doprava = smazat natrvalo</Text>
       </View>
 
       {loading ? (
-        <ActivityIndicator color="#E8C468" size="large" style={{ marginTop: 48 }} />
+        <ActivityIndicator color={colors.accent} size="large" style={{ marginTop: 48 }} />
       ) : error ? (
         <View style={styles.center}>
           <Text style={styles.errorTitle}>Nejde načíst feed</Text>
           <Text style={styles.error}>{error}</Text>
           <Pressable style={styles.primaryBtn} onPress={useGithubFeed}>
             <Text style={styles.primaryBtnText}>Obnovit GitHub feed</Text>
-          </Pressable>
-          <Pressable style={styles.secondaryBtn} onPress={() => setSettingsOpen(true)}>
-            <Text style={styles.secondaryBtnText}>Nastavení</Text>
           </Pressable>
         </View>
       ) : (
@@ -365,10 +371,8 @@ export default function App() {
               </Text>
               <Text style={styles.empty}>
                 {tab === "watchlist"
-                  ? "Přidej tituly tlačítkem ★ u položky."
-                  : tab === "fresh"
-                    ? "Ukazujeme jen nové filmy, nové seriály a nové řady."
-                    : "Zkus jiný filtr, nebo klepni ↻ nahoře."}
+                  ? "Přidej tituly tlačítkem Watchlist."
+                  : "Klepni ↻ nahoře, nebo změň filtr."}
               </Text>
             </View>
           }
@@ -376,22 +380,17 @@ export default function App() {
             <RefreshControl
               refreshing={refreshing}
               onRefresh={() => load(true)}
-              tintColor="#E8C468"
+              tintColor={colors.accent}
             />
           }
           renderItem={({ item }) => {
             const onWatchlist = watchlist.includes(item.id);
-            const fresh = isFresh(item.eventAt ?? item.firstSeenAt);
-            const pill =
-              item.eventType === "new_season"
-                ? "ŘADA"
-                : item.eventType === "new_series"
-                  ? "SERIÁL"
-                  : fresh
-                    ? "NOVÉ"
-                    : null;
+            const pill = eventPill(item);
             return (
-              <SwipeDismissRow onOpen={() => setDetail(item)} onDismiss={() => onDismiss(item.id)}>
+              <SwipeDismissRow
+                onOpen={() => setDetail(item)}
+                onDismiss={() => onDismiss(item.id)}
+              >
                 <View style={styles.card}>
                   <View style={styles.posterWrap}>
                     {item.posterUrl ? (
@@ -399,48 +398,55 @@ export default function App() {
                     ) : (
                       <View style={[styles.poster, styles.posterFallback]} />
                     )}
-                    <LinearGradient
-                      colors={["transparent", "rgba(0,0,0,0.85)"]}
-                      style={styles.posterFade}
-                    />
-                    <View style={styles.ratingPill}>
-                      <Text style={styles.ratingPillText}>{item.csfdRating ?? "—"}%</Text>
-                    </View>
                     {pill ? (
-                      <View style={styles.newPill}>
-                        <Text style={styles.newPillText}>{pill}</Text>
+                      <View style={styles.typePill}>
+                        <Text style={styles.typePillText}>{pill}</Text>
                       </View>
                     ) : null}
+                    <View style={styles.ratingPill}>
+                      <Text style={styles.ratingStar}>★</Text>
+                      <Text style={styles.ratingPillText}>{item.csfdRating ?? "—"}%</Text>
+                    </View>
                   </View>
+
                   <View style={styles.meta}>
-                    <Text style={styles.title} numberOfLines={2}>
-                      {item.title}
-                    </Text>
-                    <Text style={styles.metaLine}>{titleMetaLine(item)}</Text>
-                    <View style={styles.badges}>
-                      {(item.providers || []).map((p) => (
-                        <View
-                          key={p}
-                          style={[
-                            styles.badge,
-                            { borderColor: PROVIDER_COLOR[p] ?? "#3A4150" },
-                          ]}
-                        >
-                          <Text style={styles.badgeText}>{PROVIDER_LABEL[p] ?? p}</Text>
-                        </View>
+                    <View style={styles.metaTop}>
+                      <View style={{ flex: 1, gap: 4 }}>
+                        <Text style={styles.title} numberOfLines={2}>
+                          {item.title}
+                        </Text>
+                        <Text style={styles.metaLine}>{titleMetaLine(item)}</Text>
+                      </View>
+                      <Pressable onPress={() => setDetail(item)} hitSlop={10}>
+                        <Text style={styles.more}>⋮</Text>
+                      </Pressable>
+                    </View>
+
+                    <View style={styles.providerRow}>
+                      {(item.providers || []).slice(0, 3).map((p) => (
+                        <ProviderMark key={p} provider={p} />
                       ))}
                     </View>
+
                     <View style={styles.actions}>
                       <Pressable
                         onPress={() => onToggleWatch(item.id)}
-                        style={[styles.actionBtn, onWatchlist && styles.actionBtnOn]}
+                        style={[styles.outlineBtn, onWatchlist && styles.outlineBtnOn]}
                       >
-                        <Text style={styles.actionText}>
-                          {onWatchlist ? "★ Ve watchlistu" : "☆ Watchlist"}
+                        <Text
+                          style={[
+                            styles.outlineBtnText,
+                            onWatchlist && styles.outlineBtnTextOn,
+                          ]}
+                        >
+                          {onWatchlist ? "★ Watchlist" : "Watchlist"}
                         </Text>
                       </Pressable>
-                      <Pressable onPress={() => onMarkSeen(item.id)} style={styles.actionBtn}>
-                        <Text style={styles.actionText}>Viděl jsem</Text>
+                      <Pressable
+                        onPress={() => onMarkSeen(item.id)}
+                        style={styles.filledBtn}
+                      >
+                        <Text style={styles.filledBtnText}>Viděl jsem</Text>
                       </Pressable>
                     </View>
                   </View>
@@ -453,13 +459,14 @@ export default function App() {
 
       <Modal visible={!!detail} animationType="slide" transparent>
         <View style={styles.modalBackdrop}>
-          <View style={[styles.detailCard, { paddingBottom: 20 + BOTTOM_SAFE }]}>
+          <View style={[styles.sheet, { paddingBottom: 16 + BOTTOM_SAFE }]}>
             {detail ? (
               <ScrollView
                 bounces={false}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ gap: 12, paddingBottom: 8 }}
+                contentContainerStyle={{ gap: 12 }}
               >
+                <View style={styles.sheetHandle} />
                 <View style={styles.detailTop}>
                   {detail.posterUrl ? (
                     <Image source={{ uri: detail.posterUrl }} style={styles.detailPoster} />
@@ -469,16 +476,17 @@ export default function App() {
                   <View style={{ flex: 1, gap: 6 }}>
                     <Text style={styles.detailTitle}>{detail.title}</Text>
                     <Text style={styles.metaLine}>{titleMetaLine(detail)}</Text>
-                    <Text style={styles.detailRating}>{detail.csfdRating ?? "—"} % ČSFD</Text>
-                    <View style={styles.badges}>
+                    <Text style={styles.detailRating}>
+                      ★ {detail.csfdRating ?? "—"} % ČSFD
+                    </Text>
+                    <View style={styles.providerRow}>
                       {(detail.providers || []).map((p) => (
-                        <View key={p} style={styles.badge}>
-                          <Text style={styles.badgeText}>{PROVIDER_LABEL[p] ?? p}</Text>
-                        </View>
+                        <ProviderMark key={p} provider={p} />
                       ))}
                     </View>
                   </View>
                 </View>
+
                 <Pressable
                   style={styles.primaryBtn}
                   onPress={() => detail.csfdUrl && Linking.openURL(detail.csfdUrl)}
@@ -487,11 +495,16 @@ export default function App() {
                 </Pressable>
                 <Pressable style={styles.secondaryBtn} onPress={() => onToggleWatch(detail.id)}>
                   <Text style={styles.secondaryBtnText}>
-                    {watchlist.includes(detail.id) ? "Odebrat z watchlistu" : "Přidat do watchlistu"}
+                    {watchlist.includes(detail.id)
+                      ? "Odebrat z watchlistu"
+                      : "Přidat do watchlistu"}
                   </Text>
                 </Pressable>
                 {seen.includes(detail.id) ? (
-                  <Pressable style={styles.secondaryBtn} onPress={() => onUnmarkSeen(detail.id)}>
+                  <Pressable
+                    style={styles.secondaryBtn}
+                    onPress={() => onUnmarkSeen(detail.id)}
+                  >
                     <Text style={styles.secondaryBtnText}>Vrátit do Objevuj</Text>
                   </Pressable>
                 ) : (
@@ -513,17 +526,18 @@ export default function App() {
 
       <Modal visible={settingsOpen} animationType="slide" transparent>
         <View style={styles.modalBackdrop}>
-          <View style={[styles.detailCard, { paddingBottom: 20 + BOTTOM_SAFE }]}>
+          <View style={[styles.sheet, { paddingBottom: 16 + BOTTOM_SAFE }]}>
+            <View style={styles.sheetHandle} />
             <Text style={styles.detailTitle}>Nastavení feedu</Text>
             <Text style={styles.empty}>
-              Data jdou z GitHubu. Ruční aktualizace: tlačítko ↻ nahoře nebo stáhni seznam dolů.
+              Data jdou z GitHubu. Ruční aktualizace: tlačítko ↻ nahoře.
             </Text>
             <TextInput
               style={styles.input}
               autoCapitalize="none"
               autoCorrect={false}
               placeholder="https://...."
-              placeholderTextColor="#6B7280"
+              placeholderTextColor={colors.textDim}
               value={draftUrl}
               onChangeText={setDraftUrl}
             />
@@ -545,7 +559,7 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: "#0C0E12", paddingTop: 52 },
+  safe: { flex: 1, backgroundColor: colors.bg, paddingTop: 52 },
   center: {
     flex: 1,
     paddingHorizontal: 20,
@@ -553,45 +567,41 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 14,
   },
-  header: { paddingHorizontal: 18, paddingBottom: 10, gap: 10 },
+  header: { paddingHorizontal: 16, paddingBottom: 8, gap: 12 },
   headerRow: { flexDirection: "row", gap: 12, alignItems: "flex-start" },
   headerActions: { flexDirection: "row", gap: 8 },
-  brand: {
+  brandLine: {
     fontFamily: "BebasNeue_400Regular",
-    fontSize: 42,
-    color: "#F7F1E8",
-    letterSpacing: 1.5,
-    lineHeight: 44,
+    fontSize: 34,
+    letterSpacing: 1,
+    lineHeight: 36,
   },
+  brandFilm: { color: colors.text },
+  brandRadar: { color: colors.accent },
   subtitle: {
     fontFamily: "DMSans_400Regular",
-    color: "#A8AFBD",
-    fontSize: 14,
+    color: colors.textMuted,
+    fontSize: 13,
     marginTop: 2,
   },
   updated: {
     fontFamily: "DMSans_400Regular",
-    color: "#6F7788",
+    color: colors.textDim,
     fontSize: 12,
-    marginTop: 4,
+    marginTop: 3,
   },
-  hint: {
-    fontFamily: "DMSans_400Regular",
-    color: "#5E6573",
-    fontSize: 11,
-  },
-  gearBtn: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    backgroundColor: "rgba(255,255,255,0.06)",
+  iconBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: colors.bgElevated,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.08)",
+    borderColor: colors.cardBorder,
     alignItems: "center",
     justifyContent: "center",
   },
-  gearText: { color: "#E8C468", fontSize: 18 },
-  tabs: { flexDirection: "row", gap: 8 },
+  iconBtnText: { color: colors.accent, fontSize: 18 },
+  tabs: { flexDirection: "row", gap: 4 },
   tab: {
     flex: 1,
     paddingVertical: 10,
@@ -599,135 +609,172 @@ const styles = StyleSheet.create({
     borderBottomColor: "transparent",
     alignItems: "center",
   },
-  tabActive: { borderBottomColor: "#E8C468" },
+  tabActive: { borderBottomColor: colors.accent },
+  tabInner: { flexDirection: "row", alignItems: "center", gap: 6 },
   tabText: {
-    fontFamily: "DMSans_500Medium",
-    color: "#8B92A1",
-    fontSize: 13,
+    fontFamily: "DMSans_700Bold",
+    color: colors.textDim,
+    fontSize: 12,
+    letterSpacing: 0.4,
   },
-  tabTextActive: { color: "#E8C468" },
-  chips: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
+  tabTextActive: { color: colors.accent },
+  tabBadge: {
+    backgroundColor: colors.accent,
+    minWidth: 18,
+    height: 18,
+    borderRadius: 9,
+    paddingHorizontal: 5,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  tabBadgeText: {
+    fontFamily: "DMSans_700Bold",
+    color: "#fff",
+    fontSize: 10,
+  },
+  chipRow: { flexDirection: "row", gap: 8, paddingRight: 8 },
   chip: {
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.1)",
-    paddingHorizontal: 12,
-    paddingVertical: 7,
-    backgroundColor: "rgba(255,255,255,0.04)",
+    borderColor: colors.chipBorder,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 12,
+    backgroundColor: colors.chip,
   },
   chipActive: {
-    borderColor: "#E8C468",
-    backgroundColor: "rgba(232,196,104,0.12)",
+    borderColor: colors.accent,
+    backgroundColor: colors.accentSoft,
   },
   chipText: {
     fontFamily: "DMSans_500Medium",
-    color: "#B7BCC8",
+    color: colors.textMuted,
+    fontSize: 13,
+  },
+  chipTextActive: { color: colors.accent },
+  hint: {
+    fontFamily: "DMSans_400Regular",
+    color: colors.textDim,
     fontSize: 12,
   },
-  chipTextActive: { color: "#E8C468" },
-  list: { paddingHorizontal: 16, paddingBottom: 40, gap: 14 },
+  list: { paddingHorizontal: 14, paddingBottom: 36, gap: 12 },
   card: {
     flexDirection: "row",
-    gap: 14,
-    backgroundColor: "rgba(255,255,255,0.035)",
+    gap: 12,
+    backgroundColor: colors.card,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.06)",
+    borderColor: colors.cardBorder,
+    borderRadius: 18,
     padding: 10,
   },
-  posterWrap: { width: 92, height: 138, overflow: "hidden", position: "relative" },
-  poster: { width: "100%", height: "100%", backgroundColor: "#1A1E27" },
+  posterWrap: {
+    width: 92,
+    height: 138,
+    borderRadius: 12,
+    overflow: "hidden",
+    position: "relative",
+    backgroundColor: "#1A1E27",
+  },
+  poster: { width: "100%", height: "100%" },
   posterFallback: { backgroundColor: "#252A35" },
-  posterFade: {
+  typePill: {
     position: "absolute",
-    left: 0,
-    right: 0,
-    bottom: 0,
-    height: 48,
+    left: 6,
+    top: 6,
+    backgroundColor: colors.accent,
+    borderRadius: 8,
+    paddingHorizontal: 7,
+    paddingVertical: 3,
+  },
+  typePillText: {
+    fontFamily: "DMSans_700Bold",
+    color: "#fff",
+    fontSize: 10,
+    letterSpacing: 0.4,
   },
   ratingPill: {
     position: "absolute",
     right: 6,
     bottom: 6,
-    backgroundColor: "#E8C468",
-    paddingHorizontal: 7,
+    backgroundColor: "rgba(0,0,0,0.72)",
+    borderRadius: 8,
+    paddingHorizontal: 6,
     paddingVertical: 3,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 3,
   },
+  ratingStar: { color: colors.rating, fontSize: 11 },
   ratingPillText: {
     fontFamily: "DMSans_700Bold",
-    color: "#12141A",
-    fontSize: 12,
-  },
-  newPill: {
-    position: "absolute",
-    left: 6,
-    top: 6,
-    backgroundColor: "#E07A6A",
-    paddingHorizontal: 7,
-    paddingVertical: 3,
-  },
-  newPillText: {
-    fontFamily: "DMSans_700Bold",
     color: "#fff",
-    fontSize: 10,
-    letterSpacing: 0.6,
+    fontSize: 11,
   },
-  meta: { flex: 1, justifyContent: "center", gap: 6 },
+  meta: { flex: 1, justifyContent: "space-between", gap: 8 },
+  metaTop: { flexDirection: "row", gap: 6 },
   title: {
     fontFamily: "DMSans_700Bold",
-    color: "#F4F1EA",
+    color: colors.text,
     fontSize: 17,
     lineHeight: 22,
   },
   metaLine: {
     fontFamily: "DMSans_400Regular",
-    color: "#8B92A1",
+    color: colors.textMuted,
     fontSize: 13,
   },
-  badges: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
-  badge: {
-    borderWidth: 1,
-    borderColor: "#3A4150",
-    paddingHorizontal: 8,
-    paddingVertical: 3,
+  more: {
+    color: colors.textDim,
+    fontSize: 22,
+    lineHeight: 22,
+    paddingHorizontal: 4,
   },
-  badgeText: {
-    fontFamily: "DMSans_500Medium",
-    color: "#C5CAD6",
-    fontSize: 11,
+  providerRow: { flexDirection: "row", gap: 6 },
+  actions: { flexDirection: "row", gap: 8 },
+  outlineBtn: {
+    flex: 1,
+    borderWidth: 1.5,
+    borderColor: colors.accent,
+    borderRadius: 12,
+    paddingVertical: 9,
+    alignItems: "center",
+    backgroundColor: "transparent",
   },
-  actions: { flexDirection: "row", flexWrap: "wrap", gap: 8, marginTop: 4 },
-  actionBtn: {
-    borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.12)",
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    backgroundColor: "rgba(0,0,0,0.25)",
+  outlineBtnOn: { backgroundColor: colors.accentSoft },
+  outlineBtnText: {
+    fontFamily: "DMSans_700Bold",
+    color: colors.accent,
+    fontSize: 12,
   },
-  actionBtnOn: {
-    borderColor: "#E8C468",
-    backgroundColor: "rgba(232,196,104,0.12)",
+  outlineBtnTextOn: { color: colors.accent },
+  filledBtn: {
+    flex: 1,
+    backgroundColor: colors.accent,
+    borderRadius: 12,
+    paddingVertical: 9,
+    alignItems: "center",
   },
-  actionText: {
-    fontFamily: "DMSans_500Medium",
-    color: "#E8E4DA",
+  filledBtnText: {
+    fontFamily: "DMSans_700Bold",
+    color: "#fff",
     fontSize: 12,
   },
   emptyBox: { paddingTop: 48, paddingHorizontal: 12, gap: 8 },
   emptyTitle: {
     fontFamily: "DMSans_700Bold",
-    color: "#F4F1EA",
+    color: colors.text,
     fontSize: 18,
     textAlign: "center",
   },
   empty: {
     fontFamily: "DMSans_400Regular",
-    color: "#8B92A1",
+    color: colors.textMuted,
     textAlign: "center",
     lineHeight: 20,
     fontSize: 14,
   },
   errorTitle: {
     fontFamily: "DMSans_700Bold",
-    color: "#F4F1EA",
+    color: colors.text,
     fontSize: 18,
   },
   error: {
@@ -738,35 +785,37 @@ const styles = StyleSheet.create({
   },
   primaryBtn: {
     alignSelf: "stretch",
-    backgroundColor: "#E8C468",
-    paddingVertical: 12,
+    backgroundColor: colors.accent,
+    paddingVertical: 13,
+    borderRadius: 14,
     alignItems: "center",
   },
   primaryBtnText: {
     fontFamily: "DMSans_700Bold",
-    color: "#12141A",
+    color: "#fff",
     fontSize: 14,
   },
   secondaryBtn: {
     alignSelf: "stretch",
-    paddingVertical: 10,
+    paddingVertical: 11,
     alignItems: "center",
   },
   secondaryBtnText: {
     fontFamily: "DMSans_500Medium",
-    color: "#B7BCC8",
+    color: colors.textMuted,
     fontSize: 14,
   },
   dangerBtn: {
     alignSelf: "stretch",
-    paddingVertical: 10,
+    paddingVertical: 11,
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "rgba(224,122,106,0.45)",
+    borderColor: "rgba(185,28,28,0.5)",
+    borderRadius: 14,
   },
   dangerBtnText: {
     fontFamily: "DMSans_500Medium",
-    color: "#E07A6A",
+    color: "#F87171",
     fontSize: 14,
   },
   modalBackdrop: {
@@ -774,35 +823,51 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.72)",
     justifyContent: "flex-end",
   },
-  detailCard: {
-    backgroundColor: "#151821",
-    paddingHorizontal: 20,
-    paddingTop: 20,
+  sheet: {
+    backgroundColor: colors.bgElevated,
+    paddingHorizontal: 18,
+    paddingTop: 10,
     gap: 12,
+    borderTopLeftRadius: 22,
+    borderTopRightRadius: 22,
     borderTopWidth: 1,
-    borderTopColor: "rgba(255,255,255,0.08)",
+    borderColor: colors.cardBorder,
     maxHeight: "88%",
   },
+  sheetHandle: {
+    alignSelf: "center",
+    width: 42,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: "rgba(255,255,255,0.18)",
+    marginBottom: 6,
+  },
   detailTop: { flexDirection: "row", gap: 14 },
-  detailPoster: { width: 96, height: 144, backgroundColor: "#1A1E27" },
+  detailPoster: {
+    width: 96,
+    height: 144,
+    borderRadius: 12,
+    backgroundColor: "#1A1E27",
+  },
   detailTitle: {
     fontFamily: "DMSans_700Bold",
-    color: "#F4F1EA",
+    color: colors.text,
     fontSize: 20,
     lineHeight: 26,
   },
   detailRating: {
     fontFamily: "DMSans_700Bold",
-    color: "#E8C468",
-    fontSize: 16,
+    color: colors.rating,
+    fontSize: 15,
   },
   input: {
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.1)",
-    backgroundColor: "#0C0E12",
-    color: "#F4F1EA",
+    borderColor: colors.cardBorder,
+    backgroundColor: colors.bg,
+    color: colors.text,
     paddingHorizontal: 12,
     paddingVertical: 12,
+    borderRadius: 12,
     fontFamily: "DMSans_400Regular",
     fontSize: 14,
   },

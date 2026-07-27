@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import type { TitleItem } from "./types";
+import { colors } from "./theme";
 
 type Props = {
   children: React.ReactNode;
@@ -15,9 +16,7 @@ type Props = {
   onDismiss: () => void;
 };
 
-/**
- * Přejetí zleva doprava = odstranit (skrýt) titul.
- */
+/** Přejetí zleva doprava = smazat natrvalo. */
 export function SwipeDismissRow({ children, onOpen, onDismiss }: Props) {
   const translateX = useRef(new Animated.Value(0)).current;
   const startX = useRef(0);
@@ -32,8 +31,7 @@ export function SwipeDismissRow({ children, onOpen, onDismiss }: Props) {
         });
       },
       onPanResponderMove: (_, g) => {
-        const next = Math.max(0, startX.current + g.dx);
-        translateX.setValue(next);
+        translateX.setValue(Math.max(0, startX.current + g.dx));
       },
       onPanResponderRelease: (_, g) => {
         if (g.dx > 110 || g.vx > 0.7) {
@@ -64,10 +62,7 @@ export function SwipeDismissRow({ children, onOpen, onDismiss }: Props) {
       <Animated.View style={[styles.behind, { opacity: trashOpacity }]}>
         <Text style={styles.behindText}>Smazat natrvalo</Text>
       </Animated.View>
-      <Animated.View
-        style={{ transform: [{ translateX }] }}
-        {...pan.panHandlers}
-      >
+      <Animated.View style={{ transform: [{ translateX }] }} {...pan.panHandlers}>
         <Pressable onPress={onOpen}>{children}</Pressable>
       </Animated.View>
     </View>
@@ -86,16 +81,21 @@ export function titleMetaLine(item: TitleItem): string {
   return `${item.year ?? "—"} · ${kind}`;
 }
 
+export function eventPill(item: TitleItem): string | null {
+  if (item.eventType === "new_season") return "ŘADA";
+  if (item.eventType === "new_series") return "SERIÁL";
+  if (item.eventType === "new_movie") return "FILM";
+  return item.type === "series" ? "SERIÁL" : "FILM";
+}
+
 const styles = StyleSheet.create({
-  wrap: {
-    position: "relative",
-    overflow: "hidden",
-  },
+  wrap: { position: "relative", overflow: "hidden", borderRadius: 18 },
   behind: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: "#8B3A3A",
+    backgroundColor: colors.danger,
     justifyContent: "center",
     paddingLeft: 22,
+    borderRadius: 18,
   },
   behindText: {
     color: "#fff",
