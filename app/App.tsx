@@ -727,7 +727,7 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     paddingHorizontal: 4,
   },
-  providerRow: { flexDirection: "row", gap: 6 },
+  providerRow: { flexDirection: "row", gap: 8, flexWrap: "wrap" },
   actions: { flexDirection: "row", gap: 8 },
   outlineBtn: {
     flex: 1,

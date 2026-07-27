@@ -53,7 +53,7 @@ export function ProviderMark({ provider }: { provider: string }) {
   const wide = isWideProvider(provider);
   return (
     <View style={[styles.markWrap, wide && styles.markWrapWide]}>
-      <ProviderLogo provider={provider} size={wide ? 14 : 18} />
+      <ProviderLogo provider={provider} size={wide ? 18 : 22} />
     </View>
   );
 }
@@ -70,14 +70,17 @@ export function ProviderFilterChip({
   active: boolean;
   onPress: () => void;
 }) {
-  const logoSize = provider === "all" ? 16 : 14;
+  const logoSize =
+    provider === "netflix" ? 22 : provider === "all" ? 0 : 20;
   return (
     <Pressable
       onPress={onPress}
       style={[styles.filterInner, active && styles.filterInnerActive]}
     >
       {provider !== "all" ? (
-        <ProviderLogo provider={provider} size={logoSize} />
+        <View style={styles.filterLogoWrap}>
+          <ProviderLogo provider={provider} size={logoSize} />
+        </View>
       ) : null}
       <Text style={[styles.filterText, active && styles.filterTextActive]}>
         {label}
@@ -104,27 +107,34 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   markWrap: {
-    minWidth: 28,
-    height: 28,
-    paddingHorizontal: 4,
-    borderRadius: 8,
-    backgroundColor: "rgba(255,255,255,0.06)",
+    minWidth: 36,
+    height: 36,
+    paddingHorizontal: 6,
+    borderRadius: 10,
+    backgroundColor: "rgba(255,255,255,0.08)",
     alignItems: "center",
     justifyContent: "center",
   },
   markWrapWide: {
-    minWidth: 44,
-    paddingHorizontal: 6,
+    minWidth: 58,
+    paddingHorizontal: 8,
+  },
+  filterLogoWrap: {
+    minHeight: 24,
+    justifyContent: "center",
+    paddingHorizontal: 2,
+    borderRadius: 6,
+    backgroundColor: "rgba(0,0,0,0.35)",
   },
   filterInner: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
+    gap: 8,
     borderWidth: 1,
     borderColor: colors.chipBorder,
     backgroundColor: colors.bgElevated,
-    paddingHorizontal: 10,
-    paddingVertical: 7,
+    paddingHorizontal: 11,
+    paddingVertical: 9,
     borderRadius: 12,
   },
   filterInnerActive: {
