@@ -24,7 +24,7 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { BrandMark, ProviderMark } from "./src/Brand";
+import { BrandMark, ProviderFilterChip, ProviderMark } from "./src/Brand";
 import {
   DEFAULT_API_BASE_URL,
   getApiBaseUrl,
@@ -312,26 +312,30 @@ export default function App() {
         </View>
 
         <View style={styles.chipWrap}>
-          {(
-            [
-              ["all", "Vše"],
-              ["netflix", "Netflix"],
-              ["disney", "Disney+"],
-              ["oneplay", "Oneplay"],
-            ] as const
-          ).map(([key, label]) => (
-            <Pressable
-              key={key}
-              onPress={() => setProviderFilter(key)}
-              style={[styles.chip, providerFilter === key && styles.chipActive]}
-            >
-              <Text
-                style={[styles.chipText, providerFilter === key && styles.chipTextActive]}
-              >
-                {label}
-              </Text>
-            </Pressable>
-          ))}
+          <ProviderFilterChip
+            provider="all"
+            label="Vše"
+            active={providerFilter === "all"}
+            onPress={() => setProviderFilter("all")}
+          />
+          <ProviderFilterChip
+            provider="netflix"
+            label="Netflix"
+            active={providerFilter === "netflix"}
+            onPress={() => setProviderFilter("netflix")}
+          />
+          <ProviderFilterChip
+            provider="disney"
+            label="Disney+"
+            active={providerFilter === "disney"}
+            onPress={() => setProviderFilter("disney")}
+          />
+          <ProviderFilterChip
+            provider="oneplay"
+            label="Oneplay"
+            active={providerFilter === "oneplay"}
+            onPress={() => setProviderFilter("oneplay")}
+          />
         </View>
 
         <Text style={styles.hint} numberOfLines={1}>
