@@ -242,13 +242,6 @@ export default function App() {
             </Text>
           </View>
           <View style={styles.headerActions}>
-            <Pressable
-              onPress={() => load(true)}
-              style={styles.iconBtn}
-              disabled={refreshing || loading}
-            >
-              <Text style={styles.iconBtnText}>{refreshing ? "…" : "↻"}</Text>
-            </Pressable>
             <Pressable onPress={() => setSettingsOpen(true)} style={styles.iconBtn}>
               <Text style={styles.iconBtnText}>⚙</Text>
             </Pressable>
@@ -372,7 +365,7 @@ export default function App() {
               <Text style={styles.empty}>
                 {tab === "watchlist"
                   ? "Přidej tituly tlačítkem Watchlist."
-                  : "Klepni ↻ nahoře, nebo změň filtr."}
+                  : "Změň filtr, nebo stáhni seznam dolů pro obnovení."}
               </Text>
             </View>
           }
@@ -530,7 +523,7 @@ export default function App() {
             <View style={styles.sheetHandle} />
             <Text style={styles.detailTitle}>Nastavení feedu</Text>
             <Text style={styles.empty}>
-              Data jdou z GitHubu. Ruční aktualizace: tlačítko ↻ nahoře.
+              Data jdou z GitHubu (denní sken). Seznam obnovíš tažením dolů.
             </Text>
             <TextInput
               style={styles.input}

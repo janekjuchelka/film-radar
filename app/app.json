@@ -6,9 +6,14 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
+    "backgroundColor": "#0B0D14",
+    "splash": {
+      "backgroundColor": "#0B0D14",
+      "resizeMode": "contain"
+    },
     "android": {
       "package": "cz.personal.filmradar",
-      "versionCode": 17,
+      "versionCode": 18,
       "usesCleartextTraffic": true,
       "adaptiveIcon": {
         "backgroundColor": "#0B0D14",
