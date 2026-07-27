@@ -30,18 +30,14 @@ export function ProviderLogo({
     );
   }
   if (provider === "disney") {
+    const h = size;
+    const w = Math.round(size * 2.15);
     return (
-      <View
-        style={{
-          width: size,
-          height: size,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Text style={[styles.disneyPlus, { fontSize: size * 0.72 }]}>+</Text>
-        <View style={[styles.disneyArc, { width: size * 0.85 }]} />
-      </View>
+      <Image
+        source={require("../assets/provider-disney.png")}
+        style={{ width: w, height: h, borderRadius: 4 }}
+        resizeMode="contain"
+      />
     );
   }
   if (provider === "oneplay") {
@@ -69,9 +65,10 @@ export function ProviderLogo({
 
 /** Malý badge na kartě. */
 export function ProviderMark({ provider }: { provider: string }) {
+  const wide = provider === "disney";
   return (
-    <View style={styles.markWrap}>
-      <ProviderLogo provider={provider} size={18} />
+    <View style={[styles.markWrap, wide && styles.markWrapWide]}>
+      <ProviderLogo provider={provider} size={wide ? 14 : 18} />
     </View>
   );
 }
@@ -93,7 +90,9 @@ export function ProviderFilterChip({
       onPress={onPress}
       style={[styles.filterInner, active && styles.filterInnerActive]}
     >
-      {provider !== "all" ? <ProviderLogo provider={provider} size={16} /> : null}
+      {provider !== "all" ? (
+        <ProviderLogo provider={provider} size={provider === "disney" ? 14 : 16} />
+      ) : null}
       <Text style={[styles.filterText, active && styles.filterTextActive]}>
         {label}
       </Text>
@@ -120,17 +119,6 @@ const styles = StyleSheet.create({
   netflixN: {
     color: "#FFFFFF",
     fontFamily: "DMSans_700Bold",
-  },
-  disneyPlus: {
-    color: "#FFFFFF",
-    fontFamily: "DMSans_700Bold",
-    letterSpacing: -0.4,
-  },
-  disneyArc: {
-    height: 1.5,
-    backgroundColor: "rgba(255,255,255,0.9)",
-    borderRadius: 2,
-    marginTop: -3,
   },
   oneplayBox: {
     alignItems: "center",
@@ -160,6 +148,10 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(255,255,255,0.06)",
     alignItems: "center",
     justifyContent: "center",
+  },
+  markWrapWide: {
+    minWidth: 44,
+    paddingHorizontal: 6,
   },
   filterInner: {
     flexDirection: "row",
