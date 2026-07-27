@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderWidth: 1,
     borderColor: colors.chipBorder,
-    backgroundColor: colors.chip,
+    backgroundColor: "transparent",
     paddingHorizontal: 12,
     paddingVertical: 7,
     borderRadius: 10,
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   },
   filterChipActive: {
     borderColor: colors.accent,
-    backgroundColor: colors.accentSoft,
+    backgroundColor: "transparent",
   },
   filterText: {
     fontFamily: "DMSans_500Medium",
