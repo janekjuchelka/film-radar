@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
     fontSize: 11,
   },
   brand: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 34,
+    height: 34,
+    borderRadius: 17,
   },
 });

@@ -235,15 +235,11 @@ export default function App() {
       <View style={styles.header}>
         <View style={styles.headerRow}>
           <BrandMark />
-          <View style={{ flex: 1 }}>
-            <Text style={styles.brandLine}>
+          <View style={{ flex: 1, minWidth: 0 }}>
+            <Text style={styles.brandLine} numberOfLines={1}>
               <Text style={styles.brandFilm}>FILM </Text>
               <Text style={styles.brandRadar}>RADAR</Text>
             </Text>
-            <Text style={styles.subtitle}>
-              Nové filmy, seriály a řady · ČSFD ≥ 70 %
-            </Text>
-            <Text style={styles.updated}>{formatUpdatedAt(updatedAt)}</Text>
           </View>
           <View style={styles.headerActions}>
             <Pressable
@@ -258,6 +254,12 @@ export default function App() {
             </Pressable>
           </View>
         </View>
+        <Text style={styles.subtitle} numberOfLines={1}>
+          Novinky · ČSFD ≥ 70 %
+        </Text>
+        <Text style={styles.updated} numberOfLines={1}>
+          {formatUpdatedAt(updatedAt)}
+        </Text>
 
         <View style={styles.tabs}>
           {(
@@ -289,11 +291,7 @@ export default function App() {
           })}
         </View>
 
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.chipRow}
-        >
+        <View style={styles.chipWrap}>
           {(
             [
               ["all", "Vše"],
@@ -311,16 +309,12 @@ export default function App() {
               </Text>
             </Pressable>
           ))}
-        </ScrollView>
+        </View>
 
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.chipRow}
-        >
+        <View style={styles.chipWrap}>
           {(
             [
-              ["all", "Všechny služby"],
+              ["all", "Vše"],
               ["netflix", "Netflix"],
               ["disney", "Disney+"],
               ["oneplay", "Oneplay"],
@@ -338,9 +332,11 @@ export default function App() {
               </Text>
             </Pressable>
           ))}
-        </ScrollView>
+        </View>
 
-        <Text style={styles.hint}>↪  Přejeď zleva doprava = smazat natrvalo</Text>
+        <Text style={styles.hint} numberOfLines={1}>
+          ↪ Přejeď zleva doprava = smazat natrvalo
+        </Text>
       </View>
 
       {loading ? (
@@ -567,78 +563,77 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 14,
   },
-  header: { paddingHorizontal: 16, paddingBottom: 8, gap: 12 },
-  headerRow: { flexDirection: "row", gap: 12, alignItems: "flex-start" },
-  headerActions: { flexDirection: "row", gap: 8 },
+  header: { paddingHorizontal: 12, paddingBottom: 6, gap: 8 },
+  headerRow: { flexDirection: "row", gap: 10, alignItems: "center" },
+  headerActions: { flexDirection: "row", gap: 6 },
   brandLine: {
     fontFamily: "BebasNeue_400Regular",
-    fontSize: 34,
+    fontSize: 30,
     letterSpacing: 1,
-    lineHeight: 36,
+    lineHeight: 32,
   },
   brandFilm: { color: colors.text },
   brandRadar: { color: colors.accent },
   subtitle: {
     fontFamily: "DMSans_400Regular",
     color: colors.textMuted,
-    fontSize: 13,
-    marginTop: 2,
+    fontSize: 12,
   },
   updated: {
     fontFamily: "DMSans_400Regular",
     color: colors.textDim,
-    fontSize: 12,
-    marginTop: 3,
+    fontSize: 11,
+    marginTop: -2,
   },
   iconBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: colors.bgElevated,
     borderWidth: 1,
     borderColor: colors.cardBorder,
     alignItems: "center",
     justifyContent: "center",
   },
-  iconBtnText: { color: colors.accent, fontSize: 18 },
-  tabs: { flexDirection: "row", gap: 4 },
+  iconBtnText: { color: colors.accent, fontSize: 16 },
+  tabs: { flexDirection: "row", gap: 2 },
   tab: {
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical: 8,
     borderBottomWidth: 2,
     borderBottomColor: "transparent",
     alignItems: "center",
   },
   tabActive: { borderBottomColor: colors.accent },
-  tabInner: { flexDirection: "row", alignItems: "center", gap: 6 },
+  tabInner: { flexDirection: "row", alignItems: "center", gap: 5 },
   tabText: {
     fontFamily: "DMSans_700Bold",
     color: colors.textDim,
-    fontSize: 12,
-    letterSpacing: 0.4,
+    fontSize: 11,
+    letterSpacing: 0.3,
   },
   tabTextActive: { color: colors.accent },
   tabBadge: {
     backgroundColor: colors.accent,
-    minWidth: 18,
-    height: 18,
-    borderRadius: 9,
-    paddingHorizontal: 5,
+    minWidth: 16,
+    height: 16,
+    borderRadius: 8,
+    paddingHorizontal: 4,
     alignItems: "center",
     justifyContent: "center",
   },
   tabBadgeText: {
     fontFamily: "DMSans_700Bold",
     color: "#fff",
-    fontSize: 10,
+    fontSize: 9,
   },
-  chipRow: { flexDirection: "row", gap: 8, paddingRight: 8 },
+  chipWrap: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
   chip: {
     borderWidth: 1,
     borderColor: colors.chipBorder,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    borderRadius: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 10,
     backgroundColor: colors.chip,
   },
   chipActive: {
@@ -648,28 +643,28 @@ const styles = StyleSheet.create({
   chipText: {
     fontFamily: "DMSans_500Medium",
     color: colors.textMuted,
-    fontSize: 13,
+    fontSize: 12,
   },
   chipTextActive: { color: colors.accent },
   hint: {
     fontFamily: "DMSans_400Regular",
     color: colors.textDim,
-    fontSize: 12,
+    fontSize: 11,
   },
-  list: { paddingHorizontal: 14, paddingBottom: 36, gap: 12 },
+  list: { paddingHorizontal: 12, paddingBottom: 36, gap: 10 },
   card: {
     flexDirection: "row",
-    gap: 12,
+    gap: 10,
     backgroundColor: colors.card,
     borderWidth: 1,
     borderColor: colors.cardBorder,
-    borderRadius: 18,
-    padding: 10,
+    borderRadius: 16,
+    padding: 8,
   },
   posterWrap: {
-    width: 92,
-    height: 138,
-    borderRadius: 12,
+    width: 84,
+    height: 126,
+    borderRadius: 10,
     overflow: "hidden",
     position: "relative",
     backgroundColor: "#1A1E27",
