@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import { colors } from "./theme";
 
+const FILTER_CHIP_H = 36;
+
 const PROVIDER_IMAGES: Record<
   string,
   { source: ImageSourcePropType; aspect: number }
@@ -16,6 +18,15 @@ const PROVIDER_IMAGES: Record<
   disney: { source: require("../assets/provider-disney.png"), aspect: 2.15 },
   oneplay: { source: require("../assets/provider-oneplay.png"), aspect: 1.95 },
 };
+
+function filterChipLogoFrame(provider: string) {
+  const spec = PROVIDER_IMAGES[provider];
+  if (!spec) return null;
+  const h = FILTER_CHIP_H;
+  const w = Math.round(h * spec.aspect);
+  const radius = Math.round(h * 0.2);
+  return { w, h, radius, source: spec.source };
+}
 
 /** Ikona služby — oficiální loga Netflix / Disney+ / Oneplay. */
 export function ProviderLogo({
@@ -51,7 +62,7 @@ export function ProviderMark({ provider }: { provider: string }) {
   return <ProviderLogo provider={provider} size={wide ? 20 : 26} />;
 }
 
-/** Filtr služeb: chip jako u „Filmy / Seriály“, u služeb jen logo uvnitř. */
+/** Filtr služeb: logo na celou plochu obrysu, nebo text „Vše“. */
 export function ProviderFilterChip({
   provider,
   label,
@@ -63,8 +74,33 @@ export function ProviderFilterChip({
   active: boolean;
   onPress: () => void;
 }) {
-  const logoOnly = provider !== "all";
-  const logoSize = provider === "netflix" ? 26 : 22;
+  const frame = filterChipLogoFrame(provider);
+
+  if (frame) {
+    return (
+      <Pressable
+        onPress={onPress}
+        accessibilityLabel={label}
+        accessibilityRole="button"
+        accessibilityState={{ selected: active }}
+        style={[
+          styles.filterLogoFrame,
+          {
+            width: frame.w,
+            height: frame.h,
+            borderRadius: frame.radius,
+          },
+          active && styles.filterLogoFrameActive,
+        ]}
+      >
+        <Image
+          source={frame.source}
+          style={{ width: frame.w, height: frame.h }}
+          resizeMode="cover"
+        />
+      </Pressable>
+    );
+  }
 
   return (
     <Pressable
@@ -73,23 +109,18 @@ export function ProviderFilterChip({
       accessibilityRole="button"
       accessibilityState={{ selected: active }}
       style={[
-        styles.filterChip,
-        logoOnly && styles.filterChipLogo,
-        active && styles.filterChipActive,
+        styles.filterChipAll,
+        active && styles.filterChipAllActive,
       ]}
     >
-      {logoOnly ? (
-        <ProviderLogo provider={provider} size={logoSize} />
-      ) : (
-        <Text
-          style={[
-            styles.filterText,
-            active ? styles.filterTextActive : styles.filterTextMuted,
-          ]}
-        >
-          {label}
-        </Text>
-      )}
+      <Text
+        style={[
+          styles.filterText,
+          active ? styles.filterTextActive : styles.filterTextMuted,
+        ]}
+      >
+        {label}
+      </Text>
     </Pressable>
   );
 }
@@ -111,25 +142,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  filterChip: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+  filterLogoFrame: {
+    overflow: "hidden",
     borderWidth: 1,
     borderColor: colors.chipBorder,
-    backgroundColor: "transparent",
-    paddingHorizontal: 12,
-    paddingVertical: 7,
-    borderRadius: 10,
-    minHeight: 40,
+    padding: 0,
   },
-  filterChipLogo: {
-    paddingHorizontal: 9,
-    paddingVertical: 6,
-  },
-  filterChipActive: {
+  filterLogoFrameActive: {
     borderColor: colors.accent,
+  },
+  filterChipAll: {
+    height: FILTER_CHIP_H,
+    paddingHorizontal: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: colors.chipBorder,
+    borderRadius: 10,
     backgroundColor: "transparent",
+  },
+  filterChipAllActive: {
+    borderColor: colors.accent,
   },
   filterText: {
     fontFamily: "DMSans_500Medium",
