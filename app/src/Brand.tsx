@@ -58,7 +58,7 @@ export function ProviderMark({ provider }: { provider: string }) {
   );
 }
 
-/** Chip ve filtru: logo + text. */
+/** Chip ve filtru: u služeb jen logo, u „Vše“ text. */
 export function ProviderFilterChip({
   provider,
   label,
@@ -70,21 +70,28 @@ export function ProviderFilterChip({
   active: boolean;
   onPress: () => void;
 }) {
-  const logoSize =
-    provider === "netflix" ? 22 : provider === "all" ? 0 : 20;
+  const logoOnly = provider !== "all";
+  const logoSize = provider === "netflix" ? 28 : provider === "all" ? 0 : 24;
+
   return (
     <Pressable
       onPress={onPress}
-      style={[styles.filterInner, active && styles.filterInnerActive]}
+      accessibilityLabel={label}
+      accessibilityRole="button"
+      accessibilityState={{ selected: active }}
+      style={[
+        styles.filterInner,
+        logoOnly && styles.filterInnerLogo,
+        active && styles.filterInnerActive,
+      ]}
     >
-      {provider !== "all" ? (
-        <View style={styles.filterLogoWrap}>
-          <ProviderLogo provider={provider} size={logoSize} />
-        </View>
-      ) : null}
-      <Text style={[styles.filterText, active && styles.filterTextActive]}>
-        {label}
-      </Text>
+      {logoOnly ? (
+        <ProviderLogo provider={provider} size={logoSize} />
+      ) : (
+        <Text style={[styles.filterText, active && styles.filterTextActive]}>
+          {label}
+        </Text>
+      )}
     </Pressable>
   );
 }
@@ -119,23 +126,21 @@ const styles = StyleSheet.create({
     minWidth: 58,
     paddingHorizontal: 8,
   },
-  filterLogoWrap: {
-    minHeight: 24,
-    justifyContent: "center",
-    paddingHorizontal: 2,
-    borderRadius: 6,
-    backgroundColor: "rgba(0,0,0,0.35)",
-  },
   filterInner: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    justifyContent: "center",
     borderWidth: 1,
     borderColor: colors.chipBorder,
     backgroundColor: colors.bgElevated,
-    paddingHorizontal: 11,
-    paddingVertical: 9,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
     borderRadius: 12,
+    minHeight: 44,
+  },
+  filterInnerLogo: {
+    paddingHorizontal: 10,
+    paddingVertical: 7,
   },
   filterInnerActive: {
     borderColor: colors.accent,
