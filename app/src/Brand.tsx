@@ -12,13 +12,13 @@ const PROVIDER_IMAGES: Record<
   string,
   { source: ImageSourcePropType; aspect: number }
 > = {
-  netflix: { source: require("../assets/provider-netflix.png"), aspect: 2.55 },
+  netflix: { source: require("../assets/provider-netflix.png"), aspect: 1 },
   disney: { source: require("../assets/provider-disney.png"), aspect: 2.15 },
   oneplay: { source: require("../assets/provider-oneplay.png"), aspect: 1.95 },
 };
 
 function isWideProvider(provider: string) {
-  return provider in PROVIDER_IMAGES;
+  return provider === "disney" || provider === "oneplay";
 }
 
 /** Ikona služby — oficiální loga Netflix / Disney+ / Oneplay. */
