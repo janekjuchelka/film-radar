@@ -1,66 +1,52 @@
-# Film Radar – Android appka
+# Film Radar
 
-Osobní Android APK: Netflix / Disney+ / Oneplay (CZ) + ČSFD ≥ 70 %.
+Osobní Android aplikace: novinky na **Netflix**, **Disney+** a **Oneplay** (Česko) s hodnocením **ČSFD ≥ 70 %**.
 
-## Důležité
+## Jak to funguje
 
-Telefon **nemůže** číst data z tvého PC bez Wi‑Fi/USB.
-Proto:
+1. **GitHub Actions** (~2× denně) projde služby a uloží výsledek do [`feed/titles.json`](feed/titles.json).
+2. **APK** si feed stáhne z GitHubu — žádný vlastní server není potřeba.
+3. Watchlist, „Viděl jsem“, swipe = smazat natrvalo — vše jen v telefonu (AsyncStorage).
 
-1. **Server** musí běžet na internetu (např. Render zdarma)
-2. **Appka (APK)** se nainstaluje do telefonu a ptá se na adresu serveru
+Podrobnosti hostingu: [HOSTING-ZDARMA.md](HOSTING-ZDARMA.md).
 
-## 1) Server na internetu (Render)
+## Instalace (APK)
 
-1. Účet na [render.com](https://render.com) (zdarma)
-2. **New → Web Service → Deploy from existing image / Dockerfile**
-   - Root directory: `film-radar/server`
-   - Dockerfile path: `./Dockerfile`
-3. Po deployi získej URL typu `https://film-radar-xxxx.onrender.com`
-4. Ověř v prohlížeči: `https://…/health` a `https://…/`
-5. Jednou spusť scan:  
-   `POST https://…/admin/run-scan`  
-   (nebo v prohlížeči konzoli / Postman)
+1. Stáhni nejnovější build:  
+   [FilmRadar.apk](https://raw.githubusercontent.com/janekjuchelka/film-radar/main/FilmRadar.apk)
+2. V Androidu povol instalaci z neznámého zdroje.
+3. Nainstaluj — výchozí feed je už nastavený.
 
-Lokálně pořád: `cd server && npm start`
+**Obnovení dat:** stáhni seznam dolů (pull-to-refresh).
 
-## 2) Android APK
+## Funkce v appce
 
-### Varianta A – EAS (cloud build)
+| Oblast | Popis |
+|--------|--------|
+| **Objevuj** | Tituly, které jsi ještě neoznačil jako viděné |
+| **Nové** | Čerstvé novinky (cca 3 dny) |
+| **Watchlist** | Uložené k pozdějšímu sledování |
+| **Viděno** | Historie označených titulů |
+| **Nastavení ⚙** | Vlastní URL feedu, obnova skrytých titulů |
 
-```powershell
-cd C:\KKLProjekt\film-radar\app
-npx eas-cli login
-npx eas-cli build:configure
-npx eas-cli build -p android --profile preview
-```
-
-Stáhni APK z odkazu, v telefonu povol instalaci z neznámých zdrojů, nainstaluj.
-
-### Varianta B – lokálně (Android Studio)
-
-Po instalaci Android Studio + SDK:
+## Vývoj a build APK
 
 ```powershell
 cd C:\KKLProjekt\film-radar\app
-npx expo prebuild --platform android
+npm install
+npx tsc --noEmit
 cd android
-.\gradlew.bat assembleRelease
-adb install app\build\outputs\apk\release\app-release.apk
+$env:JAVA_HOME = "C:\Program Files\Android\Android Studio\jbr"
+$env:GRADLE_USER_HOME = "C:\g"
+.\gradlew.bat assembleRelease -PreactNativeArchitectures=arm64-v8a
 ```
 
-## 3) Po instalaci appky
+Release APK zkopíruj do kořene repa jako `FilmRadar.apk`.
 
-1. Otevři **Film Radar**
-2. **Nastavení** → vlož URL serveru (`https://…onrender.com`)
-3. Ulož → uvidíš feed
+## Volitelný vlastní server
 
-## USB / prohlížeč (nouzově)
+Složka [`server/`](server/) — Express API + lokální sken. Pro běžné použití stačí GitHub feed.
 
-Když server běží na PC a telefon je přes USB ladění:
+## Verze
 
-```powershell
-adb reverse tcp:3847 tcp:3847
-```
-
-Chrome: `http://127.0.0.1:3847/`
+Aktuální: **1.0.0** — viz [CHANGELOG.md](CHANGELOG.md).

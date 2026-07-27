@@ -24,6 +24,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { BrandMark, ProviderFilterChip, ProviderMark } from "./src/Brand";
 import {
   DEFAULT_API_BASE_URL,
@@ -33,6 +34,7 @@ import {
   titlesUrlFromBase,
   withCacheBust,
 } from "./src/config";
+import { loadFeedCache, saveFeedCache } from "./src/feedCache";
 import {
   formatUpdatedAt,
   hideTitleForever,
@@ -40,6 +42,7 @@ import {
   loadLibrary,
   markSeen,
   toggleWatchlist,
+  unhideTitle,
   unmarkSeen,
 } from "./src/library";
 import {
@@ -50,7 +53,7 @@ import {
 import { colors } from "./src/theme";
 import type { ProviderFilter, TitleItem, TitleTypeFilter } from "./src/types";
 
-type TabKey = "discover" | "fresh" | "watchlist";
+type TabKey = "discover" | "fresh" | "watchlist" | "seen";
 
 const BOTTOM_SAFE = 40;
 
@@ -86,13 +89,22 @@ export default function App() {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const [url, library] = await Promise.all([getApiBaseUrl(), loadLibrary()]);
+      const [url, library, cache] = await Promise.all([
+        getApiBaseUrl(),
+        loadLibrary(),
+        loadFeedCache(),
+      ]);
       if (cancelled) return;
       setApiUrlState(url);
       setDraftUrl(url);
       setWatchlist(library.watchlist);
       setSeen(library.seen);
       setHidden(library.hidden);
+      if (cache?.titles?.length) {
+        setTitles(cache.titles);
+        setUpdatedAt(cache.updatedAt);
+        setLoading(false);
+      }
       setHydrated(true);
     })();
     return () => {
@@ -104,7 +116,6 @@ export default function App() {
     async (isRefresh = false, baseUrl = apiUrl) => {
       if (isRefresh) setRefreshing(true);
       else setLoading(true);
-      setError(null);
       try {
         const url = withCacheBust(titlesUrlFromBase(baseUrl));
         const res = await fetch(url, {
@@ -119,11 +130,14 @@ export default function App() {
         if (!Array.isArray(data.titles)) {
           throw new Error("Neplatná odpověď feedu\nURL: " + url);
         }
-        setTitles(data.titles as TitleItem[]);
-        setUpdatedAt(data.updatedAt ?? data.meta?.lastScanAt ?? null);
+        const nextUpdated = data.updatedAt ?? data.meta?.lastScanAt ?? null;
+        const nextTitles = data.titles as TitleItem[];
+        setTitles(nextTitles);
+        setUpdatedAt(nextUpdated);
+        setError(null);
+        await saveFeedCache(nextTitles, nextUpdated);
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
-        setTitles([]);
       } finally {
         setLoading(false);
         setRefreshing(false);
@@ -149,6 +163,8 @@ export default function App() {
       );
     } else if (tab === "watchlist") {
       list = list.filter((t) => watchlist.includes(t.id));
+    } else if (tab === "seen") {
+      list = list.filter((t) => seen.includes(t.id));
     } else {
       list = list.filter((t) => !seen.includes(t.id));
     }
@@ -219,17 +235,29 @@ export default function App() {
     }
   }
 
+  async function onRestoreHidden(id: string) {
+    setHidden(await unhideTitle(id, hidden));
+  }
+
+  const hiddenEntries = useMemo(() => {
+    const byId = new Map(titles.map((t) => [t.id, t]));
+    return hidden.map((id) => ({ id, title: byId.get(id)?.title ?? null }));
+  }, [hidden, titles]);
+
+  const showInitialSpinner = loading && titles.length === 0;
+  const showBlockingError = !loading && !!error && titles.length === 0;
+
   if (!hydrated || !(bebasLoaded && dmLoaded)) {
     return (
-      <View style={[styles.safe, styles.center]}>
+      <SafeAreaView style={[styles.safe, styles.center]} edges={["top", "bottom"]}>
         <StatusBar style="light" />
         <ActivityIndicator color={colors.accent} size="large" />
-      </View>
+      </SafeAreaView>
     );
   }
 
   return (
-    <View style={styles.safe}>
+    <SafeAreaView style={styles.safe} edges={["top", "bottom"]}>
       <StatusBar style="light" />
 
       <View style={styles.header}>
@@ -259,7 +287,8 @@ export default function App() {
             [
               ["discover", "OBJEVUJ", null as number | null],
               ["fresh", "NOVÉ", freshCount || null],
-              ["watchlist", "WATCHLIST", watchlist.length || null],
+              ["watchlist", "ULOŽENÉ", watchlist.length || null],
+              ["seen", "VIDĚNO", seen.length || null],
             ] as const
           ).map(([key, label, count]) => {
             const active = tab === key;
@@ -334,16 +363,41 @@ export default function App() {
         <Text style={styles.hint} numberOfLines={1}>
           ↪ Přejeď zleva doprava = smazat natrvalo
         </Text>
+
+        {error ? (
+          <View style={styles.errorBanner}>
+            <View style={{ flex: 1, gap: 2 }}>
+              <Text style={styles.errorBannerTitle}>Nepodařilo se obnovit feed</Text>
+              <Text style={styles.errorBannerText} numberOfLines={2}>
+                {titles.length > 0
+                  ? "Zobrazujeme uložená data. Zkus obnovit znovu."
+                  : error}
+              </Text>
+            </View>
+            <Pressable
+              style={styles.errorBannerBtn}
+              onPress={() => load(true)}
+              disabled={refreshing || loading}
+            >
+              <Text style={styles.errorBannerBtnText}>
+                {refreshing ? "…" : "Zkusit znovu"}
+              </Text>
+            </Pressable>
+          </View>
+        ) : null}
       </View>
 
-      {loading ? (
+      {showInitialSpinner ? (
         <ActivityIndicator color={colors.accent} size="large" style={{ marginTop: 48 }} />
-      ) : error ? (
+      ) : showBlockingError ? (
         <View style={styles.center}>
-          <Text style={styles.errorTitle}>Nejde načíst feed</Text>
-          <Text style={styles.error}>{error}</Text>
-          <Pressable style={styles.primaryBtn} onPress={useGithubFeed}>
-            <Text style={styles.primaryBtnText}>Obnovit GitHub feed</Text>
+          <Text style={styles.emptyTitle}>Žádná data</Text>
+          <Text style={styles.empty}>{error}</Text>
+          <Pressable style={styles.primaryBtn} onPress={() => load(false)}>
+            <Text style={styles.primaryBtnText}>Zkusit znovu</Text>
+          </Pressable>
+          <Pressable style={styles.secondaryBtn} onPress={useGithubFeed}>
+            <Text style={styles.secondaryBtnText}>Obnovit výchozí GitHub feed</Text>
           </Pressable>
         </View>
       ) : (
@@ -360,12 +414,16 @@ export default function App() {
                   ? "Watchlist je prázdný"
                   : tab === "fresh"
                     ? "Žádné čerstvé novinky"
-                    : "Nic k zobrazení"}
+                    : tab === "seen"
+                      ? "Zatím nic viděného"
+                      : "Nic k zobrazení"}
               </Text>
               <Text style={styles.empty}>
                 {tab === "watchlist"
                   ? "Přidej tituly tlačítkem Watchlist."
-                  : "Změň filtr, nebo stáhni seznam dolů pro obnovení."}
+                  : tab === "seen"
+                    ? "Označ tituly jako Viděl jsem."
+                    : "Změň filtr, nebo stáhni seznam dolů pro obnovení."}
               </Text>
             </View>
           }
@@ -519,40 +577,67 @@ export default function App() {
 
       <Modal visible={settingsOpen} animationType="slide" transparent>
         <View style={styles.modalBackdrop}>
-          <View style={[styles.sheet, { paddingBottom: 16 + BOTTOM_SAFE }]}>
-            <View style={styles.sheetHandle} />
-            <Text style={styles.detailTitle}>Nastavení feedu</Text>
-            <Text style={styles.empty}>
-              Data jdou z GitHubu (denní sken). Seznam obnovíš tažením dolů.
-            </Text>
-            <TextInput
-              style={styles.input}
-              autoCapitalize="none"
-              autoCorrect={false}
-              placeholder="https://...."
-              placeholderTextColor={colors.textDim}
-              value={draftUrl}
-              onChangeText={setDraftUrl}
-            />
-            {saveMessage ? <Text style={styles.empty}>{saveMessage}</Text> : null}
-            <Pressable style={styles.primaryBtn} onPress={useGithubFeed}>
-              <Text style={styles.primaryBtnText}>Použít GitHub feed</Text>
-            </Pressable>
-            <Pressable style={styles.secondaryBtn} onPress={saveSettings}>
-              <Text style={styles.secondaryBtnText}>Uložit ruční adresu</Text>
-            </Pressable>
-            <Pressable style={styles.secondaryBtn} onPress={() => setSettingsOpen(false)}>
-              <Text style={styles.secondaryBtnText}>Zavřít</Text>
-            </Pressable>
+          <View style={[styles.sheet, { paddingBottom: 16 + BOTTOM_SAFE, maxHeight: "92%" }]}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ gap: 12, paddingBottom: 8 }}
+            >
+              <View style={styles.sheetHandle} />
+              <Text style={styles.detailTitle}>Nastavení</Text>
+              <Text style={styles.settingsSection}>Feed</Text>
+              <Text style={styles.empty}>
+                Výchozí je GitHub (denní sken). Seznam obnovíš tažením dolů.
+              </Text>
+              <TextInput
+                style={styles.input}
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="https://...."
+                placeholderTextColor={colors.textDim}
+                value={draftUrl}
+                onChangeText={setDraftUrl}
+              />
+              {saveMessage ? <Text style={styles.empty}>{saveMessage}</Text> : null}
+              <Pressable style={styles.primaryBtn} onPress={useGithubFeed}>
+                <Text style={styles.primaryBtnText}>Použít GitHub feed</Text>
+              </Pressable>
+              <Pressable style={styles.secondaryBtn} onPress={saveSettings}>
+                <Text style={styles.secondaryBtnText}>Uložit ruční adresu</Text>
+              </Pressable>
+
+              <Text style={styles.settingsSection}>Skryté tituly</Text>
+              {hiddenEntries.length === 0 ? (
+                <Text style={styles.empty}>Žádné trvale smazané tituly.</Text>
+              ) : (
+                hiddenEntries.map((entry) => (
+                  <View key={entry.id} style={styles.hiddenRow}>
+                    <Text style={styles.hiddenRowTitle} numberOfLines={2}>
+                      {entry.title ?? "Titul mimo aktuální feed"}
+                    </Text>
+                    <Pressable
+                      style={styles.hiddenRestoreBtn}
+                      onPress={() => onRestoreHidden(entry.id)}
+                    >
+                      <Text style={styles.hiddenRestoreText}>Obnovit</Text>
+                    </Pressable>
+                  </View>
+                ))
+              )}
+
+              <Text style={styles.versionLine}>Film Radar 1.0.0</Text>
+              <Pressable style={styles.secondaryBtn} onPress={() => setSettingsOpen(false)}>
+                <Text style={styles.secondaryBtnText}>Zavřít</Text>
+              </Pressable>
+            </ScrollView>
           </View>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: colors.bg, paddingTop: 52 },
+  safe: { flex: 1, backgroundColor: colors.bg },
   center: {
     flex: 1,
     paddingHorizontal: 20,
@@ -606,8 +691,8 @@ const styles = StyleSheet.create({
   tabText: {
     fontFamily: "DMSans_700Bold",
     color: colors.textDim,
-    fontSize: 11,
-    letterSpacing: 0.3,
+    fontSize: 10,
+    letterSpacing: 0.2,
   },
   tabTextActive: { color: colors.accent },
   tabBadge: {
@@ -647,6 +732,78 @@ const styles = StyleSheet.create({
     fontFamily: "DMSans_400Regular",
     color: colors.textDim,
     fontSize: 11,
+  },
+  errorBanner: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    padding: 10,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "rgba(224,122,106,0.45)",
+    backgroundColor: "rgba(185,28,28,0.12)",
+  },
+  errorBannerTitle: {
+    fontFamily: "DMSans_700Bold",
+    color: "#F4B4A8",
+    fontSize: 13,
+  },
+  errorBannerText: {
+    fontFamily: "DMSans_400Regular",
+    color: colors.textMuted,
+    fontSize: 12,
+    lineHeight: 16,
+  },
+  errorBannerBtn: {
+    borderWidth: 1,
+    borderColor: colors.accent,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  errorBannerBtnText: {
+    fontFamily: "DMSans_700Bold",
+    color: colors.accent,
+    fontSize: 12,
+  },
+  settingsSection: {
+    fontFamily: "DMSans_700Bold",
+    color: colors.text,
+    fontSize: 14,
+    marginTop: 4,
+  },
+  hiddenRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.cardBorder,
+  },
+  hiddenRowTitle: {
+    flex: 1,
+    fontFamily: "DMSans_400Regular",
+    color: colors.textMuted,
+    fontSize: 13,
+  },
+  hiddenRestoreBtn: {
+    borderWidth: 1,
+    borderColor: colors.accent,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+  },
+  hiddenRestoreText: {
+    fontFamily: "DMSans_700Bold",
+    color: colors.accent,
+    fontSize: 12,
+  },
+  versionLine: {
+    fontFamily: "DMSans_400Regular",
+    color: colors.textDim,
+    fontSize: 12,
+    textAlign: "center",
+    marginTop: 8,
   },
   list: { paddingHorizontal: 12, paddingBottom: 36, gap: 10 },
   card: {
@@ -764,11 +921,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontSize: 14,
   },
-  errorTitle: {
-    fontFamily: "DMSans_700Bold",
-    color: colors.text,
-    fontSize: 18,
-  },
   error: {
     fontFamily: "DMSans_400Regular",
     color: "#E07A6A",
@@ -777,6 +929,8 @@ const styles = StyleSheet.create({
   },
   primaryBtn: {
     alignSelf: "stretch",
+    width: "100%",
+    maxWidth: 320,
     backgroundColor: colors.accent,
     paddingVertical: 13,
     borderRadius: 14,
