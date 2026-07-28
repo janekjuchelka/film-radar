@@ -443,15 +443,15 @@ export default function App() {
                     <View style={styles.actions}>
                       <Pressable
                         onPress={() => onToggleWatch(item.id)}
-                        style={[styles.outlineBtn, onWatchlist && styles.outlineBtnOn]}
+                        style={[styles.watchBtn, onWatchlist && styles.watchBtnOn]}
                       >
                         <Text
                           style={[
-                            styles.outlineBtnText,
-                            onWatchlist && styles.outlineBtnTextOn,
+                            styles.watchBtnText,
+                            onWatchlist && styles.watchBtnTextOn,
                           ]}
                         >
-                          {onWatchlist ? "★ Watchlist" : "Watchlist"}
+                          {onWatchlist ? "★ V watchlistu" : "+ Watchlist"}
                         </Text>
                       </Pressable>
                     </View>
@@ -494,17 +494,25 @@ export default function App() {
                 </View>
 
                 <Pressable
-                  style={styles.primaryBtn}
-                  onPress={() => detail.csfdUrl && Linking.openURL(detail.csfdUrl)}
+                  style={[styles.primaryBtn, watchlist.includes(detail.id) && styles.primaryBtnSoft]}
+                  onPress={() => onToggleWatch(detail.id)}
                 >
-                  <Text style={styles.primaryBtnText}>Otevřít na ČSFD</Text>
-                </Pressable>
-                <Pressable style={styles.secondaryBtn} onPress={() => onToggleWatch(detail.id)}>
-                  <Text style={styles.secondaryBtnText}>
+                  <Text
+                    style={[
+                      styles.primaryBtnText,
+                      watchlist.includes(detail.id) && styles.primaryBtnTextSoft,
+                    ]}
+                  >
                     {watchlist.includes(detail.id)
                       ? "Odebrat z watchlistu"
                       : "Přidat do watchlistu"}
                   </Text>
+                </Pressable>
+                <Pressable
+                  style={styles.sheetOutlineBtn}
+                  onPress={() => detail.csfdUrl && Linking.openURL(detail.csfdUrl)}
+                >
+                  <Text style={styles.sheetOutlineBtnText}>Otevřít na ČSFD</Text>
                 </Pressable>
                 <Pressable style={styles.dangerBtn} onPress={() => onDismiss(detail.id)}>
                   <Text style={styles.dangerBtnText}>Smazat natrvalo</Text>
@@ -779,23 +787,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
   providerRow: { flexDirection: "row", gap: 8, flexWrap: "wrap" },
-  actions: { flexDirection: "row", gap: 8 },
-  outlineBtn: {
-    flex: 1,
+  actions: {
+    flexDirection: "row",
+    gap: 8,
+    justifyContent: "flex-start",
+  },
+  watchBtn: {
     borderWidth: 1.5,
     borderColor: colors.accent,
-    borderRadius: 12,
-    paddingVertical: 9,
+    borderRadius: 999,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
     alignItems: "center",
     backgroundColor: "transparent",
+    alignSelf: "flex-start",
   },
-  outlineBtnOn: { backgroundColor: colors.accentSoft },
-  outlineBtnText: {
+  watchBtnOn: { backgroundColor: colors.accentSoft },
+  watchBtnText: {
     fontFamily: "DMSans_700Bold",
     color: colors.accent,
     fontSize: 12,
   },
-  outlineBtnTextOn: { color: colors.accent },
+  watchBtnTextOn: { color: colors.accent },
   emptyBox: { paddingTop: 48, paddingHorizontal: 12, gap: 8 },
   emptyTitle: {
     fontFamily: "DMSans_700Bold",
@@ -828,6 +841,30 @@ const styles = StyleSheet.create({
   primaryBtnText: {
     fontFamily: "DMSans_700Bold",
     color: "#fff",
+    fontSize: 14,
+  },
+  primaryBtnSoft: {
+    backgroundColor: colors.accentSoft,
+    borderWidth: 1,
+    borderColor: colors.accent,
+  },
+  primaryBtnTextSoft: {
+    color: colors.accent,
+  },
+  sheetOutlineBtn: {
+    alignSelf: "stretch",
+    width: "100%",
+    maxWidth: 320,
+    paddingVertical: 13,
+    borderRadius: 14,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: colors.cardBorder,
+    backgroundColor: "transparent",
+  },
+  sheetOutlineBtnText: {
+    fontFamily: "DMSans_700Bold",
+    color: colors.text,
     fontSize: 14,
   },
   secondaryBtn: {
