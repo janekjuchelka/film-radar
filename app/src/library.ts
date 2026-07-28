@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const WATCHLIST_KEY = "filmradar.watchlist";
-const SEEN_KEY = "filmradar.seen";
+const LEGACY_SEEN_KEY = "filmradar.seen";
 /** Trvale smazané tituly — po refreshi ani po restartu se nevrátí. */
 const HIDDEN_KEY = "filmradar.hidden";
 
@@ -26,12 +26,16 @@ async function writeIds(key: string, ids: string[]): Promise<void> {
 }
 
 export async function loadLibrary() {
-  const [watchlist, seen, hidden] = await Promise.all([
+  try {
+    await AsyncStorage.removeItem(LEGACY_SEEN_KEY);
+  } catch {
+    // ignore stale legacy storage
+  }
+  const [watchlist, hidden] = await Promise.all([
     readIds(WATCHLIST_KEY),
-    readIds(SEEN_KEY),
     readIds(HIDDEN_KEY),
   ]);
-  return { watchlist, seen, hidden };
+  return { watchlist, hidden };
 }
 
 export async function toggleWatchlist(id: string, current: string[]) {
@@ -39,20 +43,6 @@ export async function toggleWatchlist(id: string, current: string[]) {
     ? current.filter((x) => x !== id)
     : [...current, id];
   await writeIds(WATCHLIST_KEY, next);
-  return next;
-}
-
-export async function markSeen(id: string, seen: string[], watchlist: string[]) {
-  const nextSeen = seen.includes(id) ? seen : [...seen, id];
-  const nextWatch = watchlist.filter((x) => x !== id);
-  await writeIds(SEEN_KEY, nextSeen);
-  await writeIds(WATCHLIST_KEY, nextWatch);
-  return { seen: nextSeen, watchlist: nextWatch };
-}
-
-export async function unmarkSeen(id: string, seen: string[]) {
-  const next = seen.filter((x) => x !== id);
-  await writeIds(SEEN_KEY, next);
   return next;
 }
 
@@ -78,12 +68,6 @@ export async function hideTitle(
   _watchlist?: string[]
 ) {
   return hideTitleForever(id);
-}
-
-export async function unhideTitle(id: string, hidden: string[]) {
-  const next = hidden.filter((x) => x !== id);
-  await writeIds(HIDDEN_KEY, next);
-  return next;
 }
 
 export function isFresh(iso: string, days = 3): boolean {

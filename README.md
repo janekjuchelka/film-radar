@@ -23,11 +23,10 @@ Podrobnosti hostingu: [HOSTING-ZDARMA.md](HOSTING-ZDARMA.md).
 
 | Oblast | Popis |
 |--------|--------|
-| **Objevuj** | Tituly, které jsi ještě neoznačil jako viděné |
+| **Objevuj** | Všechny aktuální tituly mimo Watchlist a ručně skryté položky |
 | **Nové** | Čerstvé novinky (cca 3 dny) |
 | **Watchlist** | Uložené k pozdějšímu sledování |
-| **Viděno** | Historie označených titulů |
-| **Nastavení ⚙** | Vlastní URL feedu, obnova skrytých titulů |
+| **Nastavení ⚙** | Vlastní URL feedu |
 
 ## Vývoj a build APK
 

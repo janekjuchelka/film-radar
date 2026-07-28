@@ -40,10 +40,7 @@ import {
   hideTitleForever,
   isFresh,
   loadLibrary,
-  markSeen,
   toggleWatchlist,
-  unhideTitle,
-  unmarkSeen,
 } from "./src/library";
 import {
   SwipeDismissRow,
@@ -53,7 +50,7 @@ import {
 import { colors } from "./src/theme";
 import type { ProviderFilter, TitleItem, TitleTypeFilter } from "./src/types";
 
-type TabKey = "discover" | "fresh" | "watchlist" | "seen";
+type TabKey = "discover" | "fresh" | "watchlist";
 
 const BOTTOM_SAFE = 40;
 
@@ -77,7 +74,6 @@ export default function App() {
   const [providerFilter, setProviderFilter] = useState<ProviderFilter>("all");
 
   const [watchlist, setWatchlist] = useState<string[]>([]);
-  const [seen, setSeen] = useState<string[]>([]);
   const [hidden, setHidden] = useState<string[]>([]);
 
   const [apiUrl, setApiUrlState] = useState(DEFAULT_API_BASE_URL);
@@ -98,7 +94,6 @@ export default function App() {
       setApiUrlState(url);
       setDraftUrl(url);
       setWatchlist(library.watchlist);
-      setSeen(library.seen);
       setHidden(library.hidden);
       if (cache?.titles?.length) {
         setTitles(cache.titles);
@@ -158,43 +153,23 @@ export default function App() {
       list = list.filter((t) => t.providers?.includes(providerFilter));
     }
     if (tab === "fresh") {
-      list = list.filter(
-        (t) => isFresh(t.eventAt ?? t.firstSeenAt) && !seen.includes(t.id)
-      );
+      list = list.filter((t) => isFresh(t.eventAt ?? t.firstSeenAt));
     } else if (tab === "watchlist") {
       list = list.filter((t) => watchlist.includes(t.id));
-    } else if (tab === "seen") {
-      list = list.filter((t) => seen.includes(t.id));
-    } else {
-      list = list.filter((t) => !seen.includes(t.id));
     }
     return list;
-  }, [titles, typeFilter, providerFilter, tab, seen, watchlist, hidden]);
+  }, [titles, typeFilter, providerFilter, tab, watchlist, hidden]);
 
   const freshCount = useMemo(
     () =>
       titles.filter(
-        (t) =>
-          !hidden.includes(t.id) &&
-          isFresh(t.eventAt ?? t.firstSeenAt) &&
-          !seen.includes(t.id)
+        (t) => !hidden.includes(t.id) && isFresh(t.eventAt ?? t.firstSeenAt)
       ).length,
-    [titles, seen, hidden]
+    [titles, hidden]
   );
 
   async function onToggleWatch(id: string) {
     setWatchlist(await toggleWatchlist(id, watchlist));
-  }
-
-  async function onMarkSeen(id: string) {
-    const next = await markSeen(id, seen, watchlist);
-    setSeen(next.seen);
-    setWatchlist(next.watchlist);
-    setDetail(null);
-  }
-
-  async function onUnmarkSeen(id: string) {
-    setSeen(await unmarkSeen(id, seen));
   }
 
   async function onDismiss(id: string) {
@@ -234,15 +209,6 @@ export default function App() {
       setSaveMessage(err instanceof Error ? err.message : String(err));
     }
   }
-
-  async function onRestoreHidden(id: string) {
-    setHidden(await unhideTitle(id, hidden));
-  }
-
-  const hiddenEntries = useMemo(() => {
-    const byId = new Map(titles.map((t) => [t.id, t]));
-    return hidden.map((id) => ({ id, title: byId.get(id)?.title ?? null }));
-  }, [hidden, titles]);
 
   const showInitialSpinner = loading && titles.length === 0;
   const showBlockingError = !loading && !!error && titles.length === 0;
@@ -287,8 +253,7 @@ export default function App() {
             [
               ["discover", "OBJEVUJ", null as number | null],
               ["fresh", "NOVÉ", freshCount || null],
-              ["watchlist", "ULOŽENÉ", watchlist.length || null],
-              ["seen", "VIDĚNO", seen.length || null],
+              ["watchlist", "WATCHLIST", watchlist.length || null],
             ] as const
           ).map(([key, label, count]) => {
             const active = tab === key;
@@ -414,16 +379,12 @@ export default function App() {
                   ? "Watchlist je prázdný"
                   : tab === "fresh"
                     ? "Žádné čerstvé novinky"
-                    : tab === "seen"
-                      ? "Zatím nic viděného"
-                      : "Nic k zobrazení"}
+                    : "Nic k zobrazení"}
               </Text>
               <Text style={styles.empty}>
                 {tab === "watchlist"
                   ? "Přidej tituly tlačítkem Watchlist."
-                  : tab === "seen"
-                    ? "Označ tituly jako Viděl jsem."
-                    : "Změň filtr, nebo stáhni seznam dolů pro obnovení."}
+                  : "Změň filtr, nebo stáhni seznam dolů pro obnovení."}
               </Text>
             </View>
           }
@@ -493,12 +454,6 @@ export default function App() {
                           {onWatchlist ? "★ Watchlist" : "Watchlist"}
                         </Text>
                       </Pressable>
-                      <Pressable
-                        onPress={() => onMarkSeen(item.id)}
-                        style={styles.filledBtn}
-                      >
-                        <Text style={styles.filledBtnText}>Viděl jsem</Text>
-                      </Pressable>
                     </View>
                   </View>
                 </View>
@@ -551,18 +506,6 @@ export default function App() {
                       : "Přidat do watchlistu"}
                   </Text>
                 </Pressable>
-                {seen.includes(detail.id) ? (
-                  <Pressable
-                    style={styles.secondaryBtn}
-                    onPress={() => onUnmarkSeen(detail.id)}
-                  >
-                    <Text style={styles.secondaryBtnText}>Vrátit do Objevuj</Text>
-                  </Pressable>
-                ) : (
-                  <Pressable style={styles.secondaryBtn} onPress={() => onMarkSeen(detail.id)}>
-                    <Text style={styles.secondaryBtnText}>Označit jako viděné</Text>
-                  </Pressable>
-                )}
                 <Pressable style={styles.dangerBtn} onPress={() => onDismiss(detail.id)}>
                   <Text style={styles.dangerBtnText}>Smazat natrvalo</Text>
                 </Pressable>
@@ -604,25 +547,6 @@ export default function App() {
               <Pressable style={styles.secondaryBtn} onPress={saveSettings}>
                 <Text style={styles.secondaryBtnText}>Uložit ruční adresu</Text>
               </Pressable>
-
-              <Text style={styles.settingsSection}>Skryté tituly</Text>
-              {hiddenEntries.length === 0 ? (
-                <Text style={styles.empty}>Žádné trvale smazané tituly.</Text>
-              ) : (
-                hiddenEntries.map((entry) => (
-                  <View key={entry.id} style={styles.hiddenRow}>
-                    <Text style={styles.hiddenRowTitle} numberOfLines={2}>
-                      {entry.title ?? "Titul mimo aktuální feed"}
-                    </Text>
-                    <Pressable
-                      style={styles.hiddenRestoreBtn}
-                      onPress={() => onRestoreHidden(entry.id)}
-                    >
-                      <Text style={styles.hiddenRestoreText}>Obnovit</Text>
-                    </Pressable>
-                  </View>
-                ))
-              )}
 
               <Text style={styles.versionLine}>Film Radar 1.0.0</Text>
               <Pressable style={styles.secondaryBtn} onPress={() => setSettingsOpen(false)}>
@@ -711,12 +635,15 @@ const styles = StyleSheet.create({
   },
   chipWrap: { flexDirection: "row", flexWrap: "wrap", gap: 6 },
   chip: {
+    height: 36,
+    minWidth: 52,
     borderWidth: 1,
     borderColor: colors.chipBorder,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+    paddingHorizontal: 12,
     borderRadius: 10,
     backgroundColor: colors.chip,
+    justifyContent: "center",
+    alignItems: "center",
   },
   chipActive: {
     borderColor: colors.accent,
@@ -771,32 +698,6 @@ const styles = StyleSheet.create({
     color: colors.text,
     fontSize: 14,
     marginTop: 4,
-  },
-  hiddenRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-    paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.cardBorder,
-  },
-  hiddenRowTitle: {
-    flex: 1,
-    fontFamily: "DMSans_400Regular",
-    color: colors.textMuted,
-    fontSize: 13,
-  },
-  hiddenRestoreBtn: {
-    borderWidth: 1,
-    borderColor: colors.accent,
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-  },
-  hiddenRestoreText: {
-    fontFamily: "DMSans_700Bold",
-    color: colors.accent,
-    fontSize: 12,
   },
   versionLine: {
     fontFamily: "DMSans_400Regular",
@@ -895,18 +796,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   outlineBtnTextOn: { color: colors.accent },
-  filledBtn: {
-    flex: 1,
-    backgroundColor: colors.accent,
-    borderRadius: 12,
-    paddingVertical: 9,
-    alignItems: "center",
-  },
-  filledBtnText: {
-    fontFamily: "DMSans_700Bold",
-    color: "#fff",
-    fontSize: 12,
-  },
   emptyBox: { paddingTop: 48, paddingHorizontal: 12, gap: 8 },
   emptyTitle: {
     fontFamily: "DMSans_700Bold",
