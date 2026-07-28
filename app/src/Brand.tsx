@@ -153,16 +153,18 @@ const styles = StyleSheet.create({
   },
   filterChipAll: {
     height: FILTER_CHIP_H,
+    minWidth: 52,
     paddingHorizontal: 12,
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
     borderColor: colors.chipBorder,
     borderRadius: 10,
-    backgroundColor: "transparent",
+    backgroundColor: colors.chip,
   },
   filterChipAllActive: {
     borderColor: colors.accent,
+    backgroundColor: colors.accentSoft,
   },
   filterText: {
     fontFamily: "DMSans_500Medium",
