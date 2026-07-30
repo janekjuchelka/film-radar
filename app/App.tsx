@@ -242,7 +242,7 @@ export default function App() {
           </View>
         </View>
         <Text style={styles.subtitle} numberOfLines={1}>
-          Novinky · ČSFD ≥ 70 %
+          Novinky · ČSFD ≥ 60 %
         </Text>
         <Text style={styles.updated} numberOfLines={1}>
           {formatUpdatedAt(updatedAt)}

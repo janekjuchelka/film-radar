@@ -37,7 +37,7 @@ jobs:
         env:
           SCAN_PER_PROVIDER: "30"
           CSFD_DELAY_MS: "1500"
-          MIN_CSFD_RATING: "70"
+          MIN_CSFD_RATING: "60"
 
       - name: Commit feed + DB
         run: |

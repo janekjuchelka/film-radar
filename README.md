@@ -1,6 +1,6 @@
 # Film Radar
 
-Osobní Android aplikace: novinky na **Netflix**, **Disney+** a **Oneplay** (Česko) s hodnocením **ČSFD ≥ 70 %**.
+Osobní Android aplikace: novinky na **Netflix**, **Disney+** a **Oneplay** (Česko) s hodnocením **ČSFD ≥ 60 %**.
 
 ## Jak to funguje
 

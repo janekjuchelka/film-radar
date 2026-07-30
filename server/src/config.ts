@@ -10,7 +10,7 @@ function num(name: string, fallback: number): number {
 export const config = {
   port: num("PORT", 3847),
   host: process.env.API_HOST || "0.0.0.0",
-  minCsfdRating: num("MIN_CSFD_RATING", 70),
+  minCsfdRating: num("MIN_CSFD_RATING", 60),
   scanCron: process.env.SCAN_CRON || "0 8 * * *",
   scanPerProvider: num("SCAN_PER_PROVIDER", 40),
   csfdDelayMs: num("CSFD_DELAY_MS", 1500),

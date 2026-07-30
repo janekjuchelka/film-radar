@@ -13,7 +13,7 @@
     },
     "android": {
       "package": "cz.personal.filmradar",
-      "versionCode": 22,
+      "versionCode": 23,
       "usesCleartextTraffic": false,
       "adaptiveIcon": {
         "backgroundColor": "#0B0D14",

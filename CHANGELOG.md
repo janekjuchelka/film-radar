@@ -14,3 +14,7 @@
 - Odebrána funkce `Viděno` / `Viděl jsem`.
 - Watchlist sjednocený napříč celou appkou.
 - Smazané tituly zůstávají trvale skryté bez UI pro obnovu.
+
+## 1.0.2 (2026-07-30)
+
+- Práh ČSFD snížen z 70 % na **60 %** (sken + export feedu).
