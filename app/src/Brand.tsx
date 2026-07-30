@@ -1,68 +1,56 @@
-import {
-  Image,
-  ImageSourcePropType,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import { colors } from "./theme";
 
 const FILTER_CHIP_H = 36;
 
-const PROVIDER_IMAGES: Record<
+const PROVIDER_META: Record<
   string,
-  { source: ImageSourcePropType; aspect: number }
+  { short: string; label: string; tint: string }
 > = {
-  netflix: { source: require("../assets/provider-netflix.png"), aspect: 1 },
-  disney: { source: require("../assets/provider-disney.png"), aspect: 2.15 },
-  oneplay: { source: require("../assets/provider-oneplay.png"), aspect: 1.95 },
+  netflix: { short: "N", label: "Netflix", tint: "#B91C1C" },
+  disney: { short: "D+", label: "Disney+", tint: "#2563EB" },
+  oneplay: { short: "O", label: "Oneplay", tint: "#0E7490" },
 };
 
-function filterChipLogoFrame(provider: string) {
-  const spec = PROVIDER_IMAGES[provider];
-  if (!spec) return null;
-  const h = FILTER_CHIP_H;
-  const w = Math.round(h * spec.aspect);
-  const radius = Math.round(h * 0.2);
-  return { w, h, radius, source: spec.source };
-}
-
-/** Ikona služby — oficiální loga Netflix / Disney+ / Oneplay. */
+/** Neutrální značka služby (ne oficiální logo). */
 export function ProviderLogo({
   provider,
-  size = 18,
+  size = 22,
 }: {
   provider: string;
   size?: number;
 }) {
-  const spec = PROVIDER_IMAGES[provider];
-  if (spec) {
-    const h = size;
-    const w = Math.round(size * spec.aspect);
-    const radius = Math.round(Math.min(w, h) * 0.22);
+  const meta = PROVIDER_META[provider];
+  if (!meta) {
     return (
-      <Image
-        source={spec.source}
-        style={{ width: w, height: h, borderRadius: radius }}
-        resizeMode="cover"
-      />
+      <View style={[styles.badge, { width: size, height: size, borderRadius: size * 0.28 }]}>
+        <Text style={[styles.badgeText, { fontSize: size * 0.42 }]}>?</Text>
+      </View>
     );
   }
+  const width = Math.round(size * (meta.short.length > 1 ? 1.35 : 1));
   return (
-    <View style={[styles.fallback, { width: size, height: size }]}>
-      <Text style={{ color: "#fff", fontSize: size * 0.5 }}>?</Text>
+    <View
+      style={[
+        styles.badge,
+        {
+          width,
+          height: size,
+          borderRadius: size * 0.28,
+          backgroundColor: meta.tint,
+        },
+      ]}
+    >
+      <Text style={[styles.badgeText, { fontSize: size * 0.4 }]}>{meta.short}</Text>
     </View>
   );
 }
 
-/** Logo u titulku na kartě — bez rámečku. */
 export function ProviderMark({ provider }: { provider: string }) {
-  const wide = provider === "disney" || provider === "oneplay";
-  return <ProviderLogo provider={provider} size={wide ? 20 : 26} />;
+  return <ProviderLogo provider={provider} size={22} />;
 }
 
-/** Filtr služeb: logo na celou plochu obrysu, nebo text „Vše“. */
+/** Filtr služeb: textové chipy, bez oficiálních log. */
 export function ProviderFilterChip({
   provider,
   label,
@@ -74,45 +62,17 @@ export function ProviderFilterChip({
   active: boolean;
   onPress: () => void;
 }) {
-  const frame = filterChipLogoFrame(provider);
-
-  if (frame) {
-    return (
-      <Pressable
-        onPress={onPress}
-        accessibilityLabel={label}
-        accessibilityRole="button"
-        accessibilityState={{ selected: active }}
-        style={[
-          styles.filterLogoFrame,
-          {
-            width: frame.w,
-            height: frame.h,
-            borderRadius: frame.radius,
-          },
-          active && styles.filterLogoFrameActive,
-        ]}
-      >
-        <Image
-          source={frame.source}
-          style={{ width: frame.w, height: frame.h }}
-          resizeMode="cover"
-        />
-      </Pressable>
-    );
-  }
-
   return (
     <Pressable
       onPress={onPress}
       accessibilityLabel={label}
       accessibilityRole="button"
       accessibilityState={{ selected: active }}
-      style={[
-        styles.filterChipAll,
-        active && styles.filterChipAllActive,
-      ]}
+      style={[styles.filterChip, active && styles.filterChipActive]}
     >
+      {provider !== "all" ? (
+        <ProviderLogo provider={provider} size={18} />
+      ) : null}
       <Text
         style={[
           styles.filterText,
@@ -136,25 +96,22 @@ export function BrandMark() {
 }
 
 const styles = StyleSheet.create({
-  fallback: {
+  badge: {
     backgroundColor: "#3A4150",
-    borderRadius: 6,
     alignItems: "center",
     justifyContent: "center",
   },
-  filterLogoFrame: {
-    overflow: "hidden",
-    borderWidth: 1,
-    borderColor: colors.chipBorder,
-    padding: 0,
+  badgeText: {
+    fontFamily: "DMSans_700Bold",
+    color: "#fff",
+    letterSpacing: 0.2,
   },
-  filterLogoFrameActive: {
-    borderColor: colors.accent,
-  },
-  filterChipAll: {
+  filterChip: {
     height: FILTER_CHIP_H,
     minWidth: 52,
     paddingHorizontal: 12,
+    flexDirection: "row",
+    gap: 6,
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 1,
@@ -162,7 +119,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: colors.chip,
   },
-  filterChipAllActive: {
+  filterChipActive: {
     borderColor: colors.accent,
     backgroundColor: colors.accentSoft,
   },

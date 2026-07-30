@@ -2,6 +2,7 @@ import { config } from "./config.js";
 import { matchCsfd } from "./csfd.js";
 import { getTitle, migrateFeedEligibility, setScanMeta, upsertTitle } from "./db.js";
 import { exportFeed } from "./export-feed.js";
+import { isRecentPremiere } from "./freshness.js";
 import { fetchCandidates } from "./justwatch.js";
 import type { FeedEventType, TitleRecord } from "./types.js";
 
@@ -9,13 +10,6 @@ let scanning = false;
 
 export function isScanning() {
   return scanning;
-}
-
-function isLikelyNewSeries(year: number | null, seasonCount: number | null): boolean {
-  const yearCut = new Date().getFullYear() - 1;
-  if (seasonCount != null && seasonCount <= 1) return true;
-  if (year != null && year >= yearCut) return true;
-  return false;
 }
 
 export async function scanDaily(): Promise<Record<string, number>> {
@@ -62,24 +56,34 @@ export async function scanDaily(): Promise<Record<string, number>> {
 
         if (candidate.type === "movie") {
           if (!existing) {
-            eventType = "new_movie";
-            eventAt = now;
-            feedEligible = qualified;
+            if (isRecentPremiere(candidate.year)) {
+              eventType = "new_movie";
+              eventAt = now;
+              feedEligible = qualified;
+            } else {
+              // Starý katalog — jen sledovat, ne jako „novinka“.
+              eventType = null;
+              eventAt = null;
+              feedEligible = false;
+              stats.trackedOnly += 1;
+            }
+          } else if (existing.eventType === "new_movie") {
+            feedEligible = qualified && isRecentPremiere(candidate.year);
           } else {
-            feedEligible = qualified && (existing.feedEligible || existing.eventType === "new_movie");
+            feedEligible = false;
           }
         } else {
           const prevSeasons = existing?.seasonCount ?? null;
           const nextSeasons = candidate.seasonCount;
 
           if (!existing) {
-            if (isLikelyNewSeries(candidate.year, nextSeasons)) {
+            if (isRecentPremiere(candidate.year)) {
               eventType = "new_series";
               eventAt = now;
               feedEligible = qualified;
               stats.newSeries += 1;
             } else {
-              // Starý běžící seriál (nový díl v trendu) — jen sleduj počet řad.
+              // Starý běžící seriál — jen sleduj počet řad.
               eventType = null;
               eventAt = null;
               feedEligible = false;
@@ -94,17 +98,12 @@ export async function scanDaily(): Promise<Record<string, number>> {
             eventAt = now;
             feedEligible = qualified;
             stats.newSeasons += 1;
-          } else if (
-            nextSeasons != null &&
-            prevSeasons == null &&
-            isLikelyNewSeries(candidate.year, nextSeasons)
-          ) {
-            // Doplněný seasonCount u legacy záznamu — neber jako novou řadu.
-            if (!eventType && isLikelyNewSeries(candidate.year, nextSeasons)) {
-              eventType = "new_series";
-              eventAt = existing.firstSeenAt;
-              feedEligible = qualified;
-            }
+          } else if (existing.eventType === "new_season") {
+            feedEligible = qualified;
+          } else if (existing.eventType === "new_series") {
+            feedEligible = qualified && isRecentPremiere(candidate.year);
+          } else {
+            feedEligible = false;
           }
         }
 

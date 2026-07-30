@@ -1,5 +1,5 @@
 {
-  "count": 25,
+  "count": 18,
   "minRating": 60,
   "updatedAt": "2026-07-29T16:12:58.360Z",
   "meta": {
@@ -16,72 +16,6 @@
     }
   },
   "titles": [
-    {
-      "id": "ts219003",
-      "justwatchId": "ts219003",
-      "title": "Moon Knight",
-      "year": 2022,
-      "type": "series",
-      "csfdId": 844725,
-      "csfdRating": 72,
-      "csfdUrl": "https://www.csfd.cz/film/844725/prehled/",
-      "posterUrl": "https://images.justwatch.com/poster/277939929/s718/moon-knight.jpg",
-      "providers": [
-        "disney"
-      ],
-      "firstSeenAt": "2026-07-29T12:33:19.565Z",
-      "lastSeenAt": "2026-07-29T16:12:58.277Z",
-      "qualified": true,
-      "seasonCount": 1,
-      "latestSeason": 1,
-      "eventType": "new_series",
-      "eventAt": "2026-07-29T12:33:19.565Z",
-      "feedEligible": true
-    },
-    {
-      "id": "tm1904",
-      "justwatchId": "tm1904",
-      "title": "Avatar: The Way of Water",
-      "year": 2022,
-      "type": "movie",
-      "csfdId": 277495,
-      "csfdRating": 79,
-      "csfdUrl": "https://www.csfd.cz/film/277495/prehled/",
-      "posterUrl": "https://images.justwatch.com/poster/302883423/s718/avatar-2.jpg",
-      "providers": [
-        "disney"
-      ],
-      "firstSeenAt": "2026-07-27T13:56:49.242Z",
-      "lastSeenAt": "2026-07-27T17:21:25.151Z",
-      "qualified": true,
-      "seasonCount": null,
-      "latestSeason": null,
-      "eventType": "new_movie",
-      "eventAt": "2026-07-27T13:56:49.242Z",
-      "feedEligible": true
-    },
-    {
-      "id": "tm135853",
-      "justwatchId": "tm135853",
-      "title": "Avatar",
-      "year": 2009,
-      "type": "movie",
-      "csfdId": 228329,
-      "csfdRating": 83,
-      "csfdUrl": "https://www.csfd.cz/film/228329/prehled/",
-      "posterUrl": "https://images.justwatch.com/poster/111516399/s718/avatar.jpg",
-      "providers": [
-        "disney"
-      ],
-      "firstSeenAt": "2026-07-27T13:56:38.590Z",
-      "lastSeenAt": "2026-07-27T17:21:25.139Z",
-      "qualified": true,
-      "seasonCount": null,
-      "latestSeason": null,
-      "eventType": "new_movie",
-      "eventAt": "2026-07-27T13:56:38.590Z",
-      "feedEligible": true
-    },
     {
       "id": "ts461186",
       "justwatchId": "ts461186",
@@ -102,28 +36,6 @@
       "latestSeason": 1,
       "eventType": "new_series",
       "eventAt": "2026-07-27T13:56:18.714Z",
-      "feedEligible": true
-    },
-    {
-      "id": "tm157099",
-      "justwatchId": "tm157099",
-      "title": "Interstellar",
-      "year": 2014,
-      "type": "movie",
-      "csfdId": 227786,
-      "csfdRating": 86,
-      "csfdUrl": "https://www.csfd.cz/film/227786/prehled/",
-      "posterUrl": "https://images.justwatch.com/poster/251525963/s718/interstelar.jpg",
-      "providers": [
-        "netflix"
-      ],
-      "firstSeenAt": "2026-07-26T10:55:58.455Z",
-      "lastSeenAt": "2026-07-27T17:21:25.075Z",
-      "qualified": true,
-      "seasonCount": null,
-      "latestSeason": null,
-      "eventType": "new_movie",
-      "eventAt": "2026-07-26T10:55:58.455Z",
       "feedEligible": true
     },
     {
@@ -256,28 +168,6 @@
       "latestSeason": 1,
       "eventType": "new_series",
       "eventAt": "2026-07-24T12:03:29.639Z",
-      "feedEligible": true
-    },
-    {
-      "id": "ts81987",
-      "justwatchId": "ts81987",
-      "title": "Zasněná láska",
-      "year": 2018,
-      "type": "series",
-      "csfdId": 632005,
-      "csfdRating": 71,
-      "csfdUrl": "https://www.csfd.cz/film/632005/prehled/",
-      "posterUrl": "https://images.justwatch.com/poster/306836271/s718/zasnena-laska.jpg",
-      "providers": [
-        "oneplay"
-      ],
-      "firstSeenAt": "2026-07-24T12:03:15.272Z",
-      "lastSeenAt": "2026-07-29T16:12:58.308Z",
-      "qualified": true,
-      "seasonCount": 1,
-      "latestSeason": 1,
-      "eventType": "new_series",
-      "eventAt": "2026-07-24T12:03:15.272Z",
       "feedEligible": true
     },
     {
@@ -476,50 +366,6 @@
       "latestSeason": null,
       "eventType": "new_movie",
       "eventAt": "2026-07-24T12:00:00.048Z",
-      "feedEligible": true
-    },
-    {
-      "id": "ts285915",
-      "justwatchId": "ts285915",
-      "title": "Schodiště",
-      "year": 2022,
-      "type": "series",
-      "csfdId": 1010173,
-      "csfdRating": 71,
-      "csfdUrl": "https://www.csfd.cz/film/1010173/prehled/",
-      "posterUrl": "https://images.justwatch.com/poster/277385611/s718/the-staircase.jpg",
-      "providers": [
-        "netflix"
-      ],
-      "firstSeenAt": "2026-07-24T11:59:37.371Z",
-      "lastSeenAt": "2026-07-29T16:12:52.697Z",
-      "qualified": true,
-      "seasonCount": 1,
-      "latestSeason": 1,
-      "eventType": "new_series",
-      "eventAt": "2026-07-24T11:59:37.371Z",
-      "feedEligible": true
-    },
-    {
-      "id": "ts218232",
-      "justwatchId": "ts218232",
-      "title": "Zrádci",
-      "year": 2020,
-      "type": "series",
-      "csfdId": 616982,
-      "csfdRating": 72,
-      "csfdUrl": "https://www.csfd.cz/film/616982/prehled/",
-      "posterUrl": "https://images.justwatch.com/poster/321033071/s718/zradci.jpg",
-      "providers": [
-        "netflix"
-      ],
-      "firstSeenAt": "2026-07-24T11:58:46.838Z",
-      "lastSeenAt": "2026-07-27T17:21:25.063Z",
-      "qualified": true,
-      "seasonCount": 1,
-      "latestSeason": 1,
-      "eventType": "new_series",
-      "eventAt": "2026-07-24T11:58:46.838Z",
       "feedEligible": true
     },
     {

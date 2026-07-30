@@ -81,17 +81,25 @@ function extractNodes(connection: unknown): any[] {
 export async function fetchCandidates(perProvider: number): Promise<JustWatchCandidate[]> {
   const shortNames = await resolveProviderShortNames();
   const byId = new Map<string, JustWatchCandidate>();
+  const yearCut = new Date().getFullYear() - 2;
 
   for (const [providerKey, shortName] of Object.entries(shortNames) as [ProviderKey, string][]) {
-    // Recent catalog additions tend to surface in TRENDING / recent RELEASE_YEAR lists.
-    for (const sortBy of ["TRENDING", "RELEASE_YEAR"] as const) {
+    // TRENDING/POPULAR = katalog ke sledování řad; RELEASE_YEAR = čerstvé premiéry.
+    const passes: Array<{ sortBy: "TRENDING" | "POPULAR" | "RELEASE_YEAR"; minYear?: number }> = [
+      { sortBy: "TRENDING" },
+      { sortBy: "POPULAR" },
+      { sortBy: "RELEASE_YEAR", minYear: yearCut },
+    ];
+
+    for (const pass of passes) {
       const connection = await client.popular({
         country: COUNTRY,
         language: LANGUAGE,
         count: perProvider,
         providers: [shortName],
         objectTypes: ["MOVIE", "SHOW"],
-        sortBy,
+        sortBy: pass.sortBy,
+        ...(pass.minYear != null ? { minReleaseYear: pass.minYear } : {}),
       });
 
       for (const node of extractNodes(connection)) {

@@ -14,6 +14,6 @@ services:
       - key: MIN_CSFD_RATING
         value: "60"
       - key: SCAN_PER_PROVIDER
-        value: "40"
+        value: "50"
       - key: CSFD_DELAY_MS
         value: "1500"

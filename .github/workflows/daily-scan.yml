@@ -35,7 +35,7 @@ jobs:
       - name: Run daily scan
         run: npm run scan
         env:
-          SCAN_PER_PROVIDER: "30"
+          SCAN_PER_PROVIDER: "50"
           CSFD_DELAY_MS: "1500"
           MIN_CSFD_RATING: "60"
 

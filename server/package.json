@@ -10,6 +10,7 @@
     "start": "tsx src/index.ts",
     "scan": "tsx src/run-scan.ts",
     "export-feed": "tsx src/run-export.ts",
+    "migrate-feed": "tsx src/run-migrate-export.ts",
     "providers": "tsx src/list-providers.ts"
   },
   "engines": {

@@ -9,8 +9,8 @@ primary_region = "ams"
   API_HOST = "0.0.0.0"
   SCAN_CRON = "0 6 * * *"
   MIN_CSFD_RATING = "60"
+  SCAN_PER_PROVIDER = "50"
   SCAN_ON_START = "true"
-  SCAN_PER_PROVIDER = "30"
   CSFD_DELAY_MS = "1500"
 
 [http_service]

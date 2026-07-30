@@ -197,9 +197,9 @@
       "qualified": true,
       "seasonCount": 1,
       "latestSeason": 1,
-      "eventType": "new_series",
-      "eventAt": "2026-07-24T11:58:46.838Z",
-      "feedEligible": true
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts22280",
@@ -330,9 +330,9 @@
       "qualified": true,
       "seasonCount": 1,
       "latestSeason": 1,
-      "eventType": "new_series",
-      "eventAt": "2026-07-24T11:59:37.371Z",
-      "feedEligible": true
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts20233",
@@ -748,9 +748,9 @@
       "qualified": true,
       "seasonCount": 1,
       "latestSeason": 1,
-      "eventType": "new_series",
-      "eventAt": "2026-07-24T12:03:15.272Z",
-      "feedEligible": true
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts21567",
@@ -1210,9 +1210,9 @@
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
-      "eventType": "new_movie",
-      "eventAt": "2026-07-26T10:55:58.455Z",
-      "feedEligible": true
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts4",
@@ -1365,9 +1365,9 @@
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
-      "eventType": "new_movie",
-      "eventAt": "2026-07-27T13:56:38.590Z",
-      "feedEligible": true
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts81927",
@@ -1410,9 +1410,9 @@
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
-      "eventType": "new_movie",
-      "eventAt": "2026-07-27T13:56:49.242Z",
-      "feedEligible": true
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     },
     {
       "id": "ts20660",
@@ -1520,9 +1520,9 @@
       "qualified": true,
       "seasonCount": 1,
       "latestSeason": 1,
-      "eventType": "new_series",
-      "eventAt": "2026-07-29T12:33:19.565Z",
-      "feedEligible": true
+      "eventType": null,
+      "eventAt": null,
+      "feedEligible": false
     }
   ],
   "csfdCache": [

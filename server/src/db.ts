@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { isRecentPremiere } from "./freshness.js";
 import type { CsfdCacheEntry, DatabaseShape, TitleRecord } from "./types.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -42,10 +43,7 @@ function normalizeTitle(t: TitleRecord): TitleRecord {
     latestSeason: t.latestSeason ?? null,
     eventType: t.eventType ?? null,
     eventAt: t.eventAt ?? null,
-    feedEligible:
-      typeof t.feedEligible === "boolean"
-        ? t.feedEligible
-        : Boolean(t.qualified && (t.type === "movie" || (t.year != null && t.year >= new Date().getFullYear() - 1))),
+    feedEligible: typeof t.feedEligible === "boolean" ? t.feedEligible : false,
   };
 }
 
@@ -107,19 +105,71 @@ export function upsertTitle(title: TitleRecord): TitleRecord {
   return title;
 }
 
-/** Jednorázově vyčistí starý feed: staré seriály jen sledovat, ne ukazovat. */
+/**
+ * Vyčistí falešné „novinky“: ve feedu jen nedávné premiéry
+ * (nebo reálně detekovaná nová řada). Starý katalog jen sledujeme.
+ */
 export function migrateFeedEligibility(): number {
   const db = ensureDb();
-  const yearCut = new Date().getFullYear() - 1;
   let changed = 0;
   db.titles = db.titles.map((raw) => {
     const t = normalizeTitle(raw);
-    if (t.type === "movie") {
+
+    if (t.eventType === "new_season") {
       const next = {
         ...t,
-        eventType: t.eventType ?? ("new_movie" as const),
         eventAt: t.eventAt ?? t.firstSeenAt,
-        feedEligible: t.qualified,
+        feedEligible: Boolean(t.qualified),
+      };
+      if (
+        next.feedEligible !== t.feedEligible ||
+        next.eventAt !== t.eventAt
+      ) {
+        changed += 1;
+      }
+      return next;
+    }
+
+    if (t.type === "movie") {
+      if (isRecentPremiere(t.year) && t.qualified) {
+        const next = {
+          ...t,
+          eventType: "new_movie" as const,
+          eventAt: t.eventAt ?? t.firstSeenAt,
+          feedEligible: true,
+        };
+        if (
+          next.eventType !== t.eventType ||
+          next.feedEligible !== t.feedEligible ||
+          next.eventAt !== t.eventAt
+        ) {
+          changed += 1;
+        }
+        return next;
+      }
+      const next = {
+        ...t,
+        eventType: null,
+        eventAt: null,
+        feedEligible: false,
+      };
+      if (
+        t.feedEligible !== false ||
+        t.eventType != null ||
+        t.eventAt != null
+      ) {
+        changed += 1;
+      }
+      return next;
+    }
+
+    // Seriál: nový seriál jen s nedávnou premiérou.
+    if (isRecentPremiere(t.year) && t.qualified) {
+      const next = {
+        ...t,
+        eventType: "new_series" as const,
+        eventAt: t.eventAt ?? t.firstSeenAt,
+        feedEligible: true,
       };
       if (
         next.eventType !== t.eventType ||
@@ -131,32 +181,15 @@ export function migrateFeedEligibility(): number {
       return next;
     }
 
-    // Seriál: ve feedu jen nový seriál / nová řada.
-    if (t.eventType === "new_series" || t.eventType === "new_season") {
-      const next = { ...t, feedEligible: t.qualified };
-      if (next.feedEligible !== t.feedEligible) changed += 1;
-      return next;
-    }
-
-    // Legacy bez eventType — nech jen nedávné premiéry jako „nový seriál“.
-    if (t.year != null && t.year >= yearCut) {
-      const next = {
-        ...t,
-        eventType: "new_series" as const,
-        eventAt: t.firstSeenAt,
-        feedEligible: t.qualified,
-      };
-      changed += 1;
-      return next;
-    }
-
     const next = {
       ...t,
       eventType: null,
       eventAt: null,
       feedEligible: false,
     };
-    if (t.feedEligible !== false || t.eventType != null) changed += 1;
+    if (t.feedEligible !== false || t.eventType != null || t.eventAt != null) {
+      changed += 1;
+    }
     return next;
   });
   saveDb(db);

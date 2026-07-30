@@ -43,6 +43,10 @@ import {
   toggleWatchlist,
 } from "./src/library";
 import {
+  ensureNotificationPermission,
+  notifyNewHighRated,
+} from "./src/notifications";
+import {
   SwipeDismissRow,
   eventPill,
   titleMetaLine,
@@ -131,6 +135,7 @@ export default function App() {
         setUpdatedAt(nextUpdated);
         setError(null);
         await saveFeedCache(nextTitles, nextUpdated);
+        await notifyNewHighRated(nextTitles);
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
       } finally {
@@ -143,6 +148,7 @@ export default function App() {
 
   useEffect(() => {
     if (!hydrated) return;
+    ensureNotificationPermission().catch(() => {});
     load(false, apiUrl);
   }, [hydrated, apiUrl]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -242,18 +248,15 @@ export default function App() {
           </View>
         </View>
         <Text style={styles.subtitle} numberOfLines={1}>
-          Novinky · ČSFD ≥ 60 %
-        </Text>
-        <Text style={styles.updated} numberOfLines={1}>
-          {formatUpdatedAt(updatedAt)}
+          ČSFD ≥ 60 % · {formatUpdatedAt(updatedAt)}
         </Text>
 
         <View style={styles.tabs}>
           {(
             [
-              ["discover", "OBJEVUJ", null as number | null],
-              ["fresh", "NOVÉ", freshCount || null],
-              ["watchlist", "WATCHLIST", watchlist.length || null],
+              ["discover", "Objevuj", null as number | null],
+              ["fresh", "Nové", freshCount || null],
+              ["watchlist", "Seznam", watchlist.length || null],
             ] as const
           ).map(([key, label, count]) => {
             const active = tab === key;
@@ -325,9 +328,11 @@ export default function App() {
           />
         </View>
 
-        <Text style={styles.hint} numberOfLines={1}>
-          ↪ Přejeď zleva doprava = smazat natrvalo
-        </Text>
+        {tab === "watchlist" ? (
+          <Text style={styles.hint} numberOfLines={1}>
+            ↪ Přejeď zleva doprava = smazat natrvalo
+          </Text>
+        ) : null}
 
         {error ? (
           <View style={styles.errorBanner}>
@@ -376,15 +381,17 @@ export default function App() {
             <View style={styles.emptyBox}>
               <Text style={styles.emptyTitle}>
                 {tab === "watchlist"
-                  ? "Watchlist je prázdný"
+                  ? "Seznam je prázdný"
                   : tab === "fresh"
                     ? "Žádné čerstvé novinky"
                     : "Nic k zobrazení"}
               </Text>
               <Text style={styles.empty}>
                 {tab === "watchlist"
-                  ? "Přidej tituly tlačítkem Watchlist."
-                  : "Změň filtr, nebo stáhni seznam dolů pro obnovení."}
+                  ? "Přidej tituly tlačítkem Do seznamu."
+                  : tab === "fresh"
+                    ? "Nové = premiéra z posledních let, nebo nová řada (max 3 dny)."
+                    : "Změň filtr, nebo stáhni seznam dolů pro obnovení."}
               </Text>
             </View>
           }
@@ -451,7 +458,7 @@ export default function App() {
                             onWatchlist && styles.watchBtnTextOn,
                           ]}
                         >
-                          {onWatchlist ? "★ V watchlistu" : "+ Watchlist"}
+                          {onWatchlist ? "★ V seznamu" : "+ Do seznamu"}
                         </Text>
                       </Pressable>
                     </View>
@@ -465,6 +472,7 @@ export default function App() {
 
       <Modal visible={!!detail} animationType="slide" transparent>
         <View style={styles.modalBackdrop}>
+          <Pressable style={styles.modalDismissArea} onPress={() => setDetail(null)} />
           <View style={[styles.sheet, { paddingBottom: 16 + BOTTOM_SAFE }]}>
             {detail ? (
               <ScrollView
@@ -504,8 +512,8 @@ export default function App() {
                     ]}
                   >
                     {watchlist.includes(detail.id)
-                      ? "Odebrat z watchlistu"
-                      : "Přidat do watchlistu"}
+                      ? "Odebrat ze seznamu"
+                      : "Přidat do seznamu"}
                   </Text>
                 </Pressable>
                 <Pressable
@@ -516,9 +524,6 @@ export default function App() {
                 </Pressable>
                 <Pressable style={styles.dangerBtn} onPress={() => onDismiss(detail.id)}>
                   <Text style={styles.dangerBtnText}>Smazat natrvalo</Text>
-                </Pressable>
-                <Pressable style={styles.secondaryBtn} onPress={() => setDetail(null)}>
-                  <Text style={styles.secondaryBtnText}>Zavřít</Text>
                 </Pressable>
               </ScrollView>
             ) : null}
@@ -537,7 +542,7 @@ export default function App() {
               <Text style={styles.detailTitle}>Nastavení</Text>
               <Text style={styles.settingsSection}>Feed</Text>
               <Text style={styles.empty}>
-                Výchozí je GitHub (denní sken). Seznam obnovíš tažením dolů.
+                Výchozí je GitHub (denní sken). Seznam obnovíš tažením dolů. Notifikace přijde u nových titulů s ČSFD ≥ 75 %.
               </Text>
               <TextInput
                 style={styles.input}
@@ -556,7 +561,12 @@ export default function App() {
                 <Text style={styles.secondaryBtnText}>Uložit ruční adresu</Text>
               </Pressable>
 
-              <Text style={styles.versionLine}>Film Radar 1.0.0</Text>
+              <Text style={styles.settingsSection}>O aplikaci</Text>
+              <Text style={styles.empty}>
+                Soukromá neoficiální appka. Není spojená s Netflixem, Disney+, Oneplay ani ČSFD. Data z veřejných zdrojů mohou být neúplná.
+              </Text>
+
+              <Text style={styles.versionLine}>Film Radar 1.1.0</Text>
               <Pressable style={styles.secondaryBtn} onPress={() => setSettingsOpen(false)}>
                 <Text style={styles.secondaryBtnText}>Zavřít</Text>
               </Pressable>
@@ -623,7 +633,7 @@ const styles = StyleSheet.create({
   tabText: {
     fontFamily: "DMSans_700Bold",
     color: colors.textDim,
-    fontSize: 10,
+    fontSize: 13,
     letterSpacing: 0.2,
   },
   tabTextActive: { color: colors.accent },
@@ -894,6 +904,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "rgba(0,0,0,0.72)",
     justifyContent: "flex-end",
+  },
+  modalDismissArea: {
+    flex: 1,
   },
   sheet: {
     backgroundColor: colors.bgElevated,

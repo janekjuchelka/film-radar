@@ -6,7 +6,8 @@ Osobní Android aplikace: novinky na **Netflix**, **Disney+** a **Oneplay** (Če
 
 1. **GitHub Actions** (~2× denně) projde služby a uloží výsledek do [`feed/titles.json`](feed/titles.json).
 2. **APK** si feed stáhne z GitHubu — žádný vlastní server není potřeba.
-3. Watchlist, „Viděl jsem“, swipe = smazat natrvalo — vše jen v telefonu (AsyncStorage).
+3. Seznam (watchlist) a swipe = smazat natrvalo — vše jen v telefonu (AsyncStorage).
+4. Notifikace při nových titulech s ČSFD ≥ 75 %.
 
 Podrobnosti hostingu: [HOSTING-ZDARMA.md](HOSTING-ZDARMA.md).
 
@@ -23,10 +24,10 @@ Podrobnosti hostingu: [HOSTING-ZDARMA.md](HOSTING-ZDARMA.md).
 
 | Oblast | Popis |
 |--------|--------|
-| **Objevuj** | Všechny aktuální tituly mimo Watchlist a ručně skryté položky |
-| **Nové** | Čerstvé novinky (cca 3 dny) |
-| **Watchlist** | Uložené k pozdějšímu sledování |
-| **Nastavení ⚙** | Vlastní URL feedu |
+| **Objevuj** | Aktuální novinky (nedávné premiéry / nové řady), mimo Seznam a skryté |
+| **Nové** | Čerstvé události (cca 3 dny) |
+| **Seznam** | Uložené k pozdějšímu sledování |
+| **Nastavení ⚙** | Feed URL, disclaimer, verze |
 
 ## Vývoj a build APK
 
@@ -48,4 +49,4 @@ Složka [`server/`](server/) — Express API + lokální sken. Pro běžné pou�
 
 ## Verze
 
-Aktuální: **1.0.0** — viz [CHANGELOG.md](CHANGELOG.md).
+Aktuální: **1.1.0** — viz [CHANGELOG.md](CHANGELOG.md).
