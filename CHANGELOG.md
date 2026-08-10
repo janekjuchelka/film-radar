@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.1 (2026-08-10)
+
+- Oprava: sken znovu bere **nově objevené tituly na službě** (ne jen filmové premiéry 2025+).
+- Novinka i při **novém poskytovateli** u už sledovaného titulu.
+- Záložka Nové: okno **7 dní**.
+- Do feedu zpětně doplněny tituly objevené v posledních 14 dnech.
+
 ## 1.1.0 (2026-07-30)
 
 - Přísnější „Nové“: ve feedu jen premiéry z posledních ~2 let, nebo reálně nová řada (ne starý katalog).

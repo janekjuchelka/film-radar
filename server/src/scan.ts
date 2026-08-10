@@ -2,14 +2,21 @@ import { config } from "./config.js";
 import { matchCsfd } from "./csfd.js";
 import { getTitle, migrateFeedEligibility, setScanMeta, upsertTitle } from "./db.js";
 import { exportFeed } from "./export-feed.js";
-import { isRecentPremiere } from "./freshness.js";
 import { fetchCandidates } from "./justwatch.js";
-import type { FeedEventType, TitleRecord } from "./types.js";
+import type { FeedEventType, ProviderKey, TitleRecord } from "./types.js";
 
 let scanning = false;
 
 export function isScanning() {
   return scanning;
+}
+
+function providersAdded(
+  previous: ProviderKey[] | undefined,
+  next: ProviderKey[]
+): ProviderKey[] {
+  const prev = new Set(previous || []);
+  return next.filter((p) => !prev.has(p));
 }
 
 export async function scanDaily(): Promise<Record<string, number>> {
@@ -24,7 +31,9 @@ export async function scanDaily(): Promise<Record<string, number>> {
     skipped: 0,
     errors: 0,
     newSeries: 0,
+    newMovies: 0,
     newSeasons: 0,
+    newOnProvider: 0,
     trackedOnly: 0,
   };
 
@@ -54,36 +63,46 @@ export async function scanDaily(): Promise<Record<string, number>> {
         let eventAt: string | null = existing?.eventAt ?? null;
         let feedEligible = existing?.feedEligible ?? false;
 
+        const mergedProviders = Array.from(
+          new Set([...(existing?.providers || []), ...candidate.providers])
+        ) as ProviderKey[];
+        const addedProviders = providersAdded(existing?.providers, candidate.providers);
+
         if (candidate.type === "movie") {
           if (!existing) {
-            if (isRecentPremiere(candidate.year)) {
+            // Poprvé ve skenu = novinka na službě (rok premiéry nerozhoduje).
+            if (qualified) {
               eventType = "new_movie";
               eventAt = now;
-              feedEligible = qualified;
+              feedEligible = true;
+              stats.newMovies += 1;
             } else {
-              // Starý katalog — jen sledovat, ne jako „novinka“.
               eventType = null;
               eventAt = null;
               feedEligible = false;
               stats.trackedOnly += 1;
             }
+          } else if (addedProviders.length && qualified) {
+            eventType = "new_movie";
+            eventAt = now;
+            feedEligible = true;
+            stats.newOnProvider += 1;
           } else if (existing.eventType === "new_movie") {
-            feedEligible = qualified && isRecentPremiere(candidate.year);
+            feedEligible = qualified;
           } else {
-            feedEligible = false;
+            feedEligible = Boolean(existing.feedEligible && qualified);
           }
         } else {
           const prevSeasons = existing?.seasonCount ?? null;
           const nextSeasons = candidate.seasonCount;
 
           if (!existing) {
-            if (isRecentPremiere(candidate.year)) {
+            if (qualified) {
               eventType = "new_series";
               eventAt = now;
-              feedEligible = qualified;
+              feedEligible = true;
               stats.newSeries += 1;
             } else {
-              // Starý běžící seriál — jen sleduj počet řad.
               eventType = null;
               eventAt = null;
               feedEligible = false;
@@ -98,12 +117,15 @@ export async function scanDaily(): Promise<Record<string, number>> {
             eventAt = now;
             feedEligible = qualified;
             stats.newSeasons += 1;
-          } else if (existing.eventType === "new_season") {
+          } else if (addedProviders.length && qualified) {
+            eventType = "new_series";
+            eventAt = now;
+            feedEligible = true;
+            stats.newOnProvider += 1;
+          } else if (existing.eventType === "new_season" || existing.eventType === "new_series") {
             feedEligible = qualified;
-          } else if (existing.eventType === "new_series") {
-            feedEligible = qualified && isRecentPremiere(candidate.year);
           } else {
-            feedEligible = false;
+            feedEligible = Boolean(existing.feedEligible && qualified);
           }
         }
 
@@ -117,7 +139,7 @@ export async function scanDaily(): Promise<Record<string, number>> {
           csfdRating: match.csfdRating,
           csfdUrl: match.csfdUrl,
           posterUrl: candidate.posterUrl,
-          providers: candidate.providers,
+          providers: mergedProviders.length ? mergedProviders : candidate.providers,
           firstSeenAt: now,
           lastSeenAt: now,
           qualified,
@@ -131,7 +153,7 @@ export async function scanDaily(): Promise<Record<string, number>> {
         upsertTitle(record);
         const tag = eventType ?? "track";
         console.log(
-          `[scan] + ${candidate.title} (${candidate.year ?? "?"}) CSFD ${match.csfdRating}% [${candidate.providers.join(",")}] event=${tag} seasons=${candidate.seasonCount ?? "-"}`
+          `[scan] + ${candidate.title} (${candidate.year ?? "?"}) CSFD ${match.csfdRating}% [${record.providers.join(",")}] event=${tag} seasons=${candidate.seasonCount ?? "-"}${addedProviders.length ? ` +prov=${addedProviders.join(",")}` : ""}`
         );
       } catch (err) {
         stats.errors += 1;

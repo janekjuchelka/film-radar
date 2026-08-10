@@ -1,7 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { isRecentPremiere } from "./freshness.js";
 import type { CsfdCacheEntry, DatabaseShape, TitleRecord } from "./types.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -106,88 +105,51 @@ export function upsertTitle(title: TitleRecord): TitleRecord {
 }
 
 /**
- * Vyčistí falešné „novinky“: ve feedu jen nedávné premiéry
- * (nebo reálně detekovaná nová řada). Starý katalog jen sledujeme.
+ * Sjednotí feedEligible podle událostí.
+ * U titulů objevených skenem v posledních dnech (qualified)
+ * obnoví novinku — opravuje příliš přísný filtr podle roku premiéry.
  */
 export function migrateFeedEligibility(): number {
   const db = ensureDb();
+  const now = Date.now();
+  const promoteWindowMs = 14 * 24 * 60 * 60 * 1000;
   let changed = 0;
+
   db.titles = db.titles.map((raw) => {
     const t = normalizeTitle(raw);
+    let next = { ...t };
 
-    if (t.eventType === "new_season") {
-      const next = {
+    if (!t.qualified) {
+      next = { ...t, feedEligible: false };
+    } else if (t.eventType === "new_season" || t.eventType === "new_series" || t.eventType === "new_movie") {
+      next = {
         ...t,
-        eventAt: t.eventAt ?? t.firstSeenAt,
-        feedEligible: Boolean(t.qualified),
-      };
-      if (
-        next.feedEligible !== t.feedEligible ||
-        next.eventAt !== t.eventAt
-      ) {
-        changed += 1;
-      }
-      return next;
-    }
-
-    if (t.type === "movie") {
-      if (isRecentPremiere(t.year) && t.qualified) {
-        const next = {
-          ...t,
-          eventType: "new_movie" as const,
-          eventAt: t.eventAt ?? t.firstSeenAt,
-          feedEligible: true,
-        };
-        if (
-          next.eventType !== t.eventType ||
-          next.feedEligible !== t.feedEligible ||
-          next.eventAt !== t.eventAt
-        ) {
-          changed += 1;
-        }
-        return next;
-      }
-      const next = {
-        ...t,
-        eventType: null,
-        eventAt: null,
-        feedEligible: false,
-      };
-      if (
-        t.feedEligible !== false ||
-        t.eventType != null ||
-        t.eventAt != null
-      ) {
-        changed += 1;
-      }
-      return next;
-    }
-
-    // Seriál: nový seriál jen s nedávnou premiérou.
-    if (isRecentPremiere(t.year) && t.qualified) {
-      const next = {
-        ...t,
-        eventType: "new_series" as const,
         eventAt: t.eventAt ?? t.firstSeenAt,
         feedEligible: true,
       };
-      if (
-        next.eventType !== t.eventType ||
-        next.feedEligible !== t.feedEligible ||
-        next.eventAt !== t.eventAt
-      ) {
-        changed += 1;
+    } else {
+      // Qualified, ale bez události — pokud jsme ho sken našel nedávno poprvé,
+      // ber jako novinku na službě (oprava regressu „jen rok premiéry“).
+      const firstSeen = Date.parse(t.firstSeenAt);
+      const recentlyDiscovered =
+        Number.isFinite(firstSeen) && now - firstSeen <= promoteWindowMs;
+      if (recentlyDiscovered) {
+        next = {
+          ...t,
+          eventType: t.type === "movie" ? ("new_movie" as const) : ("new_series" as const),
+          eventAt: t.firstSeenAt,
+          feedEligible: true,
+        };
+      } else {
+        next = { ...t, feedEligible: false };
       }
-      return next;
     }
 
-    const next = {
-      ...t,
-      eventType: null,
-      eventAt: null,
-      feedEligible: false,
-    };
-    if (t.feedEligible !== false || t.eventType != null || t.eventAt != null) {
+    if (
+      next.feedEligible !== t.feedEligible ||
+      next.eventType !== t.eventType ||
+      next.eventAt !== t.eventAt
+    ) {
       changed += 1;
     }
     return next;

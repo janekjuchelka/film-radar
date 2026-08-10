@@ -25,7 +25,7 @@ Podrobnosti hostingu: [HOSTING-ZDARMA.md](HOSTING-ZDARMA.md).
 | Oblast | Popis |
 |--------|--------|
 | **Objevuj** | Aktuální novinky (nedávné premiéry / nové řady), mimo Seznam a skryté |
-| **Nové** | Čerstvé události (cca 3 dny) |
+| **Nové** | Čerstvé události (cca 7 dní) |
 | **Seznam** | Uložené k pozdějšímu sledování |
 | **Nastavení ⚙** | Feed URL, disclaimer, verze |
 
@@ -49,4 +49,4 @@ Složka [`server/`](server/) — Express API + lokální sken. Pro běžné pou�
 
 ## Verze
 
-Aktuální: **1.1.0** — viz [CHANGELOG.md](CHANGELOG.md).
+Aktuální: **1.1.1** — viz [CHANGELOG.md](CHANGELOG.md).

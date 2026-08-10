@@ -390,7 +390,7 @@ export default function App() {
                 {tab === "watchlist"
                   ? "Přidej tituly tlačítkem Do seznamu."
                   : tab === "fresh"
-                    ? "Nové = premiéra z posledních let, nebo nová řada (max 3 dny)."
+                    ? "Nové = poprvé ve feedu / nová služba / nová řada (max 7 dní)."
                     : "Změň filtr, nebo stáhni seznam dolů pro obnovení."}
               </Text>
             </View>
@@ -566,7 +566,7 @@ export default function App() {
                 Soukromá neoficiální appka. Není spojená s Netflixem, Disney+, Oneplay ani ČSFD. Data z veřejných zdrojů mohou být neúplná.
               </Text>
 
-              <Text style={styles.versionLine}>Film Radar 1.1.0</Text>
+              <Text style={styles.versionLine}>Film Radar 1.1.1</Text>
               <Pressable style={styles.secondaryBtn} onPress={() => setSettingsOpen(false)}>
                 <Text style={styles.secondaryBtnText}>Zavřít</Text>
               </Pressable>

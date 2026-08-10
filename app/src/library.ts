@@ -70,7 +70,7 @@ export async function hideTitle(
   return hideTitleForever(id);
 }
 
-export function isFresh(iso: string, days = 3): boolean {
+export function isFresh(iso: string, days = 7): boolean {
   const t = Date.parse(iso);
   if (!Number.isFinite(t)) return false;
   return Date.now() - t < days * 24 * 60 * 60 * 1000;
