@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.2 (2026-08-11)
+
+- Seriály: do feedu jako „nový seriál“ jen nedávné premiéry (ne Šógun jen proto, že je v trendu).
+- Staré seriály se dál sledují kvůli nové řadě / novému provideru.
+- Filmy: first-seen na službě zůstává (i starší premiéry).
+
 ## 1.1.1 (2026-08-10)
 
 - Oprava: sken znovu bere **nově objevené tituly na službě** (ne jen filmové premiéry 2025+).

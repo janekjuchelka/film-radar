@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { isRecentPremiere } from "./freshness.js";
 import type { CsfdCacheEntry, DatabaseShape, TitleRecord } from "./types.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -105,9 +106,9 @@ export function upsertTitle(title: TitleRecord): TitleRecord {
 }
 
 /**
- * Sjednotí feedEligible podle událostí.
- * U titulů objevených skenem v posledních dnech (qualified)
- * obnoví novinku — opravuje příliš přísný filtr podle roku premiéry.
+ * Sjednotí feedEligible:
+ * - filmy: first-seen / událost OK i u starších premiér
+ * - seriály: „new_series“ jen u nedávné premiéry; jinak jen new_season / nový provider
  */
 export function migrateFeedEligibility(): number {
   const db = ensureDb();
@@ -121,22 +122,53 @@ export function migrateFeedEligibility(): number {
 
     if (!t.qualified) {
       next = { ...t, feedEligible: false };
-    } else if (t.eventType === "new_season" || t.eventType === "new_series" || t.eventType === "new_movie") {
+    } else if (t.eventType === "new_season") {
+      next = {
+        ...t,
+        eventAt: t.eventAt ?? t.firstSeenAt,
+        feedEligible: true,
+      };
+    } else if (t.type === "series" && t.eventType === "new_series") {
+      if (isRecentPremiere(t.year)) {
+        next = {
+          ...t,
+          eventAt: t.eventAt ?? t.firstSeenAt,
+          feedEligible: true,
+        };
+      } else {
+        // Falešná novinka (např. Šógun v trendu) — jen sledovat.
+        next = {
+          ...t,
+          eventType: null,
+          eventAt: null,
+          feedEligible: false,
+        };
+      }
+    } else if (t.type === "movie" && t.eventType === "new_movie") {
       next = {
         ...t,
         eventAt: t.eventAt ?? t.firstSeenAt,
         feedEligible: true,
       };
     } else {
-      // Qualified, ale bez události — pokud jsme ho sken našel nedávno poprvé,
-      // ber jako novinku na službě (oprava regressu „jen rok premiéry“).
       const firstSeen = Date.parse(t.firstSeenAt);
       const recentlyDiscovered =
         Number.isFinite(firstSeen) && now - firstSeen <= promoteWindowMs;
-      if (recentlyDiscovered) {
+      if (recentlyDiscovered && t.type === "movie") {
         next = {
           ...t,
-          eventType: t.type === "movie" ? ("new_movie" as const) : ("new_series" as const),
+          eventType: "new_movie" as const,
+          eventAt: t.firstSeenAt,
+          feedEligible: true,
+        };
+      } else if (
+        recentlyDiscovered &&
+        t.type === "series" &&
+        isRecentPremiere(t.year)
+      ) {
+        next = {
+          ...t,
+          eventType: "new_series" as const,
           eventAt: t.firstSeenAt,
           feedEligible: true,
         };

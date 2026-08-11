@@ -2,6 +2,7 @@ import { config } from "./config.js";
 import { matchCsfd } from "./csfd.js";
 import { getTitle, migrateFeedEligibility, setScanMeta, upsertTitle } from "./db.js";
 import { exportFeed } from "./export-feed.js";
+import { isRecentPremiere } from "./freshness.js";
 import { fetchCandidates } from "./justwatch.js";
 import type { FeedEventType, ProviderKey, TitleRecord } from "./types.js";
 
@@ -70,7 +71,7 @@ export async function scanDaily(): Promise<Record<string, number>> {
 
         if (candidate.type === "movie") {
           if (!existing) {
-            // Poprvé ve skenu = novinka na službě (rok premiéry nerozhoduje).
+            // Film: poprvé ve skenu = novinka na službě (i starší premiéry, např. Zodiac).
             if (qualified) {
               eventType = "new_movie";
               eventAt = now;
@@ -97,7 +98,9 @@ export async function scanDaily(): Promise<Record<string, number>> {
           const nextSeasons = candidate.seasonCount;
 
           if (!existing) {
-            if (qualified) {
+            // Seriál: „nový seriál“ jen u nedávné premiéry.
+            // Starší show (Šógun apod.) jen sledujeme kvůli nové řadě / novému provideru.
+            if (qualified && isRecentPremiere(candidate.year)) {
               eventType = "new_series";
               eventAt = now;
               feedEligible = true;
@@ -122,10 +125,16 @@ export async function scanDaily(): Promise<Record<string, number>> {
             eventAt = now;
             feedEligible = true;
             stats.newOnProvider += 1;
-          } else if (existing.eventType === "new_season" || existing.eventType === "new_series") {
+          } else if (existing.eventType === "new_season") {
             feedEligible = qualified;
+          } else if (existing.eventType === "new_series") {
+            feedEligible = qualified && isRecentPremiere(candidate.year);
+            if (!feedEligible) {
+              eventType = null;
+              eventAt = null;
+            }
           } else {
-            feedEligible = Boolean(existing.feedEligible && qualified);
+            feedEligible = false;
           }
         }
 
