@@ -1,23 +1,90 @@
 {
-  "count": 201,
+  "count": 204,
   "minRating": 60,
-  "updatedAt": "2026-09-12T13:48:52.503Z",
+  "updatedAt": "2026-09-13T09:57:02.274Z",
   "meta": {
-    "lastScanAt": "2026-09-12T13:48:52.503Z",
+    "lastScanAt": "2026-09-13T09:57:02.274Z",
     "lastScanStats": {
-      "candidates": 354,
-      "matched": 135,
-      "qualified": 135,
-      "skipped": 219,
+      "candidates": 358,
+      "matched": 143,
+      "qualified": 143,
+      "skipped": 215,
       "errors": 0,
-      "newSeries": 0,
-      "newMovies": 0,
+      "newSeries": 1,
+      "newMovies": 2,
       "newSeasons": 0,
       "newOnProvider": 0,
-      "trackedOnly": 1
+      "trackedOnly": 4
     }
   },
   "titles": [
+    {
+      "id": "tm105386",
+      "justwatchId": "tm105386",
+      "title": "Vřískot",
+      "year": 1996,
+      "type": "movie",
+      "csfdId": 1763,
+      "csfdRating": 75,
+      "csfdUrl": "https://www.csfd.cz/film/1763/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/316123691/s718/vriskot.jpg",
+      "providers": [
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-09-13T09:56:51.125Z",
+      "lastSeenAt": "2026-09-13T09:56:51.125Z",
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_movie",
+      "eventAt": "2026-09-13T09:56:51.125Z",
+      "feedEligible": true
+    },
+    {
+      "id": "tm206686",
+      "justwatchId": "tm206686",
+      "title": "Zpívej",
+      "year": 2016,
+      "type": "movie",
+      "csfdId": 403010,
+      "csfdRating": 73,
+      "csfdUrl": "https://www.csfd.cz/film/403010/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/109861945/s718/zpivej.jpg",
+      "providers": [
+        "disney",
+        "oneplay"
+      ],
+      "firstSeenAt": "2026-09-13T09:56:34.598Z",
+      "lastSeenAt": "2026-09-13T09:56:34.598Z",
+      "qualified": true,
+      "seasonCount": null,
+      "latestSeason": null,
+      "eventType": "new_movie",
+      "eventAt": "2026-09-13T09:56:34.598Z",
+      "feedEligible": true
+    },
+    {
+      "id": "ts530059",
+      "justwatchId": "ts530059",
+      "title": "Physical 100: Italy",
+      "year": 2026,
+      "type": "series",
+      "csfdId": 988204,
+      "csfdRating": 70,
+      "csfdUrl": "https://www.csfd.cz/film/988204/prehled/",
+      "posterUrl": "https://images.justwatch.com/poster/346258351/s718/physical-italia-da-100-a-1.jpg",
+      "providers": [
+        "netflix"
+      ],
+      "firstSeenAt": "2026-09-13T09:56:24.275Z",
+      "lastSeenAt": "2026-09-13T09:56:24.275Z",
+      "qualified": true,
+      "seasonCount": 1,
+      "latestSeason": 1,
+      "eventType": "new_series",
+      "eventAt": "2026-09-13T09:56:24.275Z",
+      "feedEligible": true
+    },
     {
       "id": "tm32415",
       "justwatchId": "tm32415",
@@ -32,7 +99,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-09-12T08:59:38.990Z",
-      "lastSeenAt": "2026-09-12T13:48:51.969Z",
+      "lastSeenAt": "2026-09-13T09:56:40.218Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -98,7 +165,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-09-12T08:59:13.359Z",
-      "lastSeenAt": "2026-09-12T13:48:44.831Z",
+      "lastSeenAt": "2026-09-13T09:56:19.402Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -120,7 +187,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-09-11T09:19:04.608Z",
-      "lastSeenAt": "2026-09-12T13:48:52.083Z",
+      "lastSeenAt": "2026-09-13T09:57:01.932Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -142,7 +209,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-09-11T09:18:54.779Z",
-      "lastSeenAt": "2026-09-12T13:48:44.744Z",
+      "lastSeenAt": "2026-09-13T09:56:19.369Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -186,7 +253,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-09-10T09:20:44.409Z",
-      "lastSeenAt": "2026-09-12T13:48:44.772Z",
+      "lastSeenAt": "2026-09-13T09:56:19.393Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -208,7 +275,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-09-09T09:21:25.037Z",
-      "lastSeenAt": "2026-09-12T13:48:44.975Z",
+      "lastSeenAt": "2026-09-13T09:56:19.469Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -231,7 +298,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-09-07T09:54:21.511Z",
-      "lastSeenAt": "2026-09-12T13:48:44.714Z",
+      "lastSeenAt": "2026-09-13T09:56:13.122Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -275,7 +342,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-09-08T09:19:21.259Z",
-      "lastSeenAt": "2026-09-12T13:48:51.931Z",
+      "lastSeenAt": "2026-09-13T09:56:40.258Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -341,7 +408,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-09-08T09:19:08.492Z",
-      "lastSeenAt": "2026-09-12T13:48:51.954Z",
+      "lastSeenAt": "2026-09-13T09:56:40.209Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -606,7 +673,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-09-04T09:23:27.035Z",
-      "lastSeenAt": "2026-09-12T13:48:52.025Z",
+      "lastSeenAt": "2026-09-13T09:56:45.448Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -651,7 +718,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-08-26T05:28:54.642Z",
-      "lastSeenAt": "2026-09-12T13:48:44.702Z",
+      "lastSeenAt": "2026-09-13T09:56:19.410Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -828,7 +895,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-09-02T09:15:08.797Z",
-      "lastSeenAt": "2026-09-12T13:48:45.307Z",
+      "lastSeenAt": "2026-09-13T09:56:24.680Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -872,7 +939,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-09-01T09:43:29.346Z",
-      "lastSeenAt": "2026-09-12T13:48:52.213Z",
+      "lastSeenAt": "2026-09-13T09:57:02.005Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -895,7 +962,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-12T08:55:51.481Z",
-      "lastSeenAt": "2026-09-12T13:48:52.224Z",
+      "lastSeenAt": "2026-09-13T09:57:02.030Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -918,7 +985,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-22T11:01:17.151Z",
-      "lastSeenAt": "2026-09-12T13:48:45.055Z",
+      "lastSeenAt": "2026-09-13T09:56:24.426Z",
       "qualified": true,
       "seasonCount": 18,
       "latestSeason": 18,
@@ -1028,7 +1095,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-08-01T10:52:18.774Z",
-      "lastSeenAt": "2026-09-12T13:48:44.852Z",
+      "lastSeenAt": "2026-09-13T09:56:19.501Z",
       "qualified": true,
       "seasonCount": 1,
       "latestSeason": 1,
@@ -1050,7 +1117,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-30T12:04:28.989Z",
-      "lastSeenAt": "2026-09-12T13:48:44.597Z",
+      "lastSeenAt": "2026-09-13T09:56:13.026Z",
       "qualified": true,
       "seasonCount": 2,
       "latestSeason": 2,
@@ -1094,10 +1161,10 @@
         "disney"
       ],
       "firstSeenAt": "2026-08-26T05:28:37.535Z",
-      "lastSeenAt": "2026-09-12T13:48:45.359Z",
+      "lastSeenAt": "2026-09-13T09:56:24.638Z",
       "qualified": true,
-      "seasonCount": null,
-      "latestSeason": null,
+      "seasonCount": 2,
+      "latestSeason": 2,
       "eventType": "new_series",
       "eventAt": "2026-08-26T05:28:37.535Z",
       "feedEligible": true
@@ -1249,7 +1316,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-24T05:34:20.861Z",
-      "lastSeenAt": "2026-09-12T13:48:51.874Z",
+      "lastSeenAt": "2026-09-13T09:56:40.201Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -1315,7 +1382,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-24T05:34:07.533Z",
-      "lastSeenAt": "2026-09-12T13:48:52.003Z",
+      "lastSeenAt": "2026-09-13T09:56:45.425Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -1425,10 +1492,10 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-22T11:01:33.584Z",
-      "lastSeenAt": "2026-09-12T13:48:45.284Z",
+      "lastSeenAt": "2026-09-13T09:56:24.647Z",
       "qualified": true,
-      "seasonCount": null,
-      "latestSeason": null,
+      "seasonCount": 38,
+      "latestSeason": 38,
       "eventType": "new_season",
       "eventAt": "2026-08-24T05:33:42.487Z",
       "feedEligible": true
@@ -1513,7 +1580,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-23T06:01:20.064Z",
-      "lastSeenAt": "2026-09-12T13:48:52.360Z",
+      "lastSeenAt": "2026-09-13T09:57:02.150Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -1623,7 +1690,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-23T06:00:46.718Z",
-      "lastSeenAt": "2026-09-12T13:48:52.112Z",
+      "lastSeenAt": "2026-09-13T09:56:56.317Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -1689,7 +1756,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-22T05:59:54.152Z",
-      "lastSeenAt": "2026-09-11T14:41:23.194Z",
+      "lastSeenAt": "2026-09-13T09:56:56.325Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -1711,7 +1778,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-22T05:59:49.615Z",
-      "lastSeenAt": "2026-09-12T13:48:52.058Z",
+      "lastSeenAt": "2026-09-13T09:56:40.275Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -1821,7 +1888,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-21T06:05:10.066Z",
-      "lastSeenAt": "2026-09-12T13:48:51.916Z",
+      "lastSeenAt": "2026-09-13T09:57:01.922Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -1843,7 +1910,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-21T06:05:05.696Z",
-      "lastSeenAt": "2026-09-12T13:48:51.907Z",
+      "lastSeenAt": "2026-09-13T09:56:40.235Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2173,7 +2240,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-19T11:58:04.816Z",
-      "lastSeenAt": "2026-09-12T13:48:52.467Z",
+      "lastSeenAt": "2026-09-13T09:57:02.242Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2195,7 +2262,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-19T11:57:57.997Z",
-      "lastSeenAt": "2026-09-12T13:48:52.453Z",
+      "lastSeenAt": "2026-09-13T09:57:02.228Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2217,7 +2284,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-19T11:57:48.908Z",
-      "lastSeenAt": "2026-09-12T13:48:52.425Z",
+      "lastSeenAt": "2026-09-13T09:57:02.208Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2239,7 +2306,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-19T11:57:38.001Z",
-      "lastSeenAt": "2026-09-12T13:48:52.402Z",
+      "lastSeenAt": "2026-09-13T09:57:02.180Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2261,7 +2328,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-19T11:57:31.365Z",
-      "lastSeenAt": "2026-09-12T13:48:52.369Z",
+      "lastSeenAt": "2026-09-13T09:57:02.142Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2283,7 +2350,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-19T11:57:16.205Z",
-      "lastSeenAt": "2026-09-12T13:48:52.319Z",
+      "lastSeenAt": "2026-09-13T09:57:02.107Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2305,7 +2372,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-19T11:57:09.770Z",
-      "lastSeenAt": "2026-09-12T13:48:52.304Z",
+      "lastSeenAt": "2026-09-13T09:57:02.094Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2327,7 +2394,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-19T11:56:52.110Z",
-      "lastSeenAt": "2026-09-12T13:48:51.897Z",
+      "lastSeenAt": "2026-09-13T09:56:40.245Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2349,7 +2416,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-19T11:56:40.796Z",
-      "lastSeenAt": "2026-09-12T13:48:52.103Z",
+      "lastSeenAt": "2026-09-13T09:56:45.467Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2437,7 +2504,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-19T11:56:20.811Z",
-      "lastSeenAt": "2026-09-12T13:48:52.273Z",
+      "lastSeenAt": "2026-09-13T09:57:02.050Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2548,7 +2615,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-19T11:56:00.395Z",
-      "lastSeenAt": "2026-09-12T13:48:51.987Z",
+      "lastSeenAt": "2026-09-13T09:56:45.435Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2570,7 +2637,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-19T11:55:56.085Z",
-      "lastSeenAt": "2026-09-12T13:48:52.016Z",
+      "lastSeenAt": "2026-09-13T09:57:02.013Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2636,7 +2703,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-19T11:55:40.007Z",
-      "lastSeenAt": "2026-09-12T13:48:52.043Z",
+      "lastSeenAt": "2026-09-13T09:57:01.912Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2658,7 +2725,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-19T11:55:35.733Z",
-      "lastSeenAt": "2026-09-12T13:48:52.238Z",
+      "lastSeenAt": "2026-09-13T09:56:51.138Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2680,7 +2747,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-19T11:55:26.792Z",
-      "lastSeenAt": "2026-09-12T13:48:52.286Z",
+      "lastSeenAt": "2026-09-13T09:57:02.058Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2702,7 +2769,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-19T11:55:17.870Z",
-      "lastSeenAt": "2026-09-12T13:48:52.251Z",
+      "lastSeenAt": "2026-09-13T09:57:02.022Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2724,7 +2791,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-19T11:55:13.350Z",
-      "lastSeenAt": "2026-09-12T13:48:52.202Z",
+      "lastSeenAt": "2026-09-13T09:57:01.994Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2818,7 +2885,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-26T10:55:58.455Z",
-      "lastSeenAt": "2026-09-12T13:48:52.067Z",
+      "lastSeenAt": "2026-09-13T09:56:56.309Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2842,7 +2909,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-30T12:03:56.882Z",
-      "lastSeenAt": "2026-09-12T13:48:44.963Z",
+      "lastSeenAt": "2026-09-13T09:56:19.515Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2865,7 +2932,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-08-09T07:59:12.232Z",
-      "lastSeenAt": "2026-09-12T13:48:45.005Z",
+      "lastSeenAt": "2026-09-13T09:56:24.469Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -2931,7 +2998,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-08-17T06:06:23.449Z",
-      "lastSeenAt": "2026-09-12T13:48:51.708Z",
+      "lastSeenAt": "2026-09-13T09:56:40.032Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -3108,7 +3175,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-08-15T05:56:40.953Z",
-      "lastSeenAt": "2026-09-12T13:48:51.674Z",
+      "lastSeenAt": "2026-09-13T09:56:39.999Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -3527,7 +3594,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-08-12T14:42:40.791Z",
-      "lastSeenAt": "2026-09-12T13:48:51.641Z",
+      "lastSeenAt": "2026-09-13T09:56:39.961Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -3770,7 +3837,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-08-08T07:38:38.021Z",
-      "lastSeenAt": "2026-09-12T13:48:45.015Z",
+      "lastSeenAt": "2026-09-13T09:56:24.418Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -3793,7 +3860,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-08-07T08:38:09.379Z",
-      "lastSeenAt": "2026-09-11T14:41:17.224Z",
+      "lastSeenAt": "2026-09-13T09:56:19.489Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -3925,7 +3992,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-08-02T10:53:37.459Z",
-      "lastSeenAt": "2026-09-12T13:48:45.401Z",
+      "lastSeenAt": "2026-09-13T09:56:34.672Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -4079,7 +4146,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-27T13:56:18.714Z",
-      "lastSeenAt": "2026-09-12T13:48:44.782Z",
+      "lastSeenAt": "2026-09-13T09:56:19.444Z",
       "qualified": true,
       "seasonCount": 1,
       "latestSeason": 1,
@@ -4101,7 +4168,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-25T10:17:39.661Z",
-      "lastSeenAt": "2026-09-12T13:48:45.045Z",
+      "lastSeenAt": "2026-09-13T09:56:24.451Z",
       "qualified": true,
       "seasonCount": 1,
       "latestSeason": 1,
@@ -4123,7 +4190,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:04:31.050Z",
-      "lastSeenAt": "2026-09-12T13:48:52.413Z",
+      "lastSeenAt": "2026-09-13T09:57:02.192Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -4145,7 +4212,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:04:26.971Z",
-      "lastSeenAt": "2026-09-12T13:48:52.380Z",
+      "lastSeenAt": "2026-09-13T09:57:02.172Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -4167,7 +4234,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:04:22.904Z",
-      "lastSeenAt": "2026-09-12T13:48:52.389Z",
+      "lastSeenAt": "2026-09-13T09:57:02.164Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -4189,7 +4256,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:04:09.198Z",
-      "lastSeenAt": "2026-09-12T13:48:51.865Z",
+      "lastSeenAt": "2026-09-13T09:56:40.188Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -4211,7 +4278,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-24T12:03:29.639Z",
-      "lastSeenAt": "2026-09-12T13:48:52.444Z",
+      "lastSeenAt": "2026-09-13T09:57:02.220Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -4233,7 +4300,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-24T12:02:47.819Z",
-      "lastSeenAt": "2026-09-12T13:48:51.811Z",
+      "lastSeenAt": "2026-09-13T09:56:40.133Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -4255,7 +4322,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-24T12:02:22.077Z",
-      "lastSeenAt": "2026-09-12T13:48:51.771Z",
+      "lastSeenAt": "2026-09-13T09:56:40.094Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -4299,7 +4366,7 @@
         "disney"
       ],
       "firstSeenAt": "2026-07-24T12:01:25.647Z",
-      "lastSeenAt": "2026-09-12T13:48:45.237Z",
+      "lastSeenAt": "2026-09-13T09:56:24.619Z",
       "qualified": true,
       "seasonCount": 2,
       "latestSeason": 2,
@@ -4321,7 +4388,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-24T12:00:42.337Z",
-      "lastSeenAt": "2026-09-12T13:48:45.190Z",
+      "lastSeenAt": "2026-09-13T09:56:24.569Z",
       "qualified": true,
       "seasonCount": 1,
       "latestSeason": 1,
@@ -4343,7 +4410,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-24T12:00:31.811Z",
-      "lastSeenAt": "2026-09-12T13:48:45.199Z",
+      "lastSeenAt": "2026-09-13T09:56:24.606Z",
       "qualified": true,
       "seasonCount": 1,
       "latestSeason": 1,
@@ -4365,7 +4432,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-24T12:00:25.696Z",
-      "lastSeenAt": "2026-09-12T13:48:45.160Z",
+      "lastSeenAt": "2026-09-13T09:56:24.584Z",
       "qualified": true,
       "seasonCount": 1,
       "latestSeason": 1,
@@ -4387,7 +4454,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-24T12:00:15.720Z",
-      "lastSeenAt": "2026-09-12T13:48:45.083Z",
+      "lastSeenAt": "2026-09-13T09:56:24.536Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -4409,7 +4476,7 @@
         "netflix"
       ],
       "firstSeenAt": "2026-07-24T12:00:00.048Z",
-      "lastSeenAt": "2026-09-12T13:48:45.105Z",
+      "lastSeenAt": "2026-09-13T09:56:24.510Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
@@ -4453,7 +4520,7 @@
         "oneplay"
       ],
       "firstSeenAt": "2026-07-22T11:01:54.205Z",
-      "lastSeenAt": "2026-09-12T13:48:52.328Z",
+      "lastSeenAt": "2026-09-13T09:57:02.115Z",
       "qualified": true,
       "seasonCount": null,
       "latestSeason": null,
